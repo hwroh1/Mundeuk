@@ -416,6 +416,8 @@ h1 {
     transform: translate(-50%, -50%);
     z-index: 20;
     transition: opacity 0.3s ease;
+    left: 0%; /* 기본 위치 */
+    top: 50%; /* 기본 위치 */
 }
 
 

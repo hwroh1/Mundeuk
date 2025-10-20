@@ -491,12 +491,17 @@
             // 빨간 점 위치 업데이트 (채워진 영역의 끝부분에 위치)
             if (animatedRedDot) {
                 // 상위 X% = 채워진 영역의 끝부분에 점 위치
-                // percentile이 80이면 상위 20%이므로, 그래프 우측 20% 지점에 점 위치
+                // percentile이 75이면 상위 25%이므로, 그래프 우측 25% 지점에 점 위치
                 const topPercentage = 100 - percentile; // 상위 몇 %인지
                 const dotPosition = topPercentage; // 상위 X% = 그래프 우측 X% 지점
+                
+                // 점을 보이게 하고 위치 설정
                 animatedRedDot.style.left = `${dotPosition}%`;
-                animatedRedDot.style.top = '50%'; // 그래프 중앙 높이
+                animatedRedDot.style.top = '50%';
+                animatedRedDot.style.opacity = '1';
+                
                 console.log('Red dot position updated to:', dotPosition + '% (top ' + topPercentage + '% position)');
+                console.log('Percentile:', percentile, 'Top percentage:', topPercentage);
             }
             
             // percentile-list 문장들 업데이트
