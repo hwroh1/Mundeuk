@@ -1,0 +1,6 @@
+# API 키 파일 (보안상 Git에 업로드하지 않음)
+api-key.js
+
+# 시스템 파일
+.DS_Store
+*.log

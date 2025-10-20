@@ -1,7 +1,7 @@
 // API 설정 파일
 const API_CONFIG = {
     // 여기에 발급받은 API 키를 입력하세요
-    OPENAI_API_KEY: 'your-api-key-here',
+    OPENAI_API_KEY: window.API_KEY || 'your-api-key-here',
     
     // API 엔드포인트
     OPENAI_API_URL: 'https://api.openai.com/v1/chat/completions',
