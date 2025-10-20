@@ -4,7 +4,7 @@ const API_CONFIG = {
     OPENAI_API_KEY: window.API_KEY || 'your-api-key-here',
     
     // 프록시 엔드포인트 (Vercel 서버리스 함수)
-    OPENAI_API_URL: '/api/analyze',
+    OPENAI_API_URL: 'https://mundeuk-five.vercel.app/api/analyze',
     
     // 사용할 모델 (서버에서 사용)
     MODEL: 'gpt-3.5-turbo',
@@ -71,10 +71,14 @@ async function analyzeText(text, topic) {
         });
 
         if (!response.ok) {
-            throw new Error(`API 요청 실패: ${response.status}`);
+            const errorText = await response.text();
+            console.error('API 응답 오류:', response.status, errorText);
+            throw new Error(`API 요청 실패: ${response.status} - ${errorText}`);
         }
 
         const data = await response.json();
+        console.log('API 응답 데이터:', data);
+        
         // 서버가 이미 JSON 형태로 가공해 반환
         return data;
         
