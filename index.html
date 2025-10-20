@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Stack Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-items-container">
+            <div class="nav-item" style="color: #32FF8A;">오늘의 학습</div>
+            <div class="nav-item" onclick="window.location.href='analysis.html'">분석리포트</div>
+            <div class="nav-item">베스트 리라이팅</div>
+            <div class="nav-item" onclick="window.location.href='mypage.html'">마이페이지</div>
+        </div>
+        <div class="nav-icon">[→</div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Left Information Box -->
+        <div class="info-box">
+            <div class="info-shapes">
+                <div class="memo memo-1">
+                    <div class="memo-content">
+                        <div class="memo-text">연속학습</div>
+                        <div class="memo-text">58일째! 🔥</div>
+                    </div>
+                </div>
+                <div class="memo memo-2">
+                    <div class="memo-content">
+                        <div class="memo-text">홍길동님의</div>
+                        <div class="memo-text">어휘력은</div>
+                        <div class="memo-text">상위 13%</div>
+                        <div class="memo-text">놀라워요! 📈</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Book Stack Area -->
+        <div class="book-stack-container">
+            <!-- Floating Book (Clickable) -->
+            <div class="floating-book" id="floatingBook">
+                <div class="bookmark bookmark-1"></div>
+                <div class="bookmark bookmark-2"></div>
+                <div class="bookmark bookmark-3"></div>
+                <div class="bookmark bookmark-4"></div>
+                <div class="book-spine green"></div>
+                <div class="book-cover">
+                    <div class="book-pattern yellow"></div>
+                </div>
+            </div>
+
+            <!-- Stacked Books Container -->
+            <div class="stacked-books" id="stackedBooks">
+                <!-- Books will be added here dynamically -->
+            </div>
+
+            <!-- Right Floating Circle -->
+            <div class="floating-circle">
+                <img src="circle.png" alt="Circle" class="circle-image">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

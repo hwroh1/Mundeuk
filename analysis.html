@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>분석 리포트 - Language Proficiency Analysis</title>
+    <link rel="stylesheet" href="analysis-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-items-container">
+            <div class="nav-item" onclick="window.location.href='index.html'">오늘의 학습</div>
+            <div class="nav-item" style="color: #32FF8A;">분석리포트</div>
+            <div class="nav-item">베스트 리라이팅</div>
+            <div class="nav-item" onclick="window.location.href='mypage.html'">마이페이지</div>
+        </div>
+        <div class="nav-icon">[→</div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Title Section -->
+        <section class="title-section animate-on-scroll">
+            <h1 class="main-title">분석 리포트</h1>
+            <p class="title-description">
+                이 리포트는 당신의 언어 능력을 종합적으로 분석하여 어휘 표현력, 문장 구성, 논리적 전개 등 다양한 측면에서의 성취도를 보여줍니다. 
+                각 영역별 세부 분석을 통해 향후 학습 방향을 제시하고, 개선점을 명확히 파악할 수 있습니다.
+            </p>
+            <div class="word-count">334/400</div>
+        </section>
+
+        <!-- Analysis Summary Section -->
+        <section class="analysis-dashboard animate-on-scroll">
+            <h2 class="section-title">분석 대시보드</h2>
+            <div class="dashboard-grid">
+                <!-- Top Row -->
+                <div class="dashboard-row-top">
+                    <!-- Left: Vocabulary Score -->
+                    <div class="vocabulary-score">
+                    <h3 class="subtitle">어휘표현력 총점</h3>
+                    <div class="score-highlight">설득 장인/</div>
+                    <p class="score-description">문장을 설계하고, 단어를 조율하는 감각이 뛰어납니다!</p>
+                    
+                    <!-- Circular Gauge Chart -->
+                    <div class="gauge-container">
+                        <svg class="gauge-chart" viewBox="0 0 200 200">
+                            <circle class="gauge-background" cx="100" cy="100" r="80" fill="none" stroke="#2a2a2a" stroke-width="16"/>
+                            <circle class="gauge-progress" cx="100" cy="100" r="80" fill="none" stroke="#00ff88" stroke-width="16" 
+                                    stroke-dasharray="0 502.4" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+                        </svg>
+                        <div class="gauge-text">
+                            <span class="gauge-number">0</span>
+                            <span class="gauge-max">/100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Percentile -->
+                <div class="percentile">
+                    <h3 class="subtitle">성과 백분위</h3>
+                    
+                    <div class="percentile-details">
+                        <ul class="percentile-list">
+                            <li>대졸 이상, 혹은 독서량이 많은 성인군에서 흔히 볼 수 있는 수준</li>
+                            <li>주제에 대한 통찰과 고급 어휘 사용이 돋보임</li>
+                        </ul>
+                        <div class="percentile-info">
+                            <span class="percentile-score">상위 40%</span>
+                            <p class="percentile-description">60%의 사용자보다 높은 점수</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Bell Curve Chart -->
+                    <div class="bell-curve-container">
+                        <canvas id="percentileChart"></canvas>
+                        <!-- Animated red dot -->
+                        <div class="animated-red-dot" id="animatedRedDot"></div>
+                        
+                    </div>
+                </div>
+                </div>
+
+                <!-- Bottom Row -->
+                <div class="dashboard-row-bottom">
+                    <!-- Bottom Left: Radar Chart -->
+                <div class="radar-chart-container">
+                    <h3 class="radar-chart-title">분야별 점수</h3>
+                    <div class="radar-content">
+                        <svg class="radar-chart" viewBox="0 0 400 300">
+                            <!-- Grid.svg 이미지를 배경으로 사용 -->
+                            <image href="Grid.svg" x="0" y="0" width="400" height="300" preserveAspectRatio="xMidYMid meet"/>
+                            
+                            <!-- 데이터 막대 (라인) -->
+                            <line class="data-bar vocabulary" x1="200" y1="240" x2="200" y2="240"/>
+                            <line class="data-bar difficulty" x1="200" y1="240" x2="200" y2="240"/>
+                            <line class="data-bar structure"  x1="200" y1="240" x2="200" y2="240"/>
+                            <line class="data-bar logic"      x1="200" y1="240" x2="200" y2="240"/>
+                        </svg>
+                        
+                        <!-- Legend -->
+                        <div class="radar-legend">
+                            <div class="legend-item">
+                                <span class="legend-color vocabulary"></span>
+                                <div class="legend-content">
+                                    <span class="legend-text">어휘 다양성</span>
+                                    <span class="legend-score">86/100</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color difficulty"></span>
+                                <div class="legend-content">
+                                    <span class="legend-text">어휘 난이도</span>
+                                    <span class="legend-score">89/100</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color structure"></span>
+                                <div class="legend-content">
+                                    <span class="legend-text">문장 구성</span>
+                                    <span class="legend-score">80/100</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color logic"></span>
+                                <div class="legend-content">
+                                    <span class="legend-text">논리적 전개</span>
+                                    <span class="legend-score">90/100</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Bar Chart -->
+                <div class="bar-chart-container">
+                    <h3 class="bar-chart-title">어휘 수준 분석</h3>
+                    <div class="bar-chart">
+                        <div class="stacked-bar-container">
+                            <div class="stacked-bar">
+                                <div class="bar-segment grade-a" data-percentage="20"></div>
+                                <div class="bar-segment grade-b" data-percentage="45"></div>
+                                <div class="bar-segment grade-c" data-percentage="25"></div>
+                                <div class="bar-segment foreign" data-percentage="10"></div>
+                            </div>
+                            <div class="bar-labels">
+                                <div class="label-item">
+                                    <span class="label-color grade-a"></span>
+                                    <span class="label-text">A 등급</span>
+                                    <span class="label-percentage">20%</span>
+                                </div>
+                                <div class="label-item">
+                                    <span class="label-color grade-b"></span>
+                                    <span class="label-text">B 등급</span>
+                                    <span class="label-percentage">45%</span>
+                                </div>
+                                <div class="label-item">
+                                    <span class="label-color grade-c"></span>
+                                    <span class="label-text">C 등급</span>
+                                    <span class="label-percentage">25%</span>
+                                </div>
+                                <div class="label-item">
+                                    <span class="label-color foreign"></span>
+                                    <span class="label-text">외래어</span>
+                                    <span class="label-percentage">10%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Analysis Results Section -->
+        <section class="detailed-analysis animate-on-scroll">
+            <h2 class="section-title">상세 분석 결과</h2>
+            <div class="vocabulary-analysis">
+                <h3 class="subtitle">어휘의 난이도 및 수준 분석</h3>
+                <p class="analysis-note">아래 어휘들은 상위 15%에서 주로 쓰여요!</p>
+                
+                <!-- Vocabulary Cards -->
+                <div class="vocabulary-cards">
+                    <div class="vocab-card card-1">
+                        <div class="card-word">진정성</div>
+                        <div class="card-pos">명사</div>
+                        <div class="card-desc">추상적 개념. 철학적 및 윤리적 담론에서 자주 사용</div>
+                    </div>
+                    <div class="vocab-card card-2">
+                        <div class="card-word">익명성</div>
+                        <div class="card-pos">명사</div>
+                        <div class="card-desc">사회학적 개념. 정보통신 분야와 연계된 고급어</div>
+                    </div>
+                    <div class="vocab-card card-3">
+                        <div class="card-word">팽배하다</div>
+                        <div class="card-pos">동사</div>
+                        <div class="card-desc">산문/논설문에서 주로 사용되는 고난도 어휘</div>
+                    </div>
+                    <div class="vocab-card card-4">
+                        <div class="card-word">가짜뉴스/AI 이미지</div>
+                        <div class="card-pos">명사</div>
+                        <div class="card-desc">현대사회적 맥락 반영. 시사적, 정보미디어적 감수성 포함</div>
+                    </div>
+                    <div class="vocab-card card-5">
+                        <div class="card-word">피상적인 관계</div>
+                        <div class="card-pos">명사</div>
+                        <div class="card-desc">감정과 관계를 설명하는 고급 심리사회적 어휘</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sentence Structure Section -->
+        <section class="sentence-structure animate-on-scroll">
+            <h2 class="section-title">문장 구조 및 논리성</h2>
+            <p class="structure-note">자신의 생각을 우수하게 표현하시네요!</p>
+            <div class="structure-content">
+                <ol class="structure-list">
+                    <li>복잡한 주제를 명확하고 논리적으로 전개하는 능력이 뛰어납니다.</li>
+                    <li>고급 어휘를 적절한 맥락에 배치하여 의미를 명확하게 전달합니다.</li>
+                    <li>문장 간의 연결성이 자연스럽게 유지되어 전체적인 흐름이 매끄럽습니다.</li>
+                    <li>추상적 개념을 구체적인 예시와 함께 설명하여 이해도를 높입니다.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Rewriting Suggestion Section -->
+        <section class="rewriting-suggestion animate-on-scroll">
+            <h2 class="section-title">리라이팅 제안</h2>
+            <p class="suggestion-note">아래는 상위 3% 회원님의 글입니다!</p>
+            <div class="suggestion-content">
+                <p class="suggestion-text">
+                    디지털 시대의 익명성은 양면성을 지닌다. 한편으로는 자유로운 의견 표현을 가능하게 하여 민주주의의 발전에 기여하지만, 
+                    다른 한편으로는 책임감 없는 발언과 가짜뉴스의 확산을 조장할 수 있다. 이러한 맥락에서 우리는 익명성의 장단점을 
+                    균형 있게 바라보고, 건전한 온라인 문화 조성을 위한 노력이 필요하다.
+                </p>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons-container animate-on-scroll">
+            <button class="print-button" onclick="window.print()">
+                <svg class="print-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                </svg>
+                인쇄하기
+            </button>
+            <button class="home-button" onclick="window.location.href='index.html'">홈으로 가기</button>
+            <button class="test-button" onclick="testWithSampleText()" style="background: #FF6B6B; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem;">테스트</button>
+            <!-- GPT 분석 버튼 제거 - 디자인 확인용 -->
+        </div>
+    </main>
+
+    <script src="api-config.js"></script>
+    <script src="analysis-script.js"></script>
+    
+    <!-- Test script to check if JavaScript is working -->
+    <script>
+        console.log('HTML inline script executed!');
+        console.log('Current URL:', window.location.href);
+        console.log('Search params:', window.location.search);
+        
+        // Test URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const text = urlParams.get('text');
+        const topic = urlParams.get('topic');
+        console.log('Text param:', text);
+        console.log('Topic param:', topic);
+        
+        // Test if we can find the title description element
+        setTimeout(() => {
+            const titleDesc = document.querySelector('.title-description');
+            console.log('Title description element found:', titleDesc);
+            
+            // Try URL parameters first
+            if (text && topic && titleDesc) {
+                console.log('URL parameters found, updating title description');
+                const decodedText = decodeURIComponent(text);
+                const decodedTopic = decodeURIComponent(topic);
+                
+                titleDesc.innerHTML = `
+                    <div class="written-topic">
+                        <strong>주제:</strong> ${decodedTopic}
+                    </div>
+                    <div class="written-text">
+                        <strong>작성한 글:</strong><br>
+                        ${decodedText}
+                    </div>
+                `;
+                console.log('Title description updated successfully from URL parameters');
+            } else {
+                // Try localStorage as backup
+                console.log('URL parameters not found, trying localStorage');
+                const storedText = localStorage.getItem('analysis_text');
+                const storedTopic = localStorage.getItem('analysis_topic');
+                console.log('Stored text:', storedText);
+                console.log('Stored topic:', storedTopic);
+                
+                if (storedText && storedTopic && titleDesc) {
+                    console.log('LocalStorage data found, updating title description');
+                    titleDesc.innerHTML = `
+                        <div class="written-topic">
+                            <strong>주제:</strong> ${storedTopic}
+                        </div>
+                        <div class="written-text">
+                            <strong>작성한 글:</strong><br>
+                            ${storedText}
+                        </div>
+                    `;
+                    console.log('Title description updated successfully from localStorage');
+                    
+                    // Update word count
+                    const wordCountElement = document.querySelector('.word-count');
+                    if (wordCountElement) {
+                        wordCountElement.textContent = `${storedText.length}/300`;
+                        console.log('Word count updated from localStorage');
+                    }
+                } else {
+                    console.log('No data found in URL parameters or localStorage');
+                }
+            }
+        }, 1000);
+        
+        // Test function with sample text
+        window.testWithSampleText = function() {
+            console.log('Test button clicked!');
+            const titleDesc = document.querySelector('.title-description');
+            if (titleDesc) {
+                console.log('Updating title description with sample text');
+                titleDesc.innerHTML = `
+                    <div class="written-topic">
+                        <strong>주제:</strong> 디지털 시대의 익명성
+                    </div>
+                    <div class="written-text">
+                        <strong>작성한 글:</strong><br>
+                        디지털 시대의 익명성은 양면성을 지닌다. 한편으로는 자유로운 의견 표현을 가능하게 하여 민주주의의 발전에 기여하지만, 다른 한편으로는 책임감 없는 발언과 가짜뉴스의 확산을 조장할 수 있다. 이러한 맥락에서 우리는 익명성의 장단점을 균형 있게 바라보고, 건전한 온라인 문화 조성을 위한 노력이 필요하다.
+                    </div>
+                `;
+                console.log('Title description updated with sample text');
+                
+                // Update word count
+                const wordCountElement = document.querySelector('.word-count');
+                if (wordCountElement) {
+                    wordCountElement.textContent = '287/300';
+                    console.log('Word count updated');
+                }
+            } else {
+                console.log('Title description element not found');
+            }
+        };
+        
+        console.log('Test function available: testWithSampleText()');
+        
+        // GPT 분석 함수
+        window.analyzeWithGPT = async function() {
+            console.log('GPT 분석 시작...');
+            
+            // API 설정 확인
+            console.log('API_CONFIG:', window.API_CONFIG);
+            console.log('analyzeText 함수:', typeof window.analyzeText);
+            
+            // 로딩 표시 (버튼이 없으므로 콘솔 로그로 대체)
+            console.log('🤖 GPT 분석 시작...');
+            
+            try {
+                // URL 파라미터에서 텍스트와 주제 가져오기
+                const urlParams = new URLSearchParams(window.location.search);
+                let text = urlParams.get('text');
+                let topic = urlParams.get('topic');
+                
+                // URL 파라미터가 없으면 localStorage에서 가져오기
+                if (!text || !topic) {
+                    text = localStorage.getItem('analysis_text');
+                    topic = localStorage.getItem('analysis_topic');
+                }
+                
+                if (!text || !topic) {
+                    alert('분석할 글이 없습니다. 글쓰기 페이지에서 글을 작성한 후 다시 시도해주세요.');
+                    return;
+                }
+                
+                // 디코딩
+                if (text.includes('%')) {
+                    text = decodeURIComponent(text);
+                }
+                if (topic.includes('%')) {
+                    topic = decodeURIComponent(topic);
+                }
+                
+                console.log('분석할 텍스트:', text);
+                console.log('분석할 주제:', topic);
+                
+                // analyzeText 함수 존재 확인
+                if (typeof analyzeText !== 'function') {
+                    console.error('analyzeText 함수가 정의되지 않음');
+                    alert('GPT 분석 함수를 찾을 수 없습니다. API 설정을 확인해주세요.');
+                    return;
+                }
+                
+                console.log('GPT API 호출 시작...');
+                // GPT API 호출
+                const result = await analyzeText(text, topic);
+                
+                if (result.error) {
+                    console.error('GPT 분석 오류:', result.error);
+                    alert('분석 중 오류가 발생했습니다: ' + result.error);
+                    return;
+                }
+                
+                console.log('GPT 분석 결과:', result);
+                
+                // 결과를 페이지에 표시
+                updateAnalysisWithGPTResult(result);
+                
+            } catch (error) {
+                console.error('GPT 분석 중 오류:', error);
+                alert('분석 중 오류가 발생했습니다: ' + error.message);
+            } finally {
+                // 분석 완료
+                console.log('GPT 분석 완료');
+            }
+        };
+        
+        // GPT 분석 결과를 페이지에 업데이트하는 함수
+        function updateAnalysisWithGPTResult(result) {
+            console.log('Updating charts with GPT result:', result);
+            
+            // 1. 원형 게이지 차트 업데이트
+            updateGaugeChart(result.overall_score || result.vocabulary_score || 0);
+            
+            // 2. 백분위 차트 업데이트
+            updatePercentileChart(result.percentile || 0);
+            
+            // 3. 레이더 차트 업데이트
+            updateRadarChart(result);
+            
+            // 4. 막대 차트 업데이트
+            updateBarChart(result);
+            
+            // 5. 텍스트 업데이트
+            updateTextElements(result);
+            
+            // 6. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
+            
+            alert('GPT 분석이 완료되었습니다!');
+        }
+        
+        // 원형 게이지 차트 업데이트
+        function updateGaugeChart(score) {
+            const gaugeProgress = document.querySelector('.gauge-progress');
+            const gaugeNumber = document.querySelector('.gauge-number');
+            
+            if (gaugeProgress && gaugeNumber) {
+                // 점수에 따른 원주 계산 (0-100을 0-502.4로 변환)
+                const circumference = 502.4;
+                const progress = (score / 100) * circumference;
+                
+                gaugeProgress.style.strokeDasharray = `${progress} ${circumference}`;
+                gaugeNumber.textContent = score;
+                
+                console.log('Gauge chart updated:', score);
+            }
+        }
+        
+        // 백분위 차트 업데이트
+        function updatePercentileChart(percentile) {
+            const percentileScore = document.querySelector('.percentile-score');
+            const animatedRedDot = document.getElementById('animatedRedDot');
+            const percentileList = document.querySelector('.percentile-list');
+            
+            if (percentileScore) {
+                percentileScore.textContent = `상위 ${100 - percentile}%`;
+            }
+            
+            // 빨간 점 위치 업데이트 (percentile에 따라)
+            if (animatedRedDot) {
+                const position = (percentile / 100) * 100; // 0-100% 위치
+                animatedRedDot.style.left = `${position}%`;
+            }
+            
+            // percentile-list 문장들 업데이트
+            if (percentileList) {
+                let percentileDescription = '';
+                let percentileDetails = '';
+                
+                if (percentile >= 90) {
+                    percentileDescription = '상위 10%';
+                    percentileDetails = '전문가 수준의 글쓰기 실력을 보여줍니다. 문학적 표현과 깊이 있는 사고가 돋보입니다.';
+                } else if (percentile >= 80) {
+                    percentileDescription = '상위 20%';
+                    percentileDetails = '대졸 이상, 혹은 독서량이 많은 성인군에서 흔히 볼 수 있는 수준입니다. 주제에 대한 통찰과 고급 어휘 사용이 돋보입니다.';
+                } else if (percentile >= 70) {
+                    percentileDescription = '상위 30%';
+                    percentileDetails = '일반적인 대학생 수준의 글쓰기 실력입니다. 논리적 구성과 적절한 어휘 사용이 잘 드러납니다.';
+                } else if (percentile >= 60) {
+                    percentileDescription = '상위 40%';
+                    percentileDetails = '고등학생 상위권 수준의 글쓰기 실력입니다. 기본적인 문장 구성과 표현력이 양호합니다.';
+                } else if (percentile >= 50) {
+                    percentileDescription = '상위 50%';
+                    percentileDetails = '평균적인 글쓰기 실력입니다. 더 많은 연습과 독서를 통해 실력을 향상시킬 수 있습니다.';
+                } else if (percentile >= 40) {
+                    percentileDescription = '상위 60%';
+                    percentileDetails = '기본적인 글쓰기 능력을 갖추고 있습니다. 문장 구조와 어휘 사용에 더 신경 쓸 필요가 있습니다.';
+                } else if (percentile >= 30) {
+                    percentileDescription = '상위 70%';
+                    percentileDetails = '글쓰기 기초를 다지는 단계입니다. 꾸준한 연습을 통해 실력을 향상시킬 수 있습니다.';
+                } else if (percentile >= 20) {
+                    percentileDescription = '상위 80%';
+                    percentileDetails = '글쓰기 학습이 필요한 단계입니다. 기본 문법과 어휘 학습에 집중하세요.';
+                } else {
+                    percentileDescription = '상위 90%';
+                    percentileDetails = '글쓰기 기초부터 차근차근 학습이 필요한 단계입니다. 기초 문법과 어휘력 향상에 집중하세요.';
+                }
+                
+                percentileList.innerHTML = `
+                    <li>${percentileDetails}</li>
+                    <li>${percentileDescription} 수준의 글쓰기 실력을 보여줍니다.</li>
+                `;
+            }
+            
+            console.log('Percentile chart updated:', percentile);
+        }
+        
+        // 레이더 차트 업데이트
+        function updateRadarChart(result) {
+            const dataBars = document.querySelectorAll('.data-bar');
+            const legendScores = document.querySelectorAll('.legend-score');
+            
+            const scores = [
+                result.vocabulary_score || 0,
+                result.structure_score || 0,
+                result.logic_score || 0,
+                result.creativity_score || 0
+            ];
+            
+            dataBars.forEach((bar, index) => {
+                if (scores[index] !== undefined) {
+                    // 점수를 높이로 변환 (0-100을 0-60px로 변환)
+                    const height = (scores[index] / 100) * 60;
+                    bar.style.height = `${height}px`;
+                    // 색상은 변경하지 않음 (기존 CSS 색상 유지)
+                }
+            });
+            
+            legendScores.forEach((score, index) => {
+                if (scores[index] !== undefined) {
+                    score.textContent = `${scores[index]}/100`;
+                }
+            });
+            
+            console.log('Radar chart updated:', scores);
+        }
+        
+        // 막대 차트 업데이트 (점수에 따른 어휘 수준 분포)
+        function updateBarChart(result) {
+            const barSegments = document.querySelectorAll('.bar-segment');
+            const labelPercentages = document.querySelectorAll('.label-percentage');
+            
+            // 점수에 따른 어휘 수준 분포 계산
+            const overallScore = result.overall_score || 0;
+            let distribution;
+            
+            if (overallScore >= 90) {
+                distribution = [40, 35, 20, 5]; // A등급, B등급, C등급, 외래어
+            } else if (overallScore >= 80) {
+                distribution = [30, 40, 25, 5];
+            } else if (overallScore >= 70) {
+                distribution = [20, 45, 30, 5];
+            } else if (overallScore >= 60) {
+                distribution = [10, 35, 45, 10];
+            } else {
+                distribution = [5, 25, 50, 20];
+            }
+            
+            barSegments.forEach((segment, index) => {
+                if (distribution[index] !== undefined) {
+                    segment.style.width = `${distribution[index]}%`;
+                }
+            });
+            
+            labelPercentages.forEach((percentage, index) => {
+                if (distribution[index] !== undefined) {
+                    percentage.textContent = `${distribution[index]}%`;
+                }
+            });
+            
+            console.log('Bar chart updated:', distribution);
+        }
+        
+        // 텍스트 요소들 업데이트
+        function updateTextElements(result) {
+            const scoreHighlight = document.querySelector('.score-highlight');
+            const scoreDescription = document.querySelector('.score-description');
+            
+            if (scoreHighlight) {
+                const overallScore = result.overall_score || 0;
+                let level = '';
+                
+                if (overallScore >= 90) level = '글쓰기 마스터';
+                else if (overallScore >= 80) level = '설득 장인';
+                else if (overallScore >= 70) level = '표현의 달인';
+                else if (overallScore >= 60) level = '성장하는 작가';
+                else level = '열정적인 초보';
+                
+                scoreHighlight.textContent = level + '/';
+            }
+            
+            if (scoreDescription) {
+                scoreDescription.textContent = result.detailed_analysis ? 
+                    result.detailed_analysis.substring(0, 100) + '...' : 
+                    'GPT가 분석한 결과입니다.';
+            }
+            
+            // 문장 구조 및 논리성 섹션 업데이트
+            updateStructureAndLogicSection(result);
+        }
+        
+        // 문장 구조 및 논리성 섹션 업데이트
+        function updateStructureAndLogicSection(result) {
+            const structureList = document.querySelector('.structure-list');
+            const structureNote = document.querySelector('.structure-note');
+            
+            if (structureList) {
+                // GPT 분석 결과를 바탕으로 구조적 피드백 생성
+                const structureScore = result.structure_score || 0;
+                const logicScore = result.logic_score || 0;
+                const vocabularyScore = result.vocabulary_score || 0;
+                const creativityScore = result.creativity_score || 0;
+                
+                let structureItems = [];
+                
+                // 구조 점수에 따른 피드백
+                if (structureScore >= 80) {
+                    structureItems.push('복잡한 주제를 명확하고 논리적으로 전개하는 능력이 뛰어납니다.');
+                } else if (structureScore >= 60) {
+                    structureItems.push('주제를 체계적으로 구성하고 전개하는 능력이 양호합니다.');
+                } else {
+                    structureItems.push('문장 구조를 더욱 체계적으로 개선할 여지가 있습니다.');
+                }
+                
+                // 어휘 점수에 따른 피드백
+                if (vocabularyScore >= 80) {
+                    structureItems.push('고급 어휘를 적절한 맥락에 배치하여 의미를 명확하게 전달합니다.');
+                } else if (vocabularyScore >= 60) {
+                    structureItems.push('적절한 어휘 선택으로 의미 전달이 명확합니다.');
+                } else {
+                    structureItems.push('어휘 선택의 다양성과 정확성을 높일 필요가 있습니다.');
+                }
+                
+                // 논리 점수에 따른 피드백
+                if (logicScore >= 80) {
+                    structureItems.push('문장 간의 연결성이 자연스럽게 유지되어 전체적인 흐름이 매끄럽습니다.');
+                } else if (logicScore >= 60) {
+                    structureItems.push('논리적 전개가 대체로 잘 이루어지고 있습니다.');
+                } else {
+                    structureItems.push('논리적 연결성을 강화하여 글의 흐름을 개선할 수 있습니다.');
+                }
+                
+                // 창의성 점수에 따른 피드백
+                if (creativityScore >= 80) {
+                    structureItems.push('추상적 개념을 구체적인 예시와 함께 설명하여 이해도를 높입니다.');
+                } else if (creativityScore >= 60) {
+                    structureItems.push('적절한 예시와 설명으로 내용을 효과적으로 전달합니다.');
+                } else {
+                    structureItems.push('구체적인 예시와 설명을 추가하여 내용을 더욱 풍부하게 만들 수 있습니다.');
+                }
+                
+                // GPT의 강점과 개선점을 활용한 추가 피드백
+                if (result.strengths && result.strengths.length > 0) {
+                    const strength = result.strengths[0]; // 첫 번째 강점 사용
+                    structureItems.push(`특히 "${strength}" 부분에서 뛰어난 능력을 보여줍니다.`);
+                }
+                
+                if (result.improvements && result.improvements.length > 0) {
+                    const improvement = result.improvements[0]; // 첫 번째 개선점 사용
+                    structureItems.push(`"${improvement}" 영역에서 더욱 발전할 수 있습니다.`);
+                }
+                
+                // HTML 생성
+                structureList.innerHTML = structureItems.map(item => `<li>${item}</li>`).join('');
+            }
+            
+            // 구조 노트 업데이트
+            if (structureNote) {
+                const overallScore = result.overall_score || 0;
+                let note = '';
+                
+                if (overallScore >= 90) {
+                    note = '전문가 수준의 글쓰기 실력을 보여주시네요!';
+                } else if (overallScore >= 80) {
+                    note = '자신의 생각을 우수하게 표현하시네요!';
+                } else if (overallScore >= 70) {
+                    note = '잘 구성된 글을 작성하셨습니다!';
+                } else if (overallScore >= 60) {
+                    note = '기본적인 글쓰기 능력을 잘 보여주셨습니다!';
+                } else {
+                    note = '꾸준한 연습을 통해 더욱 발전할 수 있습니다!';
+                }
+                
+                structureNote.textContent = note;
+            }
+        }
+        
+        // 상세 분석 결과 추가
+        function addDetailedAnalysis(result) {
+            const titleDesc = document.querySelector('.title-description');
+            if (titleDesc) {
+                const existingContent = titleDesc.innerHTML;
+                titleDesc.innerHTML = existingContent + `
+                    <div class="gpt-analysis" style="margin-top: 2rem; padding: 1.5rem; background: #1a1a1a; border: 1px solid #10A37F; border-radius: 12px;">
+                        <h3 style="color: #10A37F; margin-bottom: 1rem;">🤖 GPT 분석 결과</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="score-item">
+                                <strong>어휘 표현력:</strong> ${result.vocabulary_score || 0}/100
+                            </div>
+                            <div class="score-item">
+                                <strong>문장 구성:</strong> ${result.structure_score || 0}/100
+                            </div>
+                            <div class="score-item">
+                                <strong>논리적 전개:</strong> ${result.logic_score || 0}/100
+                            </div>
+                            <div class="score-item">
+                                <strong>창의성:</strong> ${result.creativity_score || 0}/100
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <strong>강점:</strong><br>
+                            ${(result.strengths || []).map(strength => `• ${strength}`).join('<br>')}
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <strong>개선점:</strong><br>
+                            ${(result.improvements || []).map(improvement => `• ${improvement}`).join('<br>')}
+                        </div>
+                        <div>
+                            <strong>상세 분석:</strong><br>
+                            ${result.detailed_analysis || '상세 분석을 제공할 수 없습니다.'}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 리라이팅 제안 섹션 업데이트
+            updateRewritingSuggestion(result);
+        }
+        
+        // 리라이팅 제안 섹션 업데이트
+        function updateRewritingSuggestion(result) {
+            const suggestionText = document.querySelector('.suggestion-text');
+            const suggestionNote = document.querySelector('.suggestion-note');
+            
+            if (suggestionText && result.rewritten_text) {
+                suggestionText.textContent = result.rewritten_text;
+            }
+            
+            // 제안 노트는 항상 고정 (잘 쓴 글만 보여주기)
+            if (suggestionNote) {
+                suggestionNote.textContent = '아래는 상위 3% 회원님의 글입니다!';
+            }
+        }
+        
+    </script>
+</body>
+</html>

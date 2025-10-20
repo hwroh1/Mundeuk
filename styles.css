@@ -1,0 +1,598 @@
+/* Font Import */
+@font-face {
+    font-family: 'SchoolSafeUniverse';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #1a1a1a;
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Hide scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+    scrollbar-width: none;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #7b7b7b;
+    position: relative;
+}
+
+.nav-items-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: absolute;
+    right: 1%;
+}
+
+.nav-item {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: #32FF8A;
+}
+
+/* Main Container */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    min-height: calc(100vh - 80px);
+    position: relative;
+}
+
+/* Left Information Box */
+.info-box {
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    background: transparent;
+    color: #333;
+    padding: 1.5rem;
+    border-radius: 0px;
+    border: none;
+    max-width: 250px;
+    box-shadow: none;
+    z-index: 1000;
+    font-family: 'SchoolSafeUniverse', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.info-shapes {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1001;
+}
+
+.memo {
+    position: absolute;
+    padding: 1.2rem;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.memo-1 {
+    background: #FFF9F5;
+    color: #333;
+    top: -25px;
+    left: 2rem;
+    transform: rotate(2deg);
+    z-index: 1;
+}
+
+.memo-2 {
+    background: #32FF8A;
+    color: #333;
+    top: 70px;
+    left: 4rem;
+    transform: rotate(-1deg);
+    z-index: 2;
+}
+
+.memo-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.memo-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.0;
+}
+
+/* 특정 텍스트에 더 두꺼운 폰트 적용 - 테두리로 강조 */
+.memo-1 .memo-text:nth-child(2) {
+    font-weight: 800;
+    font-size: 1.7rem;
+    -webkit-text-stroke: 0.5px #000;
+}
+
+.memo-2 .memo-text:nth-child(3) {
+    font-weight: 800;
+    font-size: 1.7rem;
+    -webkit-text-stroke: 0.5px #000;
+}
+
+.streak {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #e74c3c;
+}
+
+.stats div {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+/* Book Stack Container */
+.book-stack-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Floating Book */
+.floating-book {
+    position: relative;
+    margin-right: 60px;
+    width: 200px;
+    height: 120px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 10;
+    transform: rotate(10deg); /* Ensure transform property is set */
+}
+
+.floating-book:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+}
+
+/* Bookmarks */
+.bookmark {
+    position: absolute;
+    width: 10px;
+    height: 35px;
+    z-index: 0;
+    transition: transform 0.3s ease;
+}
+
+.bookmark-1 {
+    top: -30px;
+    right: -35px;
+}
+
+.bookmark-2 {
+    top: -20px;
+    right: -18px;
+}
+
+.bookmark-3 {
+    top: -30px;
+    right: 0px;
+}
+
+.bookmark-4 {
+    top: -25px;
+    right: -60px;
+}
+
+.book-spine {
+    position: absolute;
+    left: -10;
+    top: 0;
+    width: 45px;
+    height: 300%;
+}
+
+.book-cover {
+    position: absolute;
+    left: 40px;
+    top: 0;
+    width: 230px;
+    height: 300%;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.book-pattern {
+    width: 90px;
+    height: 35px;
+}
+
+.book-pattern.yellow {
+    position: absolute;
+    left: 30%;
+    top: 30px;
+    background: #FFEA00;
+}
+
+/* Stacked Books */
+.stacked-books {
+    margin-top: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    min-height: 250px;
+    transition: transform 0.5s ease-out;
+}
+
+.stacked-book {
+    width: 300px;
+    height: 40px;
+    position: relative;
+    animation: stackBook 0.5s ease-out;
+    margin-bottom: 5px;
+}
+
+/* Book Shapes */
+.book-rectangle {
+    border-radius: 0;
+}
+
+.book-trapezoid {
+    clip-path: polygon(8% 0%, 92% 0%, 95% 100%, 5% 100%);
+}
+
+.book-parallelogram {
+    clip-path: polygon(12% 0%, 98% 0%, 88% 100%, 2% 100%);
+}
+
+.book-irregular-trapezoid {
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+}
+
+.book-irregular-quadrilateral {
+    clip-path: polygon(20% 0%, 90% 0%, 95% 100%, 10% 100%);
+}
+
+
+
+@keyframes stackBook {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(10%);
+    }
+}
+
+/* Book Patterns */
+.book-pattern-checkered {
+    background-image: 
+        linear-gradient(45deg, #000 25%, transparent 25%),
+        linear-gradient(-45deg, #000 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #000 75%),
+        linear-gradient(-45deg, transparent 75%, #000 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.book-pattern-houndstooth {
+    background-image: 
+        linear-gradient(45deg, #000 25%, transparent 25%),
+        linear-gradient(-45deg, #000 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #000 75%),
+        linear-gradient(-45deg, transparent 75%, #000 75%);
+    background-size: 12px 12px;
+    background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.book-pattern-line {
+    background: linear-gradient(to right, transparent 30%, #000 30%, #000 32%, transparent 32%);
+}
+
+.book-pattern-wavy {
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            #000 2px,
+            #000 4px
+        );
+}
+
+.book-pattern-dots {
+    background-image: radial-gradient(circle, #000 1px, transparent 1px);
+    background-size: 8px 8px;
+}
+
+.book-pattern-lines {
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 15px,
+            #000 15px,
+            #000 17px
+        );
+}
+
+/* Right Floating Circle */
+.floating-circle {
+    position: absolute;
+    top: 520px;
+    right: -500px;
+    width: 80px;
+    height: 80px;
+    z-index: 1000;
+    transition: transform 0.1s ease-out;
+}
+
+.circle-image {
+    width: 200%;
+    height: 200%;
+    object-fit: contain;
+    position: relative;
+    left: -50%;
+    top: -50%;
+}
+
+/* Speech Bubble Styles */
+.speech-bubble {
+    position: fixed;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
+    border: 2px solid #32FF8A;
+    border-radius: 16px;
+    padding: 0;
+    z-index: 1000;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: speechBubbleAppear 0.3s ease-out;
+    max-width: 300px;
+    min-width: 250px;
+}
+
+@keyframes speechBubbleAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.speech-content {
+    position: relative;
+    padding: 1.5rem;
+}
+
+.speech-message {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.speech-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.speech-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    background: #404040;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.speech-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.writing-btn:hover {
+    background: linear-gradient(135deg, #32FF8A 0%, #00D4AA 100%);
+    color: #1a1a1a;
+}
+
+.reading-btn:hover {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+}
+
+.vocabulary-btn:hover {
+    background: linear-gradient(135deg, #F5A623 0%, #E89611 100%);
+}
+
+.grammar-btn:hover {
+    background: linear-gradient(135deg, #D0021B 0%, #B71C1C 100%);
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+}
+
+.btn-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.close-bubble {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-bubble:hover {
+    background: #404040;
+    color: white;
+}
+
+/* Speech bubble arrow */
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 30px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #32FF8A;
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 31px;
+    width: 0;
+    height: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 9px solid #2a2a2a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    
+    .info-box {
+        max-width: 100%;
+        width: 300px;
+    }
+    
+    .floating-circle {
+        position: absolute;
+        top: 150px;
+        right: -30px;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .navbar {
+        padding: 1rem;
+    }
+    
+    .nav-item {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.5rem;
+    }
+    
+    /* Speech bubble responsive */
+    .speech-bubble {
+        max-width: 280px;
+        min-width: 220px;
+        left: 50% !important;
+        transform: translateX(-50%);
+        top: 20% !important;
+    }
+    
+    .speech-buttons {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
+    }
+    
+    .speech-btn {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn-icon {
+        font-size: 1rem;
+    }
+    
+    .btn-text {
+        font-size: 0.7rem;
+    }
+    
+    /* Hide arrow on mobile */
+    .speech-bubble::before,
+    .speech-bubble::after {
+        display: none;
+    }
+}

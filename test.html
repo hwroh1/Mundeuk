@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Writing Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .score-circle {
+            background: conic-gradient(from 0deg, #10b981 0deg, #10b981 312deg, #e5e7eb 312deg, #e5e7eb 360deg);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 200px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="navbar" style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid #7b7b7b; position: relative; background: #1a1a1a;">
+        <div class="nav-items-container" style="position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 2rem;">
+            <div class="nav-item" onclick="window.location.href='index.html'" style="cursor: pointer; padding: 0.5rem 1rem; transition: color 0.3s ease; color: white;">오늘의 학습</div>
+            <div class="nav-item" onclick="window.location.href='analysis.html'" style="cursor: pointer; padding: 0.5rem 1rem; transition: color 0.3s ease; color: white;">분석리포트</div>
+            <div class="nav-item" style="cursor: pointer; padding: 0.5rem 1rem; transition: color 0.3s ease; color: white;">베스트 리라이팅</div>
+            <div class="nav-item" onclick="window.location.href='mypage.html'" style="cursor: pointer; padding: 0.5rem 1rem; transition: color 0.3s ease; color: white;">마이페이지</div>
+        </div>
+        <div class="nav-icon" style="font-size: 1.2rem; cursor: pointer; position: absolute; right: 1%; color: white;">[→</div>
+    </nav>
+    
+    <!-- Header -->
+    <div class="gradient-bg text-white py-6">
+        <div class="max-w-6xl mx-auto px-6">
+            <h1 class="text-2xl font-bold">AI Writing Analysis Report</h1>
+            <p class="text-blue-100 mt-1">Comprehensive analysis of your writing quality and style</p>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 py-8 space-y-8">
+        <!-- Original Text Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 001 1h6a1 1 0 001-1V3a2 2 0 012 2v6.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L16 11.586V5a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2h2.586l-1.293-1.293a1 1 0 111.414-1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L13 16.586H6a2 2 0 01-2-2V5z" clip-rule="evenodd"></path>
+                </svg>
+                Your Original Text
+            </h2>
+            <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-blue-400">
+                <p class="text-gray-700 leading-relaxed">
+                    The rapid advancement of artificial intelligence has fundamentally transformed how we approach problem-solving in various industries. Machine learning algorithms now enable computers to process vast amounts of data with unprecedented accuracy, leading to breakthrough innovations in healthcare, finance, and transportation. However, this technological revolution also raises important questions about employment, privacy, and the ethical implications of automated decision-making systems.
+                </p>
+            </div>
+        </div>
+
+        <!-- Main Score and Percentile Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Main Score Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-6">Overall Expression Score</h2>
+                <div class="flex items-center justify-center">
+                    <div class="relative w-32 h-32">
+                        <div class="score-circle w-32 h-32 rounded-full flex items-center justify-center">
+                            <div class="bg-white w-24 h-24 rounded-full flex flex-col items-center justify-center">
+                                <span class="text-3xl font-bold text-gray-800">86.75</span>
+                                <span class="text-sm text-gray-500">/ 100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                        Excellent Performance
+                    </span>
+                </div>
+            </div>
+
+            <!-- Percentile Chart -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Performance Percentile</h2>
+                <div class="chart-container">
+                    <canvas id="percentileChart"></canvas>
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="text-2xl font-bold text-purple-600">Top 7%</span>
+                    <p class="text-sm text-gray-600 mt-1">You scored better than 93% of writers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-Score Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800">Vocabulary Diversity</h3>
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-800 mb-2">92</div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-500 h-2 rounded-full" style="width: 92%"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800">Difficulty Level</h3>
+                    <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-800 mb-2">78</div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-orange-500 h-2 rounded-full" style="width: 78%"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800">Structure</h3>
+                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-800 mb-2">89</div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-green-500 h-2 rounded-full" style="width: 89%"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800">Logic Flow</h3>
+                    <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-800 mb-2">85</div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-purple-500 h-2 rounded-full" style="width: 85%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Word Usage Analysis -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-6">Word Usage Analysis</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <h3 class="font-medium text-gray-700 mb-3">Strong Terms</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">fundamental</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">unprecedented</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">breakthrough</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">innovation</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-700 mb-3">Technical Terms</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">artificial intelligence</span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">machine learning</span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">algorithms</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-700 mb-3">Transition Words</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">however</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">leading to</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">also</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sentence Structure and Logic Feedback -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Sentence Structure Feedback</h2>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Excellent sentence variety</p>
+                            <p class="text-sm text-gray-600">Good mix of simple and complex sentences</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg class="w-3 h-3 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Consider shorter sentences</p>
+                            <p class="text-sm text-gray-600">Some sentences could be split for clarity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Logic Flow Analysis</h2>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Strong logical progression</p>
+                            <p class="text-sm text-gray-600">Ideas flow naturally from one to the next</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg class="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Good use of transitions</p>
+                            <p class="text-sm text-gray-600">Effective connecting words between ideas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rewriting Suggestions -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-indigo-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                </svg>
+                Rewriting Suggestions
+            </h2>
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 border border-indigo-200">
+                <h3 class="font-medium text-gray-800 mb-3">Enhanced Version</h3>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Artificial intelligence has fundamentally transformed problem-solving across industries. <span class="bg-yellow-200 px-1 rounded">Machine learning algorithms now process vast data with unprecedented accuracy.</span> This leads to breakthrough innovations in healthcare, finance, and transportation.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    <span class="bg-yellow-200 px-1 rounded">Yet this revolution raises critical questions.</span> We must consider the impact on employment, privacy, and the ethics of automated decisions.
+                </p>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-sm text-gray-600">Improved readability and flow</span>
+                    <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium">
+                        Apply Suggestions
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Percentile Chart
+        const ctx = document.getElementById('percentileChart').getContext('2d');
+        
+        // Generate normal distribution data
+        const generateNormalDistribution = (mean, stdDev, points) => {
+            const data = [];
+            const labels = [];
+            for (let i = 0; i <= points; i++) {
+                const x = (i / points) * 100;
+                const y = Math.exp(-0.5 * Math.pow((x - mean) / stdDev, 2));
+                data.push(y);
+                labels.push(x);
+            }
+            return { data, labels };
+        };
+
+        const distribution = generateNormalDistribution(50, 15, 100);
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: distribution.labels,
+                datasets: [{
+                    label: 'Distribution',
+                    data: distribution.data,
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    borderWidth: 2
+                }, {
+                    label: 'Your Score',
+                    data: Array(87).fill(null).concat([0.8], Array(13).fill(null)),
+                    borderColor: '#ef4444',
+                    backgroundColor: '#ef4444',
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    showLine: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        display: false
+                    },
+                    y: {
+                        display: false
+                    }
+                },
+                elements: {
+                    point: {
+                        hoverBackgroundColor: '#ef4444'
+                    }
+                }
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9629990b4102ea07',t:'MTc1MzA4OTM2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

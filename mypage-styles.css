@@ -1,0 +1,773 @@
+/* Font Import */
+@font-face {
+    font-family: 'SchoolSafeUniverse';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'OngleipParkDahyeon';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BookkMyungjo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Lt.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+/* 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: auto;
+    overflow-y: auto; /* 세로 스크롤 허용 */
+}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #7b7b7b;
+    position: relative;
+}
+
+.nav-items-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: absolute;
+    right: 1%;
+}
+
+.nav-item {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: #32FF8A;
+}
+
+/* 메인 컨텐츠 */
+.main-content {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 프로필 섹션 */
+.profile-section {
+    margin-bottom: 3rem;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.avatar-line {
+    position: absolute;
+    width: 30px;
+    height: 4px;
+    background: #ffffff;
+    border-radius: 2px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.avatar-line:nth-child(2) {
+    transform: translate(-50%, -50%) translateY(8px);
+}
+
+.avatar-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(-12px);
+}
+
+.avatar-dot:nth-child(4) {
+    transform: translate(-50%, -50%) translateY(12px);
+}
+
+.user-info h2 {
+    color: #FFC107;
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.user-level {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+/* 설정 메뉴 */
+.settings-menu {
+    display: flex;
+    gap: 3rem;
+    margin-left: 95px;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.setting-item:hover {
+    transform: translateY(-2px);
+}
+
+.setting-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    border-radius: 8px;
+}
+
+.setting-label {
+    font-size: 0.9rem;
+    color: #ffffff;
+}
+
+/* 기존 업적 섹션 스타일 제거됨 - 북엔드로 이동 */
+
+/* 책장 섹션 */
+.bookshelf-section {
+    margin-top: 1rem;
+    width: max-content; /* 내용에 맞게 너비 조정 */
+    min-width: 100vw; /* 최소 너비는 화면 너비 */
+    margin-left: calc(-50vw + 50%);
+    padding: 0 2rem;
+    position: relative;
+    overflow-x: auto; /* 가로 스크롤 허용 */
+    overflow-y: hidden;
+    /* 스크롤바 숨기기 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    display: flex;
+    flex-direction: column;
+}
+
+.bookshelf-section::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.bookshelf {
+    margin-bottom: 0.5rem;
+    position: relative;
+    width: 100%; /* 고정 너비로 변경 */
+    overflow: visible; /* 개별 스크롤 제거 */
+    flex-shrink: 0; /* 줄어들지 않도록 */
+}
+
+.shelf-line {
+    width: 100%;
+    min-width: 100%; /* 최소 너비 보장 */
+    height: 4px; /* 2px에서 4px로 두께 증가 */
+    background-color: #ffffff;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0; /* 줄어들지 않도록 */
+}
+
+.books-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    min-height: 280px;
+    padding: 1rem 0;
+    width: max-content; /* 내용에 맞게 너비 조정 */
+    min-width: 100%; /* 최소 너비는 100% */
+    justify-content: flex-start;
+    flex-wrap: nowrap; /* 책들이 아래로 내려가지 않고 옆으로 늘어나도록 */
+    padding-bottom: 0.5rem;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+/* 드롭 존 활성화 스타일 - 시각적 피드백 제거 */
+.books-container.drop-zone-active {
+    /* 시각적 피드백 없음 */
+}
+
+/* book-group 스타일 제거 - 더 이상 사용하지 않음 */
+
+/* 기존 영역 분산 스타일 제거 - 자유로운 배치로 변경 */
+
+/* 책 스타일 */
+.book {
+    position: relative;
+    cursor: grab;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    background: var(--book-color, #4CAF50);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    transform: 
+        translate(var(--book-offset-x, 0px), var(--book-offset-y, 0px))
+        rotate(var(--book-rotation, 0deg));
+    flex-shrink: 0;
+    max-width: 100%;
+    position: relative;
+    z-index: 2;
+    display: block;
+    min-width: 40px;
+    min-height: 120px !important;
+    max-width: 200px;
+    width: auto;
+    height: auto;
+    padding: 20px 8px 10px 8px;
+}
+
+
+.book::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(90deg, 
+        transparent 0px, 
+        transparent 1px, 
+        rgba(255, 255, 255, 0.1) 1px, 
+        rgba(255, 255, 255, 0.1) 2px, 
+        transparent 2px, 
+        transparent 4px);
+    pointer-events: none;
+}
+
+.book::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.4) 0%, 
+        rgba(0, 0, 0, 0.1) 50%, 
+        rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+}
+
+.book:hover {
+    transform: 
+        translate(var(--book-offset-x, 0px), calc(var(--book-offset-y, 0px) - 5px))
+        rotateX(3deg)
+        rotate(var(--book-rotation, 0deg));
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.book:active {
+    cursor: grabbing;
+    transform: 
+        translate(var(--book-offset-x, 0px), calc(var(--book-offset-y, 0px) - 2px))
+        rotateX(1deg) 
+        scale(1.01) 
+        rotate(var(--book-rotation, 0deg));
+}
+
+.book.vertical {
+    width: 50px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    --book-color: #4CAF50;
+    --book-rotation: 0deg;
+}
+
+.book.horizontal {
+    width: 150px;
+    --book-color: #4CAF50;
+    --book-rotation: 0deg;
+}
+
+/* 다양한 책 크기와 두께 */
+.book.thin {
+    width: 35px;
+}
+
+.book.thick {
+    width: 65px;
+}
+
+.book.short {
+    width: 50px;
+}
+
+.book.tall {
+    width: 50px;
+}
+
+.book.wide-horizontal {
+    width: 180px;
+}
+
+.book.narrow-horizontal {
+    width: 110px;
+}
+
+/* 다양한 기울기 */
+.book.tilt-left {
+    --book-rotation: -4deg;
+}
+
+.book.tilt-right {
+    --book-rotation: 4deg;
+}
+
+.book.tilt-more-left {
+    --book-rotation: -12deg;
+}
+
+.book.tilt-more-right {
+    --book-rotation: 12deg;
+}
+
+.book-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #000;
+    white-space: nowrap;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* 책 제목 폰트 클래스들 */
+.book-title.font-school {
+    font-family: 'SchoolSafeUniverse', 'Arial', sans-serif;
+}
+
+.book-title.font-ongleip {
+    font-family: 'OngleipParkDahyeon', 'Arial', sans-serif;
+    font-size: 1.4rem;
+}
+
+.book-title.font-bookk {
+    font-family: 'BookkMyungjo', 'Arial', sans-serif;
+    transform: rotate(0deg);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+    line-height: 1.1;
+}
+
+/* 제목이 없는 책들의 패턴 스타일 - 기존 패턴 제거됨 */
+
+/* 기존 패턴 스타일들 제거됨 */
+
+/* pattern-lines도 제거됨 */
+
+/* 책 색상은 JavaScript에서 랜덤으로 설정됩니다 */
+
+/* 패턴이 있는 책들 */
+.book[data-book="pattern1"],
+.book[data-book="pattern2"],
+.book[data-book="pattern3"],
+.book[data-book="pattern4"],
+.book[data-book="pattern5"] {
+    --book-color: #4CAF50;
+}
+
+/* 체크무늬 패턴 */
+.pattern-checkered {
+    position: relative !important;
+}
+
+.pattern-checkered::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    background-image: 
+        linear-gradient(45deg, rgba(0,0,0,0.4) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0,0,0,0.4) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.4) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.4) 75%) !important;
+    background-size: 12px 12px !important;
+    background-position: 0 0, 0 6px, 6px -6px, -6px 0px !important;
+}
+
+/* 줄무늬 패턴 */
+.pattern-striped {
+    position: relative !important;
+}
+
+.pattern-striped::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 6px,
+            rgba(0,0,0,0.3) 6px,
+            rgba(0,0,0,0.3) 12px
+        ) !important;
+}
+
+/* 도트 패턴 */
+.pattern-dotted {
+    position: relative !important;
+}
+
+.pattern-dotted::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    background-image: 
+        radial-gradient(circle, rgba(0,0,0,0.4) 1.5px, transparent 1.5px) !important;
+    background-size: 10px 10px !important;
+}
+
+/* 책 스택 효과 (누워있는 책들) */
+.book.horizontal {
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.book.horizontal::before {
+    background: linear-gradient(0deg, 
+        transparent 0%, 
+        transparent 2px, 
+        rgba(255, 255, 255, 0.1) 2px, 
+        rgba(255, 255, 255, 0.1) 3px, 
+        transparent 3px, 
+        transparent 5px, 
+        rgba(255, 255, 255, 0.1) 5px, 
+        rgba(255, 255, 255, 0.1) 6px, 
+        transparent 6px);
+}
+
+.book.horizontal::after {
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        rgba(0, 0, 0, 0.3) 0%, 
+        rgba(0, 0, 0, 0.1) 50%, 
+        rgba(0, 0, 0, 0.3) 100%);
+    border-radius: 0 0 3px 3px;
+}
+
+/* 북엔드 책 스타일 */
+.achievement-book, .hint-book {
+    width: 140px;
+    height: 180px;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border: 2px solid #1a252f;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.8rem;
+    text-align: center;
+}
+
+.achievement-content, .drag-hint-content {
+    color: #ffffff;
+    font-weight: bold;
+    line-height: 1.3;
+    font-family: 'SchoolSafeUniverse', 'Arial', sans-serif;
+}
+
+.achievement-title {
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+    color: #ecf0f1;
+    font-family: 'SchoolSafeUniverse', 'Arial', sans-serif;
+}
+
+.achievement-count {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
+.count-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f39c12;
+    font-family: 'SchoolSafeUniverse', 'Arial', sans-serif;
+}
+
+.count-unit {
+    font-size: 1.2rem;
+    color: #bdc3c7;
+    font-family: 'SchoolSafeUniverse', 'Arial', sans-serif;
+}
+
+.drag-hint-content span {
+    font-size: 1rem;
+    color: #ecf0f1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    font-family: 'SchoolSafeUniverse', 'Arial', sans-serif;
+}
+
+/* 책 연도 */
+.book-year {
+    font-size: 0.8rem;
+    color: #ffffff;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* 드래그 상태 - 시각적 효과 제거 */
+.book.dragging {
+    /* 시각적 효과 없음 */
+}
+
+.book.drag-over {
+    /* 시각적 효과 없음 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1200px) {
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .bookshelf-section {
+        padding: 0 1rem;
+    }
+    
+    .books-container {
+        gap: 0.3rem;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        min-height: 250px;
+    }
+    
+    .book-group {
+        gap: 0.2rem;
+    }
+    
+    .left-books, .right-books {
+        min-width: 150px;
+    }
+    
+    .book-group.achievement-books, .book-group.hint-books {
+        min-width: 140px;
+    }
+    
+    .achievement-book, .hint-book {
+        width: 120px;
+        height: 160px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+    }
+    
+    .nav-item {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.5rem;
+    }
+    
+    .settings-menu {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+    
+    .profile-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .achievement-title {
+        font-size: 1.5rem;
+    }
+    
+    .count-number {
+        font-size: 3rem;
+    }
+    
+    .count-unit {
+        font-size: 1.5rem;
+    }
+    
+    .bookshelf-section {
+        padding: 0 0.5rem;
+    }
+    
+    .books-container {
+        gap: 0.3rem;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        min-height: 220px;
+    }
+    
+    .book-group {
+        gap: 0.2rem;
+    }
+    
+    .left-books, .right-books {
+        min-width: 120px;
+    }
+    
+    .book-group.achievement-books, .book-group.hint-books {
+        min-width: 100px;
+    }
+    
+    .achievement-book, .hint-book {
+        width: 100px;
+        height: 140px;
+    }
+    
+    .achievement-title {
+        font-size: 0.7rem;
+    }
+    
+    .count-number {
+        font-size: 1.5rem;
+    }
+    
+    .count-unit {
+        font-size: 1rem;
+    }
+    
+    .drag-hint-content span {
+        font-size: 0.8rem;
+    }
+    
+    .book.vertical {
+        width: 40px;
+        height: 130px;
+    }
+    
+    .book.horizontal {
+        width: 120px;
+        height: 40px;
+    }
+    
+    .book-title {
+        font-size: 0.9rem;
+        max-width: 120px;
+    }
+    
+    .drag-hint {
+        margin: 0 0.5rem;
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        min-width: 150px;
+    }
+}
+
+/* 애니메이션 */
+@keyframes bookMove {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+.book.move-animation {
+    /* 이동 애니메이션 제거 */
+}
+
+/* 중복 스크롤바 스타일 제거됨 */
+
+/* 책장 스크롤바 숨기기 */
+.books-container::-webkit-scrollbar {
+    display: none;
+}

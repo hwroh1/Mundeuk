@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기 연습 - Writing Practice</title>
+    <link rel="stylesheet" href="writing-styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-items-container">
+            <div class="nav-item" onclick="window.location.href='index.html'">오늘의 학습</div>
+            <div class="nav-item" onclick="window.location.href='analysis.html'">분석리포트</div>
+            <div class="nav-item">베스트 리라이팅</div>
+            <div class="nav-item" onclick="window.location.href='mypage.html'">마이페이지</div>
+        </div>
+        <div class="nav-icon">[→</div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Writing Prompt Section -->
+        <section class="prompt-section">
+            <div class="prompt-container">
+                <h1 class="main-title">글쓰기 연습</h1>
+                <p class="title-description">
+                    주어진 주제에 대해 300자 내외로 자유롭게 글을 작성해보세요. 
+                    생각을 정리하고 표현하는 능력을 기를 수 있습니다.
+                </p>
+                
+                <!-- Topic Display -->
+                <div class="topic-card">
+                    <div class="topic-label">오늘의 주제</div>
+                    <h2 class="topic-title" id="currentTopic">디지털 시대의 익명성</h2>
+                    <p class="topic-description">
+                        인터넷과 소셜미디어가 발달하면서 익명으로 의견을 표현할 수 있는 기회가 늘어났습니다. 
+                        익명성의 장단점과 우리 사회에 미치는 영향에 대해 생각해보세요.
+                    </p>
+                </div>
+
+                <!-- New Topic Button -->
+                <button class="new-topic-btn" onclick="generateNewTopic()">
+                    <svg class="refresh-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    새로운 주제
+                </button>
+            </div>
+        </section>
+
+        <!-- Writing Area Section -->
+        <section class="writing-section">
+            <div class="writing-container">
+                <div class="writing-header">
+                    <h3 class="writing-title">글쓰기 영역</h3>
+                    <div class="word-counter">
+                        <span class="current-count" id="currentCount">0</span>
+                        <span class="target-count">/ 300자</span>
+                    </div>
+                </div>
+                
+                <div class="writing-area">
+                    <textarea 
+                        id="writingTextarea" 
+                        placeholder="여기에 글을 작성해주세요..."
+                        maxlength="500"
+                    ></textarea>
+                    
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span class="progress-label">0자</span>
+                            <span class="progress-label">150자</span>
+                            <span class="progress-label">300자</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Writing Tips -->
+                <div class="writing-tips">
+                    <h4 class="tips-title">💡 글쓰기 팁</h4>
+                    <ul class="tips-list">
+                        <li>주제에 대한 자신의 생각을 명확히 정리해보세요</li>
+                        <li>구체적인 예시나 경험을 포함하면 더 좋습니다</li>
+                        <li>서론, 본론, 결론의 구조를 고려해보세요</li>
+                        <li>300자 내외로 작성하되, 내용이 완성도 있게 마무리되도록 하세요</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="save-btn" onclick="saveWriting()">
+                <svg class="save-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                </svg>
+                임시저장
+            </button>
+            <button class="submit-btn" onclick="goToAnalysis()">
+                <svg class="submit-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                분석하기
+            </button>
+        </div>
+
+        <!-- Writing History -->
+        <section class="history-section">
+            <h3 class="history-title">최근 작성한 글</h3>
+            <div class="history-list" id="historyList">
+                <div class="history-item">
+                    <div class="history-topic">인공지능과 인간의 관계</div>
+                    <div class="history-date">2024.01.15</div>
+                    <div class="history-count">287자</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-topic">환경보호의 중요성</div>
+                    <div class="history-date">2024.01.14</div>
+                    <div class="history-count">312자</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>글쓰기 완료! 🎉</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>훌륭한 글을 작성하셨습니다!</p>
+                <p>분석 리포트를 확인해보시겠어요?</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeModal()">나중에</button>
+                <button class="modal-btn primary" onclick="goToAnalysis(); closeModal();">분석보기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="writing-script.js"></script>
+    
+    <!-- Test script for writing page -->
+    <script>
+        console.log('Writing page script loaded!');
+        console.log('Current URL:', window.location.href);
+        
+        // Test if textarea exists
+        setTimeout(() => {
+            const textarea = document.getElementById('writingTextarea');
+            console.log('Textarea found:', textarea);
+            
+            if (textarea) {
+                console.log('Textarea value:', textarea.value);
+                
+                // Add event listener to textarea
+                textarea.addEventListener('input', function() {
+                    console.log('Textarea changed:', this.value);
+                });
+            }
+        }, 1000);
+        
+        // Test function to manually trigger analysis
+        window.testGoToAnalysis = function() {
+            console.log('Manual test: goToAnalysis called');
+            const textarea = document.getElementById('writingTextarea');
+            const text = textarea ? textarea.value : '테스트 글입니다.';
+            
+            // Get current topic from the page
+            const currentTopicElement = document.getElementById('currentTopic');
+            const topic = currentTopicElement ? currentTopicElement.textContent : '테스트 주제';
+            
+            console.log('Test text:', text);
+            console.log('Test topic:', topic);
+            
+            if (text.trim()) {
+                const encodedText = encodeURIComponent(text);
+                const encodedTopic = encodeURIComponent(topic);
+                const url = `analysis.html?text=${encodedText}&topic=${encodedTopic}`;
+                console.log('Test URL:', url);
+                window.location.href = url;
+            }
+        };
+        
+        // Simple test function
+        window.simpleTest = function() {
+            console.log('Simple test function called!');
+            const textarea = document.getElementById('writingTextarea');
+            if (textarea) {
+                textarea.value = '테스트 글입니다.';
+                console.log('Textarea value set to:', textarea.value);
+            }
+        };
+        
+        console.log('Test functions available: testGoToAnalysis(), simpleTest()');
+    </script>
+</body>
+</html>
