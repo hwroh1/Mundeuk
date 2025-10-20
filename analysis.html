@@ -481,9 +481,21 @@
             
             // 빨간 점 위치 업데이트 (percentile에 따라)
             if (animatedRedDot) {
-                const position = (percentile / 100) * 100; // 0-100% 위치
-                animatedRedDot.style.left = `${position}%`;
-                console.log('Red dot position updated to:', position + '%');
+                // percentile을 그래프 위치로 변환 (정규분포 기준)
+                // 상위 25% = 75번째 백분위 = 그래프 우측 25% 지점
+                const graphPosition = (percentile / 100) * 100; // 0-100% 위치
+                animatedRedDot.style.left = `${graphPosition}%`;
+                animatedRedDot.style.top = '50%'; // 그래프 중앙 높이
+                console.log('Red dot position updated to:', graphPosition + '%');
+            }
+            
+            // 백분위 그래프 채우기 업데이트
+            const percentileFill = document.querySelector('.percentile-fill');
+            if (percentileFill) {
+                // 상위 X% = (100 - percentile)% 영역을 채움
+                const fillPercentage = 100 - percentile;
+                percentileFill.style.width = `${fillPercentage}%`;
+                console.log('Percentile fill updated to:', fillPercentage + '%');
             }
             
             // percentile-list 문장들 업데이트
