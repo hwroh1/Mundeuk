@@ -15,13 +15,15 @@ function send(res, status, data) {
   res.end(JSON.stringify(data));
 }
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
+  // CORS preflight
   if (req.method === 'OPTIONS') {
     return send(res, 200, { ok: true });
   }
 
+  // Only allow POST
   if (req.method !== 'POST') {
-    return send(res, 405, { error: 'Method not allowed' });
+    return send(res, 405, { error: 'Only POST is allowed' });
   }
 
   try {
@@ -66,8 +68,8 @@ module.exports = async (req, res) => {
       return send(res, 200, { error: 'Failed to parse model output as JSON', raw: content });
     }
   } catch (err) {
-    return send(res, 500, { error: 'Unexpected server error', details: String(err && err.message || err) });
+    return send(res, 500, { error: 'Unexpected server error', details: String((err && err.message) || err) });
   }
-};
+}
 
 
