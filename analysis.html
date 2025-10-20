@@ -349,19 +349,38 @@
                 console.log('✅ 글자 수 업데이트 완료');
             }
             
-            // 3. 샘플 분석 결과 생성
+            // 3. 랜덤 샘플 분석 결과 생성 (매번 다른 결과)
+            const generateRandomScore = () => Math.floor(Math.random() * 40) + 60; // 60-100점
+            const generateRandomPercentile = () => Math.floor(Math.random() * 60) + 20; // 20-80번째 백분위
+            
+            const vocabulary_score = generateRandomScore();
+            const structure_score = generateRandomScore();
+            const logic_score = generateRandomScore();
+            const creativity_score = generateRandomScore();
+            const overall_score = Math.floor((vocabulary_score + structure_score + logic_score + creativity_score) / 4);
+            const percentile = generateRandomPercentile();
+            
             const sampleResult = {
-                vocabulary_score: 85,
-                structure_score: 78,
-                logic_score: 92,
-                creativity_score: 80,
-                overall_score: 84,
+                vocabulary_score: vocabulary_score,
+                structure_score: structure_score,
+                logic_score: logic_score,
+                creativity_score: creativity_score,
+                overall_score: overall_score,
                 strengths: ["구체적인 예시 사용", "논리적 전개", "적절한 어휘 선택"],
                 improvements: ["문장 연결성 강화", "더 다양한 표현 사용"],
-                detailed_analysis: "이 글은 주제에 대한 명확한 이해를 보여주며, 구체적인 예시를 활용하여 주장을 뒷받침하고 있습니다. 또한 논리적인 전개와 적절한 어휘 선택이 돋보입니다. 특히 양면성을 균형 있게 제시한 점이 인상적입니다.",
-                percentile: 75,
+                detailed_analysis: `이 글은 주제에 대한 명확한 이해를 보여주며, 구체적인 예시를 활용하여 주장을 뒷받침하고 있습니다. 어휘력 ${vocabulary_score}점, 구조 ${structure_score}점, 논리 ${logic_score}점, 창의성 ${creativity_score}점으로 종합 ${overall_score}점을 기록했습니다. 특히 양면성을 균형 있게 제시한 점이 인상적입니다.`,
+                percentile: percentile,
                 rewritten_text: "디지털 시대의 익명성은 복합적인 특성을 지닌다. 긍정적 측면에서는 자유로운 의견 표현을 통해 민주주의 발전에 기여하지만, 부정적 측면에서는 무책임한 발언과 가짜뉴스 확산의 원인이 되기도 한다. 따라서 우리는 익명성의 이중성을 인식하고, 건전한 디지털 문화 조성을 위한 적극적인 노력이 필요하다."
             };
+            
+            console.log('🎲 랜덤 결과 생성:', {
+                vocabulary: vocabulary_score,
+                structure: structure_score,
+                logic: logic_score,
+                creativity: creativity_score,
+                overall: overall_score,
+                percentile: percentile
+            });
             
             // 4. 모든 차트와 텍스트 업데이트
             console.log('🔄 모든 차트 업데이트 시작...');
