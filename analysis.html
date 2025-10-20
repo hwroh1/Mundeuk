@@ -630,9 +630,24 @@
             }
             
             if (scoreDescription) {
-                scoreDescription.textContent = result.detailed_analysis ? 
-                    result.detailed_analysis.substring(0, 100) + '...' : 
-                    'GPT가 분석한 결과입니다.';
+                if (result.detailed_analysis) {
+                    // 100자 이내에서 문장이 완성되도록 처리
+                    let text = result.detailed_analysis;
+                    if (text.length > 100) {
+                        // 100자 지점에서 가장 가까운 문장 끝 찾기
+                        let cutPoint = 100;
+                        for (let i = 100; i >= 80; i--) { // 80자부터 100자까지 역순으로 검색
+                            if (text[i] === '.' || text[i] === '!' || text[i] === '?') {
+                                cutPoint = i + 1;
+                                break;
+                            }
+                        }
+                        text = text.substring(0, cutPoint);
+                    }
+                    scoreDescription.textContent = text;
+                } else {
+                    scoreDescription.textContent = 'GPT가 분석한 결과입니다.';
+                }
             }
             
             // 문장 구조 및 논리성 섹션 업데이트
