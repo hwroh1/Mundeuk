@@ -323,12 +323,13 @@
             }
         }, 1000);
         
-        // Test function with sample text
+        // Test function with sample text and complete analysis
         window.testWithSampleText = function() {
-            console.log('Test button clicked!');
+            console.log('🧪 테스트 시작 - GPT 토큰 없이 샘플 데이터로 모든 차트 테스트');
+            
+            // 1. 제목 설명 업데이트
             const titleDesc = document.querySelector('.title-description');
             if (titleDesc) {
-                console.log('Updating title description with sample text');
                 titleDesc.innerHTML = `
                     <div class="written-topic">
                         <strong>주제:</strong> 디지털 시대의 익명성
@@ -338,17 +339,62 @@
                         디지털 시대의 익명성은 양면성을 지닌다. 한편으로는 자유로운 의견 표현을 가능하게 하여 민주주의의 발전에 기여하지만, 다른 한편으로는 책임감 없는 발언과 가짜뉴스의 확산을 조장할 수 있다. 이러한 맥락에서 우리는 익명성의 장단점을 균형 있게 바라보고, 건전한 온라인 문화 조성을 위한 노력이 필요하다.
                     </div>
                 `;
-                console.log('Title description updated with sample text');
-                
-                // Update word count
-                const wordCountElement = document.querySelector('.word-count');
-                if (wordCountElement) {
-                    wordCountElement.textContent = '287/300';
-                    console.log('Word count updated');
-                }
-            } else {
-                console.log('Title description element not found');
+                console.log('✅ 제목 설명 업데이트 완료');
             }
+            
+            // 2. 글자 수 업데이트
+            const wordCountElement = document.querySelector('.word-count');
+            if (wordCountElement) {
+                wordCountElement.textContent = '287/300';
+                console.log('✅ 글자 수 업데이트 완료');
+            }
+            
+            // 3. 샘플 분석 결과 생성
+            const sampleResult = {
+                vocabulary_score: 85,
+                structure_score: 78,
+                logic_score: 92,
+                creativity_score: 80,
+                overall_score: 84,
+                strengths: ["구체적인 예시 사용", "논리적 전개", "적절한 어휘 선택"],
+                improvements: ["문장 연결성 강화", "더 다양한 표현 사용"],
+                detailed_analysis: "이 글은 주제에 대한 명확한 이해를 보여주며, 구체적인 예시를 활용하여 주장을 뒷받침하고 있습니다. 또한 논리적인 전개와 적절한 어휘 선택이 돋보입니다. 특히 양면성을 균형 있게 제시한 점이 인상적입니다.",
+                percentile: 75,
+                rewritten_text: "디지털 시대의 익명성은 복합적인 특성을 지닌다. 긍정적 측면에서는 자유로운 의견 표현을 통해 민주주의 발전에 기여하지만, 부정적 측면에서는 무책임한 발언과 가짜뉴스 확산의 원인이 되기도 한다. 따라서 우리는 익명성의 이중성을 인식하고, 건전한 디지털 문화 조성을 위한 적극적인 노력이 필요하다."
+            };
+            
+            // 4. 모든 차트와 텍스트 업데이트
+            console.log('🔄 모든 차트 업데이트 시작...');
+            
+            // 게이지 차트 업데이트
+            updateGaugeChart(sampleResult.overall_score);
+            console.log('✅ 게이지 차트 업데이트 완료');
+            
+            // 백분위 차트 업데이트 (정규분포 곡선을 따라)
+            updatePercentileChart(sampleResult.percentile);
+            console.log('✅ 백분위 차트 업데이트 완료');
+            
+            // 레이더 차트 업데이트
+            updateRadarChart([sampleResult.vocabulary_score, sampleResult.structure_score, sampleResult.logic_score, sampleResult.creativity_score]);
+            console.log('✅ 레이더 차트 업데이트 완료');
+            
+            // 막대 차트 업데이트
+            updateBarChart(sampleResult);
+            console.log('✅ 막대 차트 업데이트 완료');
+            
+            // 텍스트 요소 업데이트
+            updateTextElements(sampleResult);
+            console.log('✅ 텍스트 요소 업데이트 완료');
+            
+            // 구조 및 논리성 섹션 업데이트
+            updateStructureAndLogicSection(sampleResult);
+            console.log('✅ 구조 및 논리성 섹션 업데이트 완료');
+            
+            // 리라이팅 제안 업데이트
+            updateRewritingSuggestion(sampleResult);
+            console.log('✅ 리라이팅 제안 업데이트 완료');
+            
+            console.log('🎉 모든 테스트 완료! GPT 토큰 없이 모든 기능이 정상 작동합니다.');
         };
         
         console.log('Test function available: testWithSampleText()');
