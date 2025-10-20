@@ -248,7 +248,7 @@ function animateRedDotAlongCurve(chart, targetPercent) {
 }
 
 // Function to update score and animate red dot (for dynamic score changes)
-function updateScore(newScorePercent) {
+window.updateScore = function(newScorePercent) {
     // This function can be called to update the score dynamically
     // For example: updateScore(75) for 75th percentile
     
