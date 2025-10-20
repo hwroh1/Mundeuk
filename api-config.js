@@ -1,12 +1,12 @@
 // API 설정 파일
 const API_CONFIG = {
-    // 여기에 발급받은 API 키를 입력하세요
+    // 프론트엔드는 백엔드 프록시로만 요청합니다 (API 키는 서버에서 보관)
     OPENAI_API_KEY: window.API_KEY || 'your-api-key-here',
     
-    // API 엔드포인트
-    OPENAI_API_URL: 'https://api.openai.com/v1/chat/completions',
+    // 프록시 엔드포인트 (로컬 Python 서버)
+    OPENAI_API_URL: 'http://localhost:8787/api/analyze',
     
-    // 사용할 모델 (GPT-3.5-turbo가 비용 효율적)
+    // 사용할 모델 (서버에서 사용)
     MODEL: 'gpt-3.5-turbo',
     
     // 최대 토큰 수
@@ -61,29 +61,13 @@ const ANALYSIS_PROMPT = `
 // API 호출 함수
 async function analyzeText(text, topic) {
     try {
+        // 프록시 엔드포인트로 요청 (서버가 OpenAI와 통신)
         const response = await fetch(API_CONFIG.OPENAI_API_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_CONFIG.OPENAI_API_KEY}`
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                model: API_CONFIG.MODEL,
-                messages: [
-                    {
-                        role: 'system',
-                        content: '당신은 한국어 글쓰기 전문가입니다. 사용자의 글을 정확하고 상세하게 분석해주세요.'
-                    },
-                    {
-                        role: 'user',
-                        content: ANALYSIS_PROMPT
-                            .replace('{topic}', topic)
-                            .replace('{text}', text)
-                    }
-                ],
-                max_tokens: API_CONFIG.MAX_TOKENS,
-                temperature: API_CONFIG.TEMPERATURE
-            })
+            body: JSON.stringify({ text, topic })
         });
 
         if (!response.ok) {
@@ -91,18 +75,8 @@ async function analyzeText(text, topic) {
         }
 
         const data = await response.json();
-        const analysisText = data.choices[0].message.content;
-        
-        // JSON 파싱
-        try {
-            return JSON.parse(analysisText);
-        } catch (parseError) {
-            console.error('JSON 파싱 오류:', parseError);
-            return {
-                error: '분석 결과를 파싱할 수 없습니다.',
-                raw_response: analysisText
-            };
-        }
+        // 서버가 이미 JSON 형태로 가공해 반환
+        return data;
         
     } catch (error) {
         console.error('API 호출 오류:', error);
