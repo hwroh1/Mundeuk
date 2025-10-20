@@ -3,8 +3,8 @@ const API_CONFIG = {
     // 프론트엔드는 백엔드 프록시로만 요청합니다 (API 키는 서버에서 보관)
     OPENAI_API_KEY: window.API_KEY || 'your-api-key-here',
     
-    // 프록시 엔드포인트 (로컬 Python 서버)
-    OPENAI_API_URL: 'http://localhost:8787/api/analyze',
+    // 프록시 엔드포인트 (Vercel 서버리스 함수)
+    OPENAI_API_URL: '/api/analyze',
     
     // 사용할 모델 (서버에서 사용)
     MODEL: 'gpt-3.5-turbo',

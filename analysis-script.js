@@ -14,17 +14,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize Chart.js percentile chart
     initializePercentileChart();
     
-    // Auto-run GPT analysis if text is available (CORS 프록시 사용)
-    setTimeout(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const text = urlParams.get('text');
-        const topic = urlParams.get('topic');
-        
-        if (text && topic && window.analyzeWithGPT) {
-            console.log('Auto-running GPT analysis...');
-            window.analyzeWithGPT();
-        }
-    }, 1000); // 1초 후 자동 실행
+    // Auto-run GPT analysis if text is available (429 오류로 인해 일시 중단)
+    // setTimeout(() => {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const text = urlParams.get('text');
+    //     const topic = urlParams.get('topic');
+    //     
+    //     if (text && topic && window.analyzeWithGPT) {
+    //         console.log('Auto-running GPT analysis...');
+    //         window.analyzeWithGPT();
+    //     }
+    // }, 1000); // 1초 후 자동 실행
     
     // Test function to manually trigger loadWrittenText
     window.testLoadWrittenText = function() {
