@@ -461,6 +461,8 @@
                 gaugeNumber.textContent = score;
                 
                 console.log('Gauge chart updated:', score);
+            } else {
+                console.error('Gauge chart elements not found:', { gaugeProgress, gaugeNumber });
             }
         }
         
@@ -470,6 +472,9 @@
             const animatedRedDot = document.getElementById('animatedRedDot');
             const percentileList = document.querySelector('.percentile-list');
             
+            console.log('Updating percentile chart:', percentile);
+            console.log('Elements found:', { percentileScore, animatedRedDot, percentileList });
+            
             if (percentileScore) {
                 percentileScore.textContent = `상위 ${100 - percentile}%`;
             }
@@ -478,6 +483,7 @@
             if (animatedRedDot) {
                 const position = (percentile / 100) * 100; // 0-100% 위치
                 animatedRedDot.style.left = `${position}%`;
+                console.log('Red dot position updated to:', position + '%');
             }
             
             // percentile-list 문장들 업데이트
@@ -558,6 +564,9 @@
             const barSegments = document.querySelectorAll('.bar-segment');
             const labelPercentages = document.querySelectorAll('.label-percentage');
             
+            console.log('Updating bar chart:', result);
+            console.log('Bar elements found:', { barSegments: barSegments.length, labelPercentages: labelPercentages.length });
+            
             // 점수에 따른 어휘 수준 분포 계산
             const overallScore = result.overall_score || 0;
             let distribution;
@@ -577,6 +586,7 @@
             barSegments.forEach((segment, index) => {
                 if (distribution[index] !== undefined) {
                     segment.style.width = `${distribution[index]}%`;
+                    console.log(`Bar segment ${index} updated to ${distribution[index]}%`);
                 }
             });
             
