@@ -385,33 +385,66 @@
             // 4. 모든 차트와 텍스트 업데이트
             console.log('🔄 모든 차트 업데이트 시작...');
             
-            // 게이지 차트 업데이트
-            updateGaugeChart(sampleResult.overall_score);
-            console.log('✅ 게이지 차트 업데이트 완료');
-            
-            // 백분위 차트 업데이트 (정규분포 곡선을 따라)
-            updatePercentileChart(sampleResult.percentile);
-            console.log('✅ 백분위 차트 업데이트 완료');
-            
-            // 레이더 차트 업데이트
-            updateRadarChart([sampleResult.vocabulary_score, sampleResult.structure_score, sampleResult.logic_score, sampleResult.creativity_score]);
-            console.log('✅ 레이더 차트 업데이트 완료');
-            
-            // 막대 차트 업데이트
-            updateBarChart(sampleResult);
-            console.log('✅ 막대 차트 업데이트 완료');
-            
-            // 텍스트 요소 업데이트
-            updateTextElements(sampleResult);
-            console.log('✅ 텍스트 요소 업데이트 완료');
-            
-            // 구조 및 논리성 섹션 업데이트
-            updateStructureAndLogicSection(sampleResult);
-            console.log('✅ 구조 및 논리성 섹션 업데이트 완료');
-            
-            // 리라이팅 제안 업데이트
-            updateRewritingSuggestion(sampleResult);
-            console.log('✅ 리라이팅 제안 업데이트 완료');
+            try {
+                // 게이지 차트 업데이트
+                if (typeof updateGaugeChart === 'function') {
+                    updateGaugeChart(sampleResult.overall_score);
+                    console.log('✅ 게이지 차트 업데이트 완료');
+                } else {
+                    console.log('❌ updateGaugeChart 함수를 찾을 수 없습니다');
+                }
+                
+                // 백분위 차트 업데이트 (정규분포 곡선을 따라)
+                if (typeof updatePercentileChart === 'function') {
+                    updatePercentileChart(sampleResult.percentile);
+                    console.log('✅ 백분위 차트 업데이트 완료');
+                } else {
+                    console.log('❌ updatePercentileChart 함수를 찾을 수 없습니다');
+                }
+                
+                // 레이더 차트 업데이트
+                if (typeof updateRadarChart === 'function') {
+                    updateRadarChart([sampleResult.vocabulary_score, sampleResult.structure_score, sampleResult.logic_score, sampleResult.creativity_score]);
+                    console.log('✅ 레이더 차트 업데이트 완료');
+                } else {
+                    console.log('❌ updateRadarChart 함수를 찾을 수 없습니다');
+                }
+                
+                // 막대 차트 업데이트
+                if (typeof updateBarChart === 'function') {
+                    updateBarChart(sampleResult);
+                    console.log('✅ 막대 차트 업데이트 완료');
+                } else {
+                    console.log('❌ updateBarChart 함수를 찾을 수 없습니다');
+                }
+                
+                // 텍스트 요소 업데이트
+                if (typeof updateTextElements === 'function') {
+                    updateTextElements(sampleResult);
+                    console.log('✅ 텍스트 요소 업데이트 완료');
+                } else {
+                    console.log('❌ updateTextElements 함수를 찾을 수 없습니다');
+                }
+                
+                // 구조 및 논리성 섹션 업데이트
+                if (typeof updateStructureAndLogicSection === 'function') {
+                    updateStructureAndLogicSection(sampleResult);
+                    console.log('✅ 구조 및 논리성 섹션 업데이트 완료');
+                } else {
+                    console.log('❌ updateStructureAndLogicSection 함수를 찾을 수 없습니다');
+                }
+                
+                // 리라이팅 제안 업데이트
+                if (typeof updateRewritingSuggestion === 'function') {
+                    updateRewritingSuggestion(sampleResult);
+                    console.log('✅ 리라이팅 제안 업데이트 완료');
+                } else {
+                    console.log('❌ updateRewritingSuggestion 함수를 찾을 수 없습니다');
+                }
+                
+            } catch (error) {
+                console.error('❌ 테스트 중 오류 발생:', error);
+            }
             
             console.log('🎉 모든 테스트 완료! GPT 토큰 없이 모든 기능이 정상 작동합니다.');
         };
@@ -513,7 +546,7 @@
         }
         
         // 원형 게이지 차트 업데이트
-        function updateGaugeChart(score) {
+        window.updateGaugeChart = function(score) {
             const gaugeProgress = document.querySelector('.gauge-progress');
             const gaugeNumber = document.querySelector('.gauge-number');
             
@@ -532,7 +565,7 @@
         }
         
         // 백분위 차트 업데이트
-        function updatePercentileChart(percentile) {
+        window.updatePercentileChart = function(percentile) {
             const percentileScore = document.querySelector('.percentile-score');
             const percentileList = document.querySelector('.percentile-list');
             
@@ -601,7 +634,7 @@
         }
         
         // 레이더 차트 업데이트
-        function updateRadarChart(result) {
+        window.updateRadarChart = function(result) {
             const dataBars = document.querySelectorAll('.data-bar');
             const legendScores = document.querySelectorAll('.legend-score');
             
@@ -631,7 +664,7 @@
         }
         
         // 막대 차트 업데이트 (점수에 따른 어휘 수준 분포)
-        function updateBarChart(result) {
+        window.updateBarChart = function(result) {
             const barSegments = document.querySelectorAll('.bar-segment');
             const labelPercentages = document.querySelectorAll('.label-percentage');
             
@@ -671,7 +704,7 @@
         }
         
         // 텍스트 요소들 업데이트
-        function updateTextElements(result) {
+        window.updateTextElements = function(result) {
             const scoreHighlight = document.querySelector('.score-highlight');
             const scoreDescription = document.querySelector('.score-description');
             
@@ -723,7 +756,7 @@
         }
         
         // 문장 구조 및 논리성 섹션 업데이트
-        function updateStructureAndLogicSection(result) {
+        window.updateStructureAndLogicSection = function(result) {
             const structureList = document.querySelector('.structure-list');
             const structureNote = document.querySelector('.structure-note');
             
@@ -851,7 +884,7 @@
         }
         
         // 리라이팅 제안 섹션 업데이트
-        function updateRewritingSuggestion(result) {
+        window.updateRewritingSuggestion = function(result) {
             const suggestionText = document.querySelector('.suggestion-text');
             const suggestionNote = document.querySelector('.suggestion-note');
             
