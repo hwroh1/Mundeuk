@@ -252,8 +252,14 @@ window.updateScore = function(newScorePercent) {
     // This function can be called to update the score dynamically
     // For example: updateScore(75) for 75th percentile
     
+    console.log('updateScore called with:', newScorePercent);
+    
     const chart = Chart.getChart('percentileChart');
-    if (chart && chart.data && chart.data.datasets) {
+    console.log('Chart found:', chart);
+    console.log('Chart data:', chart?.data);
+    console.log('Chart datasets:', chart?.data?.datasets);
+    
+    if (chart && chart.data && chart.data.datasets && chart.data.datasets.length > 0) {
         // Update the percentile text
         const percentileText = document.querySelector('.percentile-score');
         if (percentileText) {
@@ -261,16 +267,16 @@ window.updateScore = function(newScorePercent) {
         }
         
         // Check if datasets exist before accessing them
-        if (chart.data.datasets.length > 1) {
+        if (chart.data.datasets.length > 1 && chart.data.datasets[1]) {
             const areaDataset = chart.data.datasets[1];
-            if (areaDataset) {
+            if (areaDataset && areaDataset.data) {
                 areaDataset.data = Array(101).fill(null);
             }
         }
         
-        if (chart.data.datasets.length > 2) {
+        if (chart.data.datasets.length > 2 && chart.data.datasets[2]) {
             const pointDataset = chart.data.datasets[2];
-            if (pointDataset) {
+            if (pointDataset && pointDataset.data) {
                 pointDataset.data = Array(101).fill(null);
                 pointDataset.pointRadius = 0;
             }
