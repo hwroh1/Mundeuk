@@ -563,7 +563,7 @@
             }
             
             // 원래 백분위 차트 로직 사용 (정규분포 곡선을 따라가면서)
-            if (window.updateScore) {
+            if (window.updateScore && typeof percentile === 'number' && percentile >= 0 && percentile <= 100) {
                 // percentile은 상위 몇 %이므로, 0-100 점수로 변환
                 // 예: 상위 40% = 60점
                 const scorePercent = 100 - percentile;

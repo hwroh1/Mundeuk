@@ -253,21 +253,28 @@ window.updateScore = function(newScorePercent) {
     // For example: updateScore(75) for 75th percentile
     
     const chart = Chart.getChart('percentileChart');
-    if (chart) {
+    if (chart && chart.data && chart.data.datasets) {
         // Update the percentile text
         const percentileText = document.querySelector('.percentile-score');
         if (percentileText) {
             percentileText.textContent = `상위 ${100 - newScorePercent}%`;
         }
         
-        // Reset both area and point to start from beginning
-        const areaDataset = chart.data.datasets[1];
-        const pointDataset = chart.data.datasets[2];
+        // Check if datasets exist before accessing them
+        if (chart.data.datasets.length > 1) {
+            const areaDataset = chart.data.datasets[1];
+            if (areaDataset) {
+                areaDataset.data = Array(101).fill(null);
+            }
+        }
         
-        // Clear both datasets
-        areaDataset.data = Array(101).fill(null);
-        pointDataset.data = Array(101).fill(null);
-        pointDataset.pointRadius = 0;
+        if (chart.data.datasets.length > 2) {
+            const pointDataset = chart.data.datasets[2];
+            if (pointDataset) {
+                pointDataset.data = Array(101).fill(null);
+                pointDataset.pointRadius = 0;
+            }
+        }
         
         chart.update('none');
         
