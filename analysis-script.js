@@ -303,7 +303,7 @@ function setupEventListeners() {
     });
 
     // Add hover effects for interactive elements
-    document.querySelectorAll('.nav-btn, .home-button').forEach(button => {
+    document.querySelectorAll('.nav-btn').forEach(button => {
         button.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.05)';
         });

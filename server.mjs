@@ -67,3 +67,4 @@ app.post('/api/analyze', async (req, res) => {
 
 const PORT = 8787;
 app.listen(PORT, () => console.log(`Local proxy running on http://localhost:${PORT}`));
+
