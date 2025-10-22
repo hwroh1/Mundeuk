@@ -243,7 +243,7 @@
                 인쇄하기
             </button>
             <button class="home-button" onclick="window.location.href='index.html'">홈으로 가기</button>
-            <button class="gpt-button" onclick="analyzeWithGPT()" style="background: #10A37F; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem;">🤖 GPT 분석</button>
+            <button class="gpt-button" onclick="try { analyzeWithGPT(); } catch(e) { console.error('함수 호출 오류:', e); alert('분석 함수를 찾을 수 없습니다.'); }" style="background: #10A37F; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem;">🤖 GPT 분석</button>
         </div>
     </main>
 
@@ -447,8 +447,8 @@
         
         console.log('Test function available: testWithSampleText()');
         
-        // GPT 분석 함수
-        window.analyzeWithGPT = async function() {
+        // GPT 분석 함수 (전역 함수로 선언)
+        function analyzeWithGPT() {
             console.log('GPT 분석 시작...');
             
             // API 설정 확인
@@ -522,11 +522,16 @@
                 // 분석 완료
                 console.log('GPT 분석 완료');
             }
-        };
+        }
+        
+        // 함수를 여러 방법으로 전역에 할당
+        window.analyzeWithGPT = analyzeWithGPT;
+        window['analyzeWithGPT'] = analyzeWithGPT;
         
         // 함수 정의 확인
-        console.log('analyzeWithGPT 함수 정의 완료:', typeof window.analyzeWithGPT);
-        console.log('analyzeWithGPT 함수:', window.analyzeWithGPT);
+        console.log('analyzeWithGPT 함수 정의 완료:', typeof analyzeWithGPT);
+        console.log('window.analyzeWithGPT:', typeof window.analyzeWithGPT);
+        console.log('window["analyzeWithGPT"]:', typeof window['analyzeWithGPT']);
         
         // GPT 분석 버튼은 인라인 onclick으로 처리됨
         console.log('GPT 분석 버튼은 인라인 onclick으로 설정됨');
