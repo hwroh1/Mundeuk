@@ -493,25 +493,62 @@
         
         // GPT 분석 결과를 페이지에 업데이트하는 함수
         window.updateAnalysisWithGPTResult = function(result) {
-            console.log('Updating charts with GPT result:', result);
+            console.log('=== updateAnalysisWithGPTResult 호출됨 ===');
+            console.log('GPT 분석 결과:', result);
+            console.log('overall_score:', result.overall_score);
+            console.log('vocabulary_score:', result.vocabulary_score);
+            console.log('percentile:', result.percentile);
+            console.log('advanced_vocabulary:', result.advanced_vocabulary);
             
             // 1. 원형 게이지 차트 업데이트
-            updateGaugeChart(result.overall_score || result.vocabulary_score || 0);
+            console.log('1. 원형 게이지 차트 업데이트 시작...');
+            if (typeof window.updateGaugeChart === 'function') {
+                window.updateGaugeChart(result.overall_score || result.vocabulary_score || 0);
+            } else {
+                console.error('updateGaugeChart 함수를 찾을 수 없습니다');
+            }
             
             // 2. 백분위 차트 업데이트
-            updatePercentileChart(result.percentile || 0);
+            console.log('2. 백분위 차트 업데이트 시작...');
+            if (typeof window.updatePercentileChart === 'function') {
+                window.updatePercentileChart(result.percentile || 0);
+            } else {
+                console.error('updatePercentileChart 함수를 찾을 수 없습니다');
+            }
             
             // 3. 레이더 차트 업데이트
-            updateRadarChart(result);
+            console.log('3. 레이더 차트 업데이트 시작...');
+            if (typeof window.updateRadarChart === 'function') {
+                window.updateRadarChart(result);
+            } else {
+                console.error('updateRadarChart 함수를 찾을 수 없습니다');
+            }
             
             // 4. 막대 차트 업데이트
-            updateBarChart(result);
+            console.log('4. 막대 차트 업데이트 시작...');
+            if (typeof window.updateBarChart === 'function') {
+                window.updateBarChart(result);
+            } else {
+                console.error('updateBarChart 함수를 찾을 수 없습니다');
+            }
             
             // 5. 텍스트 업데이트
-            updateTextElements(result);
+            console.log('5. 텍스트 업데이트 시작...');
+            if (typeof updateTextElements === 'function') {
+                updateTextElements(result);
+            } else {
+                console.error('updateTextElements 함수를 찾을 수 없습니다');
+            }
             
             // 6. 어휘 카드 업데이트
-            updateVocabularyCards(result);
+            console.log('6. 어휘 카드 업데이트 시작...');
+            if (typeof updateVocabularyCards === 'function') {
+                updateVocabularyCards(result);
+            } else {
+                console.error('updateVocabularyCards 함수를 찾을 수 없습니다');
+            }
+            
+            console.log('=== updateAnalysisWithGPTResult 완료 ===');
             
             // 7. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
             
