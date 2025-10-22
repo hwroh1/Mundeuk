@@ -959,18 +959,138 @@
         }
     }
     
-    // detailed_analysis에서 어휘 추출하는 함수
+    // 제공된 원본 텍스트에서 어휘 추출하는 함수
+    function extractVocabularyFromOriginalText(originalText) {
+        console.log('extractVocabularyFromOriginalText called with:', originalText);
+        
+        if (!originalText) return null;
+        
+        // 한국어 어휘 추출 (조사, 어미 제거)
+        const words = extractKoreanWords(originalText);
+        console.log('추출된 단어들:', words);
+        
+        // 상위 수준의 어휘만 선택 (길이와 복잡성 기준)
+        const advancedWords = selectAdvancedWords(words);
+        console.log('선택된 고급 어휘들:', advancedWords);
+        
+        // 각 어휘의 품사와 정의 분석
+        return advancedWords.map(word => analyzeWord(word));
+    }
+    
+    // 한국어 단어 추출 (조사, 어미 제거)
+    function extractKoreanWords(text) {
+        // 조사 패턴
+        const particles = ['은', '는', '이', '가', '을', '를', '에', '에서', '로', '으로', '와', '과', '의', '도', '만', '까지', '부터', '처럼', '같이', '보다', '에게', '한테', '께'];
+        
+        // 어미 패턴 (동사, 형용사 어미)
+        const endings = ['다', '하다', '되다', '있다', '없다', '이다', '아니다', '같다', '다르다', '크다', '작다', '좋다', '나쁘다', '많다', '적다', '높다', '낮다', '빠르다', '느리다', '쉽다', '어렵다'];
+        
+        // 2글자 이상의 한국어 단어 추출
+        const words = text.match(/[가-힣]{2,}/g) || [];
+        
+        // 조사와 어미 제거하여 기본형 추출
+        const cleanWords = words.map(word => {
+            let cleanWord = word;
+            
+            // 조사 제거
+            for (const particle of particles) {
+                if (cleanWord.endsWith(particle)) {
+                    cleanWord = cleanWord.slice(0, -particle.length);
+                    break;
+                }
+            }
+            
+            // 어미 제거 (동사, 형용사)
+            for (const ending of endings) {
+                if (cleanWord.endsWith(ending)) {
+                    cleanWord = cleanWord.slice(0, -ending.length);
+                    break;
+                }
+            }
+            
+            return cleanWord;
+        }).filter(word => word.length >= 2); // 2글자 이상만 유지
+        
+        // 중복 제거
+        return [...new Set(cleanWords)];
+    }
+    
+    // 고급 어휘 선택 (길이와 복잡성 기준)
+    function selectAdvancedWords(words) {
+        // 길이순으로 정렬하고 상위 5개 선택
+        return words
+            .sort((a, b) => b.length - a.length)
+            .slice(0, 5);
+    }
+    
+    // 단어 분석 (품사와 정의)
+    function analyzeWord(word) {
+        // 간단한 품사 분석 (실제로는 더 정교한 분석이 필요)
+        let pos = "명사";
+        let definition = "";
+        
+        // 동사 패턴
+        if (word.endsWith('하다') || word.endsWith('되다') || word.endsWith('하다')) {
+            pos = "동사";
+        }
+        // 형용사 패턴
+        else if (word.endsWith('적') || word.endsWith('스러운') || word.endsWith('한')) {
+            pos = "형용사";
+        }
+        // 부사 패턴
+        else if (word.endsWith('게') || word.endsWith('히') || word.endsWith('이')) {
+            pos = "부사";
+        }
+        
+        // 정의 생성 (실제로는 사전 API나 더 정교한 분석이 필요)
+        definition = generateDefinition(word, pos);
+        
+        return {
+            word: word,
+            pos: pos,
+            definition: definition
+        };
+    }
+    
+    // 정의 생성
+    function generateDefinition(word, pos) {
+        const definitions = {
+            "디지털": "컴퓨터나 전자 기술을 이용한",
+            "시대": "특정한 특징을 가진 역사적 기간",
+            "익명성": "이름이나 신원을 알 수 없는 상태",
+            "양면성": "서로 다른 두 가지 특성을 동시에 지니는 성질",
+            "민주주의": "국민이 주권을 가지고 스스로를 통치하는 정치 체제",
+            "조장": "어떤 일이 일어나도록 부추기거나 도움을 주는 것",
+            "진정성": "진실하고 정직한 성질",
+            "표현": "생각이나 감정을 나타내는 것",
+            "전개": "내용을 펼쳐 나가는 것",
+            "구성": "여러 요소를 체계적으로 배열하는 것",
+            "연결성": "서로 연결되어 있는 성질",
+            "흐름": "일정한 방향으로 진행되는 것",
+            "개념": "사물이나 현상에 대한 추상적 인식",
+            "예시": "설명을 위해 들어주는 구체적인 사례",
+            "이해도": "이해하는 정도",
+            "발전": "더 나은 상태로 나아가는 것",
+            "강화": "더욱 강하게 만드는 것",
+            "문화": "한 사회의 생활 양식과 가치관",
+            "노력": "목표를 달성하기 위해 애쓰는 것"
+        };
+        
+        return definitions[word] || `${word}에 대한 ${pos} 정의`;
+    }
+    
+    // detailed_analysis에서 어휘 추출하는 함수 (원본 텍스트 우선)
     function extractVocabularyFromAnalysis(analysis) {
         console.log('extractVocabularyFromAnalysis called with:', analysis);
-        // 간단한 어휘 추출 로직 (실제로는 더 정교한 NLP가 필요)
-        const words = analysis.match(/[가-힣]{2,}/g) || [];
-        const uniqueWords = [...new Set(words)].slice(0, 5);
         
-        return uniqueWords.map(word => ({
-            word: word,
-            pos: "명사", // 기본값
-            definition: `${word}에 대한 설명`
-        }));
+        // 원본 텍스트가 있으면 우선 사용
+        const originalText = getOriginalText();
+        if (originalText) {
+            return extractVocabularyFromOriginalText(originalText);
+        }
+        
+        // 원본 텍스트가 없으면 분석 텍스트에서 추출
+        return extractVocabularyFromOriginalText(analysis);
     }
     
     // strengths에서 어휘 추출하는 함수
@@ -979,14 +1099,19 @@
         if (!Array.isArray(strengths)) return null;
         
         const allText = strengths.join(' ');
-        const words = allText.match(/[가-힣]{2,}/g) || [];
-        const uniqueWords = [...new Set(words)].slice(0, 5);
+        return extractVocabularyFromOriginalText(allText);
+    }
+    
+    // 원본 텍스트 가져오기
+    function getOriginalText() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let text = urlParams.get('text');
         
-        return uniqueWords.map(word => ({
-            word: word,
-            pos: "명사", // 기본값
-            definition: `${word}에 대한 설명`
-        }));
+        if (!text) {
+            text = localStorage.getItem('analysis_text');
+        }
+        
+        return text;
     }
         
         // 리라이팅 제안 섹션 업데이트
