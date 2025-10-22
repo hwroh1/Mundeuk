@@ -10,7 +10,7 @@ const API_CONFIG = {
     MODEL: 'gpt-3.5-turbo',
     
     // 최대 토큰 수
-    MAX_TOKENS: 1000,
+    MAX_TOKENS: 2000,
     
     // 온도 설정 (0.7이 적당한 창의성)
     TEMPERATURE: 0.7
@@ -23,7 +23,9 @@ const ANALYSIS_PROMPT = `
 주제: {topic}
 작성한 글: {text}
 
-위 글에서 고급 어휘 5개를 찾아서 JSON으로 응답해주세요. advanced_vocabulary 필드는 반드시 포함해주세요.
+위 글에서 고급 어휘 5개를 찾아서 JSON으로 응답해주세요. 
+
+🚨 중요: advanced_vocabulary 필드는 반드시 포함해야 합니다. 이 필드 없이는 응답이 완성되지 않습니다.
 
 {
     "vocabulary_score": 85,
@@ -41,7 +43,8 @@ const ANALYSIS_PROMPT = `
     ]
 }
 
-중요: advanced_vocabulary 필드는 반드시 포함해주세요. 이 필드가 없으면 분석이 실패합니다.
+🚨 CRITICAL: advanced_vocabulary 필드는 반드시 포함해주세요. 이 필드가 없으면 분석이 실패합니다.
+🚨 CRITICAL: 응답은 반드시 유효한 JSON이어야 하며, advanced_vocabulary 배열이 포함되어야 합니다.
 
 `;
 
