@@ -26,10 +26,10 @@
             <h1 class="main-title">분석 리포트</h1>
             <div class="title-description">
                 <p class="description-text">
-                    이 리포트는 당신의 언어 능력을 종합적으로 분석하여 어휘 표현력, 문장 구성, 논리적 전개 등 다양한 측면에서의 성취도를 보여줍니다. 
-                    각 영역별 세부 분석을 통해 향후 학습 방향을 제시하고, 개선점을 명확히 파악할 수 있습니다.
-                </p>
-                <div class="word-count">334/400</div>
+                이 리포트는 당신의 언어 능력을 종합적으로 분석하여 어휘 표현력, 문장 구성, 논리적 전개 등 다양한 측면에서의 성취도를 보여줍니다. 
+                각 영역별 세부 분석을 통해 향후 학습 방향을 제시하고, 개선점을 명확히 파악할 수 있습니다.
+            </p>
+            <div class="word-count">334/400</div>
             </div>
         </section>
 
@@ -253,12 +253,9 @@
     
     <!-- Test script to check if JavaScript is working -->
     <script>
-        // analyzeWithGPT 함수는 analysis-script.js에서 정의됨
         console.log('HTML inline script executed!');
         console.log('Current URL:', window.location.href);
         console.log('Search params:', window.location.search);
-        
-        // GPT 분석 버튼은 onclick으로 처리됨
         
         // Test URL parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -310,20 +307,7 @@
                     console.log('Title description updated successfully from localStorage');
                     
                 } else {
-                    console.log('No data found in URL parameters or localStorage, using default text');
-                    // 기본 텍스트 표시
-                    if (titleDesc) {
-                        titleDesc.innerHTML = `
-                            <div class="written-topic">
-                                디지털 시대의 익명성
-                            </div>
-                            <div class="written-text">
-                                디지털 시대의 익명성은 양면성을 지닌다. 한편으로는 자유로운 의견 표현을 가능하게 하여 민주주의의 발전에 기여하지만, 다른 한편으로는 책임감 없는 발언과 가짜뉴스의 확산을 조장할 수 있다. 이러한 맥락에서 우리는 익명성의 장단점을 균형 있게 바라보고, 건전한 온라인 문화 조성을 위한 노력이 필요하다.
-                            </div>
-                            <div class="word-count">287/300</div>
-                        `;
-                        console.log('Default text displayed');
-                    }
+                    console.log('No data found in URL parameters or localStorage');
                 }
             }
         }, 1000);
@@ -450,7 +434,53 @@
         
         console.log('Test function available: testWithSampleText()');
         
-        // analyzeWithGPT 함수는 이미 위에서 정의됨
+        // GPT 분석 함수
+        window.analyzeWithGPT = async function() {
+            console.log('GPT 분석 시작...');
+            
+            // API 설정 확인
+            console.log('API_CONFIG:', window.API_CONFIG);
+            console.log('analyzeText 함수:', typeof window.analyzeText);
+            
+            // 로딩 표시 (버튼이 없으므로 콘솔 로그로 대체)
+            console.log('🤖 GPT 분석 시작...');
+            
+            try {
+                // URL 파라미터에서 텍스트와 주제 가져오기
+                const urlParams = new URLSearchParams(window.location.search);
+                let text = urlParams.get('text');
+                let topic = urlParams.get('topic');
+                
+                // URL 파라미터가 없으면 localStorage에서 가져오기
+                if (!text || !topic) {
+                    text = localStorage.getItem('analysis_text');
+                    topic = localStorage.getItem('analysis_topic');
+                }
+                
+                if (!text || !topic) {
+                    alert('분석할 글이 없습니다. 글쓰기 페이지에서 글을 작성한 후 다시 시도해주세요.');
+                    return;
+                }
+                
+                // 디코딩
+                if (text.includes('%')) {
+                    text = decodeURIComponent(text);
+                }
+                if (topic.includes('%')) {
+                    topic = decodeURIComponent(topic);
+                }
+                
+                console.log('분석할 텍스트:', text);
+                console.log('분석할 주제:', topic);
+                
+                // analyzeText 함수 존재 확인
+                if (typeof analyzeText !== 'function') {
+                    console.error('analyzeText 함수가 정의되지 않음');
+                    alert('GPT 분석 함수를 찾을 수 없습니다. API 설정을 확인해주세요.');
+                    return;
+                }
+                
+                console.log('GPT API 호출 시작...');
                 // GPT API 호출
                 const result = await analyzeText(text, topic);
                 
@@ -461,11 +491,9 @@
                 }
                 
                 console.log('GPT 분석 결과:', result);
-                console.log('전체 응답 키들:', Object.keys(result));
                 console.log('advanced_vocabulary 데이터:', result.advanced_vocabulary);
                 console.log('advanced_vocabulary 타입:', typeof result.advanced_vocabulary);
                 console.log('advanced_vocabulary 배열 여부:', Array.isArray(result.advanced_vocabulary));
-                console.log('전체 응답 데이터:', JSON.stringify(result, null, 2));
                 
                 // 결과를 페이지에 표시
                 updateAnalysisWithGPTResult(result);
@@ -477,78 +505,29 @@
                 // 분석 완료
                 console.log('GPT 분석 완료');
             }
-        }
-        
-        // 함수를 여러 방법으로 전역에 할당
-        window.analyzeWithGPT = analyzeWithGPT;
-        window['analyzeWithGPT'] = analyzeWithGPT;
-        
-        // 함수 정의 확인
-        console.log('analyzeWithGPT 함수 정의 완료:', typeof analyzeWithGPT);
-        console.log('window.analyzeWithGPT:', typeof window.analyzeWithGPT);
-        console.log('window["analyzeWithGPT"]:', typeof window['analyzeWithGPT']);
-        
-        // GPT 분석 버튼은 인라인 onclick으로 처리됨
-        console.log('GPT 분석 버튼은 인라인 onclick으로 설정됨');
+        };
         
         // GPT 분석 결과를 페이지에 업데이트하는 함수
-        window.updateAnalysisWithGPTResult = function(result) {
-            console.log('=== updateAnalysisWithGPTResult 호출됨 ===');
-            console.log('GPT 분석 결과:', result);
-            console.log('overall_score:', result.overall_score);
-            console.log('vocabulary_score:', result.vocabulary_score);
-            console.log('percentile:', result.percentile);
-            console.log('advanced_vocabulary:', result.advanced_vocabulary);
+        function updateAnalysisWithGPTResult(result) {
+            console.log('Updating charts with GPT result:', result);
             
             // 1. 원형 게이지 차트 업데이트
-            console.log('1. 원형 게이지 차트 업데이트 시작...');
-            if (typeof window.updateGaugeChart === 'function') {
-                window.updateGaugeChart(result.overall_score || result.vocabulary_score || 0);
-            } else {
-                console.error('updateGaugeChart 함수를 찾을 수 없습니다');
-            }
+            updateGaugeChart(result.overall_score || result.vocabulary_score || 0);
             
             // 2. 백분위 차트 업데이트
-            console.log('2. 백분위 차트 업데이트 시작...');
-            if (typeof window.updatePercentileChart === 'function') {
-                window.updatePercentileChart(result.percentile || 0);
-            } else {
-                console.error('updatePercentileChart 함수를 찾을 수 없습니다');
-            }
+            updatePercentileChart(result.percentile || 0);
             
             // 3. 레이더 차트 업데이트
-            console.log('3. 레이더 차트 업데이트 시작...');
-            if (typeof window.updateRadarChart === 'function') {
-                window.updateRadarChart(result);
-            } else {
-                console.error('updateRadarChart 함수를 찾을 수 없습니다');
-            }
+            updateRadarChart(result);
             
             // 4. 막대 차트 업데이트
-            console.log('4. 막대 차트 업데이트 시작...');
-            if (typeof window.updateBarChart === 'function') {
-                window.updateBarChart(result);
-            } else {
-                console.error('updateBarChart 함수를 찾을 수 없습니다');
-            }
+            updateBarChart(result);
             
             // 5. 텍스트 업데이트
-            console.log('5. 텍스트 업데이트 시작...');
-            if (typeof updateTextElements === 'function') {
-                updateTextElements(result);
-            } else {
-                console.error('updateTextElements 함수를 찾을 수 없습니다');
-            }
+            updateTextElements(result);
             
             // 6. 어휘 카드 업데이트
-            console.log('6. 어휘 카드 업데이트 시작...');
-            if (typeof updateVocabularyCards === 'function') {
-                updateVocabularyCards(result);
-            } else {
-                console.error('updateVocabularyCards 함수를 찾을 수 없습니다');
-            }
-            
-            console.log('=== updateAnalysisWithGPTResult 완료 ===');
+            updateVocabularyCards(result);
             
             // 7. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
             
@@ -915,26 +894,11 @@
             card.style.display = 'none';
         });
         
-        // advanced_vocabulary가 없으면 다른 필드에서 어휘 정보 추출 시도
-        let vocabularyData = result.advanced_vocabulary;
-        
-        if (!vocabularyData && result.detailed_analysis) {
-            // detailed_analysis에서 어휘 정보 추출 시도
-            console.log('advanced_vocabulary가 없어서 detailed_analysis에서 어휘 추출 시도');
-            vocabularyData = await extractVocabularyFromAnalysis(result.detailed_analysis);
-        }
-        
-        if (!vocabularyData && result.strengths) {
-            // strengths에서 어휘 정보 추출 시도
-            console.log('detailed_analysis에서도 어휘를 찾지 못해 strengths에서 추출 시도');
-            vocabularyData = await extractVocabularyFromStrengths(result.strengths);
-        }
-        
-        if (vocabularyData && Array.isArray(vocabularyData)) {
-            const vocabCount = vocabularyData.length;
+        if (result.advanced_vocabulary && Array.isArray(result.advanced_vocabulary)) {
+            const vocabCount = result.advanced_vocabulary.length;
             
-            // 추출된 어휘로 카드 업데이트
-            vocabularyData.forEach((vocab, index) => {
+            // GPT에서 제공된 어휘로 카드 업데이트
+            result.advanced_vocabulary.forEach((vocab, index) => {
                 if (vocabCards[index]) {
                     const card = vocabCards[index];
                     const wordElement = card.querySelector('.card-word');
@@ -969,197 +933,13 @@
             }
         } else {
             console.log('No advanced vocabulary data found, hiding all cards');
-            console.log('GPT did not return advanced_vocabulary data. Cards will remain hidden.');
+            console.log('GPT가 advanced_vocabulary 데이터를 반환하지 않았습니다. API 프롬프트를 확인해주세요.');
             
-            // GPT 데이터가 없으면 모든 카드 숨김
+            // GPT 데이터가 없을 때 모든 카드 숨김
             vocabCards.forEach(card => {
                 card.style.display = 'none';
             });
         }
-    }
-    
-    // 제공된 원본 텍스트에서 어휘 추출하는 함수
-    async function extractVocabularyFromOriginalText(originalText) {
-        console.log('extractVocabularyFromOriginalText called with:', originalText);
-        
-        if (!originalText) return null;
-        
-        // 한국어 어휘 추출 (조사, 어미 제거)
-        const words = extractKoreanWords(originalText);
-        console.log('추출된 단어들:', words);
-        
-        // 상위 수준의 어휘만 선택 (길이와 복잡성 기준)
-        const advancedWords = selectAdvancedWords(words);
-        console.log('선택된 고급 어휘들:', advancedWords);
-        
-        // 각 어휘의 품사와 정의 분석 (GPT에게 질문)
-        return await analyzeWordsWithGPT(advancedWords);
-    }
-    
-    // 한국어 단어 추출 (조사, 어미 제거)
-    function extractKoreanWords(text) {
-        // 조사 패턴
-        const particles = ['은', '는', '이', '가', '을', '를', '에', '에서', '로', '으로', '와', '과', '의', '도', '만', '까지', '부터', '처럼', '같이', '보다', '에게', '한테', '께'];
-        
-        // 활용된 어미 패턴 (기본형이 아닌 활용형만)
-        const conjugatedEndings = ['는', '은', '을', '를', '에', '에서', '로', '으로', '와', '과', '의', '도', '만', '까지', '부터', '처럼', '같이', '보다', '에게', '한테', '께', '고', '며', '면서', '하니', '해서', '하면', '하지만', '하므로', '하므로서', '하므로써'];
-        
-        // 2글자 이상의 한국어 단어 추출
-        const words = text.match(/[가-힣]{2,}/g) || [];
-        
-        // 조사와 활용된 어미 제거하여 기본형 추출
-        const cleanWords = words.map(word => {
-            let cleanWord = word;
-            
-            // 조사 제거
-            for (const particle of particles) {
-                if (cleanWord.endsWith(particle)) {
-                    cleanWord = cleanWord.slice(0, -particle.length);
-                    break;
-                }
-            }
-            
-            // 활용된 어미 제거 (기본형이 아닌 활용형만)
-            for (const ending of conjugatedEndings) {
-                if (cleanWord.endsWith(ending)) {
-                    cleanWord = cleanWord.slice(0, -ending.length);
-                    break;
-                }
-            }
-            
-            // "~하다"로 끝나는 경우 기본형으로 복원
-            if (cleanWord.endsWith('하') && !cleanWord.endsWith('하다')) {
-                cleanWord = cleanWord + '다';
-            }
-            
-            return cleanWord;
-        }).filter(word => word.length >= 2); // 2글자 이상만 유지
-        
-        // 중복 제거
-        return [...new Set(cleanWords)];
-    }
-    
-    // 고급 어휘 선택 (길이와 복잡성 기준)
-    function selectAdvancedWords(words) {
-        // 길이순으로 정렬하고 상위 5개 선택
-        return words
-            .sort((a, b) => b.length - a.length)
-            .slice(0, 5);
-    }
-    
-    // GPT에게 단어 분석 요청
-    async function analyzeWordsWithGPT(words) {
-        console.log('GPT에게 단어 분석 요청:', words);
-        
-        try {
-            // 단어들을 쉼표로 구분하여 문자열로 만들기
-            const wordList = words.join(', ');
-            
-            // GPT에게 단어 분석 요청
-            const response = await fetch('https://mundeuk-five.vercel.app/api/analyze', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text: `다음 한국어 단어들의 품사와 정의를 분석해주세요: ${wordList}`,
-                    topic: "단어 분석"
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`API 요청 실패: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            console.log('GPT 단어 분석 결과:', data);
-            
-            // GPT 응답에서 단어 정보 추출 (간단한 파싱)
-            return parseWordAnalysisFromGPT(data, words);
-            
-        } catch (error) {
-            console.error('GPT 단어 분석 오류:', error);
-            // 오류 시 기본 분석 사용
-            return words.map(word => analyzeWordBasic(word));
-        }
-    }
-    
-    // GPT 응답에서 단어 분석 정보 파싱
-    function parseWordAnalysisFromGPT(gptResponse, words) {
-        // GPT 응답에서 단어 정보를 추출하는 로직
-        // 실제로는 GPT가 구조화된 응답을 반환하도록 프롬프트를 수정해야 함
-        
-        // 임시로 기본 분석 사용
-        return words.map(word => analyzeWordBasic(word));
-    }
-    
-    // 기본 단어 분석 (GPT 실패 시 사용)
-    function analyzeWordBasic(word) {
-        // 간단한 품사 분석
-        let pos = "명사";
-        let definition = "";
-        
-        // 동사 패턴
-        if (word.endsWith('하다') || word.endsWith('되다')) {
-            pos = "동사";
-        }
-        // 형용사 패턴
-        else if (word.endsWith('적') || word.endsWith('스러운') || word.endsWith('한')) {
-            pos = "형용사";
-        }
-        // 부사 패턴
-        else if (word.endsWith('게') || word.endsWith('히') || word.endsWith('이')) {
-            pos = "부사";
-        }
-        
-        // 기본 정의 생성
-        definition = generateDefinition(word, pos);
-        
-        return {
-            word: word,
-            pos: pos,
-            definition: definition
-        };
-    }
-    
-    // 기본 정의 생성 (GPT 실패 시 사용)
-    function generateDefinition(word, pos) {
-        return `${word}의 의미`;
-    }
-    
-    // detailed_analysis에서 어휘 추출하는 함수 (원본 텍스트 우선)
-    async function extractVocabularyFromAnalysis(analysis) {
-        console.log('extractVocabularyFromAnalysis called with:', analysis);
-        
-        // 원본 텍스트가 있으면 우선 사용
-        const originalText = getOriginalText();
-        if (originalText) {
-            return await extractVocabularyFromOriginalText(originalText);
-        }
-        
-        // 원본 텍스트가 없으면 분석 텍스트에서 추출
-        return await extractVocabularyFromOriginalText(analysis);
-    }
-    
-    // strengths에서 어휘 추출하는 함수
-    async function extractVocabularyFromStrengths(strengths) {
-        console.log('extractVocabularyFromStrengths called with:', strengths);
-        if (!Array.isArray(strengths)) return null;
-        
-        const allText = strengths.join(' ');
-        return await extractVocabularyFromOriginalText(allText);
-    }
-    
-    // 원본 텍스트 가져오기
-    function getOriginalText() {
-        const urlParams = new URLSearchParams(window.location.search);
-        let text = urlParams.get('text');
-        
-        if (!text) {
-            text = localStorage.getItem('analysis_text');
-        }
-        
-        return text;
     }
         
         // 리라이팅 제안 섹션 업데이트
