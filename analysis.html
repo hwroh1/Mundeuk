@@ -243,7 +243,7 @@
                 인쇄하기
             </button>
             <button class="home-button" onclick="window.location.href='index.html'">홈으로 가기</button>
-            <button class="gpt-button" onclick="console.log('버튼 클릭됨!'); if(typeof window.analyzeWithGPT === 'function') { window.analyzeWithGPT(); } else { console.error('함수 없음'); }" style="background: #10A37F; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem;">🤖 GPT 분석</button>
+            <button class="gpt-button" onclick="analyzeWithGPT()" style="background: #10A37F; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem;">🤖 GPT 분석</button>
         </div>
     </main>
 
@@ -448,7 +448,7 @@
         console.log('Test function available: testWithSampleText()');
         
         // GPT 분석 함수
-        async function analyzeWithGPT() {
+        window.analyzeWithGPT = async function() {
             console.log('GPT 분석 시작...');
             
             // API 설정 확인
@@ -523,9 +523,6 @@
                 console.log('GPT 분석 완료');
             }
         };
-        
-        // 함수를 window 객체에 할당
-        window.analyzeWithGPT = analyzeWithGPT;
         
         // 함수 정의 확인
         console.log('analyzeWithGPT 함수 정의 완료:', typeof window.analyzeWithGPT);
