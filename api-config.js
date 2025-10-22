@@ -23,7 +23,8 @@ const ANALYSIS_PROMPT = `
 주제: {topic}
 작성한 글: {text}
 
-다음 형식으로 JSON 응답을 해주세요:
+⚠️ 중요: 반드시 아래 JSON 형식으로만 응답해주세요. 다른 텍스트는 포함하지 마세요.
+
 {
     "vocabulary_score": 85,
     "structure_score": 78,
@@ -96,6 +97,8 @@ const ANALYSIS_PROMPT = `
 6. 300자 내외로 작성
 
 중요: advanced_vocabulary 필드는 반드시 포함되어야 하며, 글에서 실제로 사용된 고급 어휘 5개를 추출하여 제공해야 합니다. 이 필드가 없으면 분석이 완료되지 않습니다.
+
+⚠️ 최종 확인: 응답은 반드시 유효한 JSON 형식이어야 하며, advanced_vocabulary 배열이 포함되어야 합니다.
 `;
 
 // API 호출 함수
@@ -118,6 +121,10 @@ async function analyzeText(text, topic) {
 
         const data = await response.json();
         console.log('API 응답 데이터:', data);
+        console.log('API 응답 데이터 타입:', typeof data);
+        console.log('API 응답 데이터 키들:', Object.keys(data));
+        console.log('advanced_vocabulary 존재 여부:', 'advanced_vocabulary' in data);
+        console.log('advanced_vocabulary 값:', data.advanced_vocabulary);
         
         // 서버가 이미 JSON 형태로 가공해 반환
         return data;
