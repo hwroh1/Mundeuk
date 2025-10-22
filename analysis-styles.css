@@ -105,11 +105,11 @@ body {
 .nav-link:nth-child(4) { animation-delay: 0.4s; }
 
 .nav-link:hover {
-    color: #00ff88;
+    color: #32FF8A;
 }
 
 .nav-link.active {
-    color: #00ff88;
+    color: #32FF8A;
     font-weight: 600;
 }
 
@@ -133,7 +133,7 @@ body {
 }
 
 .nav-btn:hover {
-    border-color: #00ff88;
+    border-color: #32FF8A;
     background-color: rgba(0, 255, 136, 0.1);
 }
 
@@ -344,7 +344,7 @@ body {
 .score-highlight {
     font-size: 1.8rem;
     font-weight: 800;
-    color: #00ff88;
+    color: #32FF8A;
     margin-bottom: 1rem;
     line-height: 1.2;
 }
@@ -395,7 +395,7 @@ body {
 .gauge-number {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #00ff88;
+    color: #32FF8A;
     display: block;
 }
 
@@ -409,7 +409,7 @@ body {
 .percentile-highlight {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #00ff88;
+    color: #32FF8A;
     margin-bottom: 0.5rem;
 }
 
@@ -583,7 +583,7 @@ body {
     stroke: yellow; 
 }
 .data-bar.difficulty { 
-    stroke: #00ff88; 
+    stroke: #32FF8A; 
 }
 .data-bar.structure { 
     stroke: #FFF9F5; 
