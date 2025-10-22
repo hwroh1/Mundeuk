@@ -18,14 +18,12 @@ const API_CONFIG = {
 
 // 글 분석을 위한 프롬프트 템플릿
 const ANALYSIS_PROMPT = `
-다음 글을 분석하여 JSON으로 응답해주세요:
+다음 글을 분석해주세요:
 
 주제: {topic}
 작성한 글: {text}
 
-위 글에서 고급 어휘 5개를 찾아서 분석해주세요.
-
-응답 형식:
+위 글에서 고급 어휘 5개를 찾아서 JSON으로 응답해주세요. advanced_vocabulary 필드는 반드시 포함해주세요.
 
 {
     "vocabulary_score": 85,
@@ -33,12 +31,7 @@ const ANALYSIS_PROMPT = `
     "logic_score": 92,
     "creativity_score": 80,
     "overall_score": 84,
-    "strengths": ["구체적인 예시 사용", "논리적 전개", "적절한 어휘 선택"],
-    "improvements": ["문장 연결성 강화", "더 다양한 표현 사용"],
-    "detailed_analysis": "이 글은 주제에 대한 명확한 이해를 보여주며...",
     "percentile": 75,
-    "rewritten_text": "상위 3% 수준의 글쓰기 능력을 가진 화자로서 동일한 주제로 300자 내외의 새로운 글을 작성해주세요.",
-    "structure_analysis": ["문장 구조가 체계적입니다", "논리적 전개가 우수합니다", "고급 어휘 사용이 적절합니다"],
     "advanced_vocabulary": [
         {"word": "양면성", "pos": "명사", "definition": "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질"},
         {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
@@ -48,32 +41,7 @@ const ANALYSIS_PROMPT = `
     ]
 }
 
-평가 기준:
-- vocabulary_score: 어휘의 다양성과 적절성 (0-100)
-- structure_score: 문장 구조와 구성 (0-100)  
-- logic_score: 논리적 전개와 일관성 (0-100)
-- creativity_score: 창의성과 독창성 (0-100)
-- overall_score: 전체적인 점수 (0-100)
-- strengths: 글의 강점 (배열)
-- improvements: 개선점 (배열)
-- detailed_analysis: 상세한 분석 내용
-- percentile: 상위 몇 % 수준인지
-- rewritten_text: 상위 3% 수준의 글쓰기 능력을 가진 화자로서 동일한 주제로 300자 내외의 새로운 글 작성 (원글과는 다른 관점이나 접근법 사용, 더욱 정교하고 세련된 표현)
-- structure_analysis: 문장 구조와 논리적 전개에 대한 상세한 분석을 3-4개의 항목으로 나누어 배열로 제공
-- advanced_vocabulary: 글에서 사용된 고급 어휘 5개를 추출하여 배열로 제공 (각 어휘는 word, pos, definition 포함)
-
-어휘 분석:
-- 제공된 글에서 고급 어휘 5개를 찾아주세요
-- 각 어휘는 word, pos, definition을 포함해야 합니다
-- advanced_vocabulary 필드는 반드시 포함해주세요
-
-상위 3% 수준 글쓰기 가이드라인:
-1. 동일한 주제에 대해 완전히 새로운 관점이나 접근법으로 작성
-2. 상위 3% 수준의 정교하고 세련된 어휘와 표현 사용
-3. 복잡하고 정교한 문장 구조와 논리적 전개
-4. 깊이 있는 사고와 통찰력이 드러나는 내용
-5. 문학적이거나 학술적인 수준의 표현력
-6. 300자 내외로 작성
+중요: advanced_vocabulary 필드는 반드시 포함해주세요. 이 필드가 없으면 분석이 실패합니다.
 
 `;
 
