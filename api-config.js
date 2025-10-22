@@ -25,7 +25,7 @@ const ANALYSIS_PROMPT = `
 
 위 글에서 사용된 어휘 중에서 고급 어휘(대학생 이상 수준)를 5개 찾아서 분석해주세요.
 
-반드시 아래 JSON 형식으로만 응답하세요:
+반드시 아래 JSON 형식으로만 응답하세요. advanced_vocabulary 필드는 절대 생략하면 안됩니다:
 
 {
     "vocabulary_score": 85,
@@ -99,7 +99,11 @@ const ANALYSIS_PROMPT = `
 5. 문학적이거나 학술적인 수준의 표현력
 6. 300자 내외로 작성
 
-중요: advanced_vocabulary 필드는 반드시 포함되어야 하며, 제공된 글에서 실제로 사용된 고급 어휘 5개를 추출하여 제공해야 합니다.
+🚨 CRITICAL: advanced_vocabulary 필드는 반드시 포함되어야 합니다!
+- 이 필드가 없으면 분석이 실패합니다
+- 제공된 글에서 실제로 사용된 고급 어휘 5개를 추출하세요
+- 각 어휘는 word, pos, definition을 포함해야 합니다
+- 절대로 이 필드를 생략하지 마세요
 `;
 
 // API 호출 함수
