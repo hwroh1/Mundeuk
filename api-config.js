@@ -7,10 +7,10 @@ const API_CONFIG = {
     OPENAI_API_URL: 'https://mundeuk-five.vercel.app/api/analyze',
     
     // 사용할 모델 (서버에서 사용)
-    MODEL: 'gpt-3.5-turbo',
+    MODEL: 'gpt-4',
     
     // 최대 토큰 수
-    MAX_TOKENS: 1000,
+    MAX_TOKENS: 2000,
     
     // 온도 설정 (0.7이 적당한 창의성)
     TEMPERATURE: 0.7
