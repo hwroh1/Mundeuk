@@ -18,6 +18,8 @@ const API_CONFIG = {
 
 // 글 분석을 위한 프롬프트 템플릿
 const ANALYSIS_PROMPT = `
+당신은 한국어 어휘 분석기입니다. 사용자의 텍스트에서 주요 어휘를 추출하여, 반드시 다음 JSON 배열 형식을 따르는 '단어 카드'를 만드세요.
+
 다음 글을 분석해주세요:
 
 주제: {topic}
@@ -40,6 +42,10 @@ const ANALYSIS_PROMPT = `
         {"word": "진정성", "pos": "명사", "definition": "추상적 개념. 철학적 및 윤리적 담론에서 자주 사용"}
     ]
 }
+
+예시:
+입력: "하늘이 정말 푸르다."
+출력: vocabulary_list에 [{"word": "하늘", "pos": "명사", "definition": "지구의 대기권, 또는 그것이 파랗게 보이는 공간."}, {"word": "푸르다", "pos": "형용사", "definition": "맑은 하늘이나 깊은 바다와 같이 밝고 짙은 파란색이다."}]
 
 vocabulary_list 필드는 반드시 포함해주세요.
 
