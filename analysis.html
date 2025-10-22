@@ -982,13 +982,13 @@
         // 조사 패턴
         const particles = ['은', '는', '이', '가', '을', '를', '에', '에서', '로', '으로', '와', '과', '의', '도', '만', '까지', '부터', '처럼', '같이', '보다', '에게', '한테', '께'];
         
-        // 어미 패턴 (동사, 형용사 어미)
-        const endings = ['다', '하다', '되다', '있다', '없다', '이다', '아니다', '같다', '다르다', '크다', '작다', '좋다', '나쁘다', '많다', '적다', '높다', '낮다', '빠르다', '느리다', '쉽다', '어렵다'];
+        // 활용된 어미 패턴 (기본형이 아닌 활용형만)
+        const conjugatedEndings = ['는', '은', '을', '를', '에', '에서', '로', '으로', '와', '과', '의', '도', '만', '까지', '부터', '처럼', '같이', '보다', '에게', '한테', '께', '고', '며', '면서', '하니', '해서', '하면', '하지만', '하므로', '하므로서', '하므로써'];
         
         // 2글자 이상의 한국어 단어 추출
         const words = text.match(/[가-힣]{2,}/g) || [];
         
-        // 조사와 어미 제거하여 기본형 추출
+        // 조사와 활용된 어미 제거하여 기본형 추출
         const cleanWords = words.map(word => {
             let cleanWord = word;
             
@@ -1000,12 +1000,17 @@
                 }
             }
             
-            // 어미 제거 (동사, 형용사)
-            for (const ending of endings) {
+            // 활용된 어미 제거 (기본형이 아닌 활용형만)
+            for (const ending of conjugatedEndings) {
                 if (cleanWord.endsWith(ending)) {
                     cleanWord = cleanWord.slice(0, -ending.length);
                     break;
                 }
+            }
+            
+            // "~하다"로 끝나는 경우 기본형으로 복원
+            if (cleanWord.endsWith('하') && !cleanWord.endsWith('하다')) {
+                cleanWord = cleanWord + '다';
             }
             
             return cleanWord;
