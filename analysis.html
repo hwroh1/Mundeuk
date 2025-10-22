@@ -491,6 +491,9 @@
                 }
                 
                 console.log('GPT 분석 결과:', result);
+                console.log('advanced_vocabulary 데이터:', result.advanced_vocabulary);
+                console.log('advanced_vocabulary 타입:', typeof result.advanced_vocabulary);
+                console.log('advanced_vocabulary 배열 여부:', Array.isArray(result.advanced_vocabulary));
                 
                 // 결과를 페이지에 표시
                 updateAnalysisWithGPTResult(result);
@@ -881,6 +884,8 @@
     // 어휘 카드 업데이트 함수
     window.updateVocabularyCards = function(result) {
         console.log('Updating vocabulary cards with GPT result:', result);
+        console.log('result.advanced_vocabulary:', result.advanced_vocabulary);
+        console.log('vocabCards found:', document.querySelectorAll('.vocab-card').length);
         
         const vocabCards = document.querySelectorAll('.vocab-card');
         
