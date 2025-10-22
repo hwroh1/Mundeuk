@@ -491,9 +491,11 @@
                 }
                 
                 console.log('GPT 분석 결과:', result);
+                console.log('전체 응답 키들:', Object.keys(result));
                 console.log('advanced_vocabulary 데이터:', result.advanced_vocabulary);
                 console.log('advanced_vocabulary 타입:', typeof result.advanced_vocabulary);
                 console.log('advanced_vocabulary 배열 여부:', Array.isArray(result.advanced_vocabulary));
+                console.log('전체 응답 데이터:', JSON.stringify(result, null, 2));
                 
                 // 결과를 페이지에 표시
                 updateAnalysisWithGPTResult(result);
