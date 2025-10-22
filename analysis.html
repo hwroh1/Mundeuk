@@ -884,7 +884,7 @@
     // 어휘 카드 업데이트 함수
     window.updateVocabularyCards = function(result) {
         console.log('Updating vocabulary cards with GPT result:', result);
-        console.log('result.advanced_vocabulary:', result.advanced_vocabulary);
+        console.log('result.vocabulary_list:', result.vocabulary_list);
         console.log('vocabCards found:', document.querySelectorAll('.vocab-card').length);
         
         const vocabCards = document.querySelectorAll('.vocab-card');
@@ -894,11 +894,11 @@
             card.style.display = 'none';
         });
         
-        if (result.advanced_vocabulary && Array.isArray(result.advanced_vocabulary)) {
-            const vocabCount = result.advanced_vocabulary.length;
+        if (result.vocabulary_list && Array.isArray(result.vocabulary_list)) {
+            const vocabCount = result.vocabulary_list.length;
             
             // GPT에서 제공된 어휘로 카드 업데이트
-            result.advanced_vocabulary.forEach((vocab, index) => {
+            result.vocabulary_list.forEach((vocab, index) => {
                 if (vocabCards[index]) {
                     const card = vocabCards[index];
                     const wordElement = card.querySelector('.card-word');
@@ -933,7 +933,7 @@
             }
         } else {
             console.log('No advanced vocabulary data found, hiding all cards');
-            console.log('GPT가 advanced_vocabulary 데이터를 반환하지 않았습니다. API 프롬프트를 확인해주세요.');
+            console.log('GPT가 vocabulary_list 데이터를 반환하지 않았습니다. API 프롬프트를 확인해주세요.');
             
             // GPT 데이터가 없을 때 모든 카드 숨김
             vocabCards.forEach(card => {

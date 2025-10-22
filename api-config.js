@@ -10,7 +10,7 @@ const API_CONFIG = {
     MODEL: 'gpt-3.5-turbo',
     
     // 최대 토큰 수
-    MAX_TOKENS: 2000,
+    MAX_TOKENS: 1000,
     
     // 온도 설정 (0.7이 적당한 창의성)
     TEMPERATURE: 0.7
@@ -18,12 +18,12 @@ const API_CONFIG = {
 
 // 글 분석을 위한 프롬프트 템플릿
 const ANALYSIS_PROMPT = `
-당신은 한국어 어휘 분석 전문가입니다. 다음 글을 분석해주세요:
+당신은 한국어 어휘력 분석 전문가입니다. 다음 글을 분석해주세요:
 
 주제: {topic}
 작성한 글: {text}
 
-위 글에서 사용된 고급 어휘 5개를 찾아서 분석해주세요.
+위 글에서 사용된 고급 어휘 최소 5개를 찾아서 분석해주세요.
 
 반드시 아래 JSON 형식으로만 응답하세요:
 
@@ -34,7 +34,7 @@ const ANALYSIS_PROMPT = `
     "creativity_score": 80,
     "overall_score": 84,
     "percentile": 75,
-    "advanced_vocabulary": [
+    "vocabulary_list": [
         {"word": "양면성", "pos": "명사", "definition": "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질"},
         {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
         {"word": "조장", "pos": "동사", "definition": "어떤 일이 일어나도록 부추기거나 도움을 주는 것"},
@@ -44,13 +44,13 @@ const ANALYSIS_PROMPT = `
 }
 
 어휘 분석 규칙:
-1. 글에서 실제로 사용된 어휘만 선택
+1. {text}에서 실제로 사용된 어휘만 선택
 2. 조사나 어미는 제거하고 기본형만 사용
 3. 고급 어휘(대학생 이상 수준)만 선택
 4. 각 어휘의 정확한 품사와 정의 제공
-5. advanced_vocabulary 필드는 반드시 포함
+5. vocabulary_list 필드는 반드시 포함
 
-중요: advanced_vocabulary 필드가 없으면 분석이 실패합니다.
+중요: vocabulary_list 필드가 없으면 분석이 실패합니다.
 
 `;
 
