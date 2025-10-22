@@ -896,11 +896,26 @@
             card.style.display = 'none';
         });
         
-        if (result.advanced_vocabulary && Array.isArray(result.advanced_vocabulary)) {
-            const vocabCount = result.advanced_vocabulary.length;
+        // advanced_vocabulary가 없으면 다른 필드에서 어휘 정보 추출 시도
+        let vocabularyData = result.advanced_vocabulary;
+        
+        if (!vocabularyData && result.detailed_analysis) {
+            // detailed_analysis에서 어휘 정보 추출 시도
+            console.log('advanced_vocabulary가 없어서 detailed_analysis에서 어휘 추출 시도');
+            vocabularyData = extractVocabularyFromAnalysis(result.detailed_analysis);
+        }
+        
+        if (!vocabularyData && result.strengths) {
+            // strengths에서 어휘 정보 추출 시도
+            console.log('detailed_analysis에서도 어휘를 찾지 못해 strengths에서 추출 시도');
+            vocabularyData = extractVocabularyFromStrengths(result.strengths);
+        }
+        
+        if (vocabularyData && Array.isArray(vocabularyData)) {
+            const vocabCount = vocabularyData.length;
             
-            // GPT에서 제공된 어휘로 카드 업데이트
-            result.advanced_vocabulary.forEach((vocab, index) => {
+            // 추출된 어휘로 카드 업데이트
+            vocabularyData.forEach((vocab, index) => {
                 if (vocabCards[index]) {
                     const card = vocabCards[index];
                     const wordElement = card.querySelector('.card-word');
@@ -942,6 +957,36 @@
                 card.style.display = 'none';
             });
         }
+    }
+    
+    // detailed_analysis에서 어휘 추출하는 함수
+    function extractVocabularyFromAnalysis(analysis) {
+        console.log('extractVocabularyFromAnalysis called with:', analysis);
+        // 간단한 어휘 추출 로직 (실제로는 더 정교한 NLP가 필요)
+        const words = analysis.match(/[가-힣]{2,}/g) || [];
+        const uniqueWords = [...new Set(words)].slice(0, 5);
+        
+        return uniqueWords.map(word => ({
+            word: word,
+            pos: "명사", // 기본값
+            definition: `${word}에 대한 설명`
+        }));
+    }
+    
+    // strengths에서 어휘 추출하는 함수
+    function extractVocabularyFromStrengths(strengths) {
+        console.log('extractVocabularyFromStrengths called with:', strengths);
+        if (!Array.isArray(strengths)) return null;
+        
+        const allText = strengths.join(' ');
+        const words = allText.match(/[가-힣]{2,}/g) || [];
+        const uniqueWords = [...new Set(words)].slice(0, 5);
+        
+        return uniqueWords.map(word => ({
+            word: word,
+            pos: "명사", // 기본값
+            definition: `${word}에 대한 설명`
+        }));
     }
         
         // 리라이팅 제안 섹션 업데이트
