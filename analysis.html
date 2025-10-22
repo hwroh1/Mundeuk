@@ -243,7 +243,7 @@
                 인쇄하기
             </button>
             <button class="home-button" onclick="window.location.href='index.html'">홈으로 가기</button>
-            <button class="gpt-button" onclick="if(typeof analyzeWithGPT === 'function') { analyzeWithGPT(); } else { console.error('analyzeWithGPT function not found'); }" style="background: #10A37F; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem;">🤖 GPT 분석</button>
+            <button class="gpt-button" id="gpt-analysis-btn" style="background: #10A37F; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem;">🤖 GPT 분석</button>
         </div>
     </main>
 
@@ -511,6 +511,25 @@
         
         // 함수 정의 확인
         console.log('analyzeWithGPT 함수 정의 완료:', typeof window.analyzeWithGPT);
+        
+        // GPT 분석 버튼에 이벤트 리스너 추가
+        document.addEventListener('DOMContentLoaded', function() {
+            const gptButton = document.getElementById('gpt-analysis-btn');
+            if (gptButton) {
+                gptButton.addEventListener('click', function() {
+                    console.log('GPT 분석 버튼 클릭됨');
+                    if (typeof window.analyzeWithGPT === 'function') {
+                        window.analyzeWithGPT();
+                    } else {
+                        console.error('analyzeWithGPT 함수를 찾을 수 없습니다');
+                        alert('GPT 분석 기능을 사용할 수 없습니다. 페이지를 새로고침해주세요.');
+                    }
+                });
+                console.log('GPT 분석 버튼 이벤트 리스너 추가 완료');
+            } else {
+                console.error('GPT 분석 버튼을 찾을 수 없습니다');
+            }
+        });
         
         // GPT 분석 결과를 페이지에 업데이트하는 함수
         function updateAnalysisWithGPTResult(result) {
