@@ -253,77 +253,7 @@
     
     <!-- Test script to check if JavaScript is working -->
     <script>
-        // GPT 분석 함수를 가장 먼저 정의
-        function analyzeWithGPT() {
-            console.log('GPT 분석 시작...');
-            
-            // API 설정 확인
-            console.log('API_CONFIG:', window.API_CONFIG);
-            console.log('analyzeText 함수:', typeof window.analyzeText);
-            
-            // 로딩 표시
-            console.log('🤖 GPT 분석 시작...');
-            
-            try {
-                // URL 파라미터에서 텍스트와 주제 가져오기
-                const urlParams = new URLSearchParams(window.location.search);
-                let text = urlParams.get('text');
-                let topic = urlParams.get('topic');
-                
-                // URL 파라미터가 없으면 localStorage에서 가져오기
-                if (!text || !topic) {
-                    text = localStorage.getItem('analysis_text');
-                    topic = localStorage.getItem('analysis_topic');
-                }
-                
-                if (!text || !topic) {
-                    // 임시 테스트용 텍스트 사용
-                    text = "디지털 시대의 익명성은 양면성을 지닌다. 한편으로는 자유로운 의견 표현을 가능하게 하여 민주주의의 발전에 기여하지만, 다른 한편으로는 책임감 없는 발언과 가짜뉴스의 확산을 조장할 수 있다. 이러한 맥락에서 우리는 익명성의 장단점을 균형 있게 바라보고, 건전한 온라인 문화 조성을 위한 노력이 필요하다.";
-                    topic = "디지털 시대의 익명성";
-                    console.log('테스트용 텍스트 사용:', { text, topic });
-                }
-                
-                // 디코딩
-                if (text.includes('%')) {
-                    text = decodeURIComponent(text);
-                }
-                if (topic.includes('%')) {
-                    topic = decodeURIComponent(topic);
-                }
-                
-                console.log('분석할 텍스트:', text);
-                console.log('분석할 주제:', topic);
-                
-                // GPT 분석 실행
-                if (typeof window.analyzeText === 'function') {
-                    window.analyzeText(text, topic).then(result => {
-                        console.log('GPT 분석 결과:', result);
-                        // 결과를 페이지에 표시
-                        if (typeof window.updateAnalysisWithGPTResult === 'function') {
-                            window.updateAnalysisWithGPTResult(result);
-                        }
-                    }).catch(error => {
-                        console.error('GPT 분석 오류:', error);
-                        alert('분석 중 오류가 발생했습니다: ' + error.message);
-                    });
-                } else {
-                    console.error('analyzeText 함수를 찾을 수 없습니다');
-                    alert('GPT 분석 기능을 사용할 수 없습니다.');
-                }
-                
-            } catch (error) {
-                console.error('GPT 분석 중 오류:', error);
-                alert('분석 중 오류가 발생했습니다: ' + error.message);
-            } finally {
-                // 분석 완료
-                console.log('GPT 분석 완료');
-            }
-        }
-        
-        // 함수를 window 객체에 할당
-        window.analyzeWithGPT = analyzeWithGPT;
-        
-        console.log('analyzeWithGPT 함수 정의 완료:', typeof window.analyzeWithGPT);
+        // analyzeWithGPT 함수는 analysis-script.js에서 정의됨
         console.log('HTML inline script executed!');
         console.log('Current URL:', window.location.href);
         console.log('Search params:', window.location.search);
