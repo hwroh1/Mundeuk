@@ -70,6 +70,87 @@ window.analyzeWithGPT = async function() {
 
 console.log('analyzeWithGPT 함수 정의 완료:', typeof window.analyzeWithGPT);
 
+// 차트 업데이트 함수들
+function updateGaugeChart(score) {
+    console.log('updateGaugeChart called with score:', score);
+    const chart = Chart.getChart('gaugeChart');
+    if (chart) {
+        chart.data.datasets[0].data = [score, 100 - score];
+        chart.update();
+    }
+}
+
+function updatePercentileChart(percentile) {
+    console.log('updatePercentileChart called with percentile:', percentile);
+    const chart = Chart.getChart('percentileChart');
+    if (chart) {
+        // percentile이 "상위 X%" 형태일 수 있으므로 숫자로 변환
+        let score = percentile;
+        if (typeof percentile === 'string' && percentile.includes('상위')) {
+            score = parseInt(percentile.replace(/[^0-9]/g, ''));
+        }
+        
+        // updateScore 함수 호출
+        if (typeof window.updateScore === 'function') {
+            window.updateScore(score);
+        }
+    }
+}
+
+function updateRadarChart(result) {
+    console.log('updateRadarChart called with result:', result);
+    const chart = Chart.getChart('radarChart');
+    if (chart) {
+        chart.data.datasets[0].data = [
+            result.vocabulary_score || 0,
+            result.structure_score || 0,
+            result.logic_score || 0,
+            result.creativity_score || 0
+        ];
+        chart.update();
+    }
+}
+
+function updateBarChart(result) {
+    console.log('updateBarChart called with result:', result);
+    const chart = Chart.getChart('barChart');
+    if (chart) {
+        // 어휘 수준 분석 데이터 업데이트
+        const vocabularyData = result.advanced_vocabulary || [];
+        const gradeCounts = {
+            'A': 0,
+            'B': 0,
+            'C': 0,
+            'D': 0,
+            'F': 0
+        };
+        
+        // 어휘 데이터를 등급별로 분류 (간단한 예시)
+        vocabularyData.forEach((vocab, index) => {
+            if (index < 2) gradeCounts['A']++;
+            else if (index < 4) gradeCounts['B']++;
+            else if (index < 6) gradeCounts['C']++;
+            else if (index < 8) gradeCounts['D']++;
+            else gradeCounts['F']++;
+        });
+        
+        chart.data.datasets[0].data = [
+            gradeCounts['A'],
+            gradeCounts['B'],
+            gradeCounts['C'],
+            gradeCounts['D'],
+            gradeCounts['F']
+        ];
+        chart.update();
+    }
+}
+
+// 함수들을 window 객체에 할당
+window.updateGaugeChart = updateGaugeChart;
+window.updatePercentileChart = updatePercentileChart;
+window.updateRadarChart = updateRadarChart;
+window.updateBarChart = updateBarChart;
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, starting analysis page initialization');
