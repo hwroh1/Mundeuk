@@ -492,7 +492,7 @@
         console.log('GPT 분석 버튼은 인라인 onclick으로 설정됨');
         
         // GPT 분석 결과를 페이지에 업데이트하는 함수
-        function updateAnalysisWithGPTResult(result) {
+        window.updateAnalysisWithGPTResult = function(result) {
             console.log('Updating charts with GPT result:', result);
             
             // 1. 원형 게이지 차트 업데이트
