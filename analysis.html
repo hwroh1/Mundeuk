@@ -448,7 +448,7 @@
         console.log('Test function available: testWithSampleText()');
         
         // GPT 분석 함수
-        window.analyzeWithGPT = async function() {
+        async function analyzeWithGPT() {
             console.log('GPT 분석 시작...');
             
             // API 설정 확인
@@ -524,8 +524,12 @@
             }
         };
         
+        // 함수를 window 객체에 할당
+        window.analyzeWithGPT = analyzeWithGPT;
+        
         // 함수 정의 확인
         console.log('analyzeWithGPT 함수 정의 완료:', typeof window.analyzeWithGPT);
+        console.log('analyzeWithGPT 함수:', window.analyzeWithGPT);
         
         // GPT 분석 버튼은 인라인 onclick으로 처리됨
         console.log('GPT 분석 버튼은 인라인 onclick으로 설정됨');
