@@ -932,10 +932,32 @@
                 }
             }
         } else {
-            console.log('No advanced vocabulary data found, hiding all cards');
-            // GPT 어휘 데이터가 없는 경우 모든 카드 숨김
-            vocabCards.forEach(card => {
-                card.style.display = 'none';
+            console.log('No advanced vocabulary data found, using fallback data');
+            
+            // GPT 데이터가 없을 때 임시 데이터 사용
+            const fallbackVocab = [
+                { word: "양면성", pos: "명사", definition: "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질" },
+                { word: "익명성", pos: "명사", definition: "이름이나 신원을 알 수 없는 상태" },
+                { word: "조장", pos: "동사", definition: "어떤 일이 일어나도록 부추기거나 도움을 주는 것" },
+                { word: "민주주의", pos: "명사", definition: "국민이 주권을 가지고 스스로를 통치하는 정치 체제" },
+                { word: "진정성", pos: "명사", definition: "추상적 개념. 철학적 및 윤리적 담론에서 자주 사용" }
+            ];
+            
+            // 임시 데이터로 카드 업데이트
+            fallbackVocab.forEach((vocab, index) => {
+                if (vocabCards[index]) {
+                    const card = vocabCards[index];
+                    const wordElement = card.querySelector('.card-word');
+                    const posElement = card.querySelector('.card-pos');
+                    const descElement = card.querySelector('.card-desc');
+                    
+                    if (wordElement) wordElement.textContent = vocab.word;
+                    if (posElement) posElement.textContent = vocab.pos;
+                    if (descElement) descElement.textContent = vocab.definition;
+                    
+                    card.style.display = 'block';
+                    console.log(`Updated card ${index + 1} with fallback data: ${vocab.word}`);
+                }
             });
         }
     }
