@@ -4,7 +4,34 @@
 const ANALYSIS_PROMPT = (
   topic,
   text
-) => `다음은 사용자가 작성한 글입니다. 이 글을 분석하여 다음 항목들을 평가해주세요:\n\n주제: ${topic}\n작성한 글: ${text}\n\n다음 형식으로 JSON 응답을 해주세요:\n{\n    "vocabulary_score": 85,\n    "structure_score": 78,\n    "logic_score": 92,\n    "creativity_score": 80,\n    "overall_score": 84,\n    "strengths": ["구체적인 예시 사용", "논리적 전개", "적절한 어휘 선택"],\n    "improvements": ["문장 연결성 강화", "더 다양한 표현 사용"],\n    "detailed_analysis": "이 글은 주제에 대한 명확한 이해를 보여주며...",\n    "percentile": 75,\n    "rewritten_text": "개선된 버전의 글을 300자 내외로 작성해주세요. 원글의 핵심 내용은 유지하면서 더 나은 표현과 구조로 개선해주세요."\n}\n\n평가 기준:\n- vocabulary_score: 어휘의 다양성과 적절성 (0-100)\n- structure_score: 문장 구조와 구성 (0-100)\n- logic_score: 논리적 전개와 일관성 (0-100)\n- creativity_score: 창의성과 독창성 (0-100)\n- overall_score: 전체적인 점수 (0-100)\n- strengths: 글의 강점 (배열)\n- improvements: 개선점 (배열)\n- detailed_analysis: 상세한 분석 내용\n- percentile: 상위 몇 % 수준인지\n- rewritten_text: 원글을 개선한 버전 (300자 내외, 원글의 핵심 내용 유지하면서 더 나은 표현과 구조로 개선)\n`;
+) => `당신은 한국어 어휘 분석기입니다. 사용자의 텍스트에서 주요 어휘를 추출하여 submit_vocabulary_analysis 함수를 호출하세요.
+
+주제: ${topic}
+작성한 글: ${text}
+
+위 글에서 고급 어휘 5개를 찾아서 submit_vocabulary_analysis 함수를 호출하여 결과를 제출하세요.
+
+함수 호출 형식:
+submit_vocabulary_analysis({
+    "vocabulary_list": [
+        {"word": "양면성", "pos": "명사", "definition": "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질"},
+        {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
+        {"word": "조장", "pos": "동사", "definition": "어떤 일이 일어나도록 부추기거나 도움을 주는 것"},
+        {"word": "민주주의", "pos": "명사", "definition": "국민이 주권을 가지고 스스로를 통치하는 정치 체제"},
+        {"word": "진정성", "pos": "명사", "definition": "추상적 개념. 철학적 및 윤리적 담론에서 자주 사용"}
+    ]
+})
+
+예시:
+입력: "하늘이 정말 푸르다."
+함수 호출: submit_vocabulary_analysis({
+    "vocabulary_list": [
+        {"word": "하늘", "pos": "명사", "definition": "지구의 대기권, 또는 그것이 파랗게 보이는 공간."},
+        {"word": "푸르다", "pos": "형용사", "definition": "맑은 하늘이나 깊은 바다와 같이 밝고 짙은 파란색이다."}
+    ]
+})
+
+반드시 submit_vocabulary_analysis 함수를 호출하여 vocabulary_list를 제출하세요.`;
 
 function send(res, status, data) {
   res.statusCode = status;
@@ -44,12 +71,12 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4',
         messages: [
-          { role: 'system', content: '당신은 한국어 글쓰기 전문가입니다. 사용자의 글을 정확하고 상세하게 분석해주세요.' },
+          { role: 'system', content: '당신은 한국어 어휘 분석 전문가입니다. 사용자의 텍스트에서 고급 어휘를 정확하게 추출해주세요.' },
           { role: 'user', content: ANALYSIS_PROMPT(topic, text) },
         ],
-        max_tokens: 1000,
+        max_tokens: 2000,
         temperature: 0.7,
       }),
     });
