@@ -18,14 +18,14 @@ const API_CONFIG = {
 
 // 글 분석을 위한 프롬프트 템플릿
 const ANALYSIS_PROMPT = `
-다음 글을 분석해주세요:
+당신은 한국어 어휘 분석 전문가입니다. 다음 글을 분석해주세요:
 
 주제: {topic}
 작성한 글: {text}
 
-위 글에서 고급 어휘 5개를 찾아서 JSON으로 응답해주세요. 
+위 글에서 사용된 고급 어휘 5개를 찾아서 분석해주세요.
 
-🚨 중요: advanced_vocabulary 필드는 반드시 포함해야 합니다. 이 필드 없이는 응답이 완성되지 않습니다.
+반드시 아래 JSON 형식으로만 응답하세요:
 
 {
     "vocabulary_score": 85,
@@ -43,8 +43,14 @@ const ANALYSIS_PROMPT = `
     ]
 }
 
-🚨 CRITICAL: advanced_vocabulary 필드는 반드시 포함해주세요. 이 필드가 없으면 분석이 실패합니다.
-🚨 CRITICAL: 응답은 반드시 유효한 JSON이어야 하며, advanced_vocabulary 배열이 포함되어야 합니다.
+어휘 분석 규칙:
+1. 글에서 실제로 사용된 어휘만 선택
+2. 조사나 어미는 제거하고 기본형만 사용
+3. 고급 어휘(대학생 이상 수준)만 선택
+4. 각 어휘의 정확한 품사와 정의 제공
+5. advanced_vocabulary 필드는 반드시 포함
+
+중요: advanced_vocabulary 필드가 없으면 분석이 실패합니다.
 
 `;
 
