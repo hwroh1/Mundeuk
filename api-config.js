@@ -58,7 +58,11 @@ async function analyzeText(text, topic) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ text, topic })
+            body: JSON.stringify({ 
+                text, 
+                topic,
+                prompt: ANALYSIS_PROMPT.replace('{topic}', topic).replace('{text}', text)
+            })
         });
 
         if (!response.ok) {
