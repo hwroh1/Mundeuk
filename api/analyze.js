@@ -88,6 +88,23 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     const content = data.choices?.[0]?.message?.content || '';
+    
+    // Function Calling 응답 처리
+    if (content.includes('submit_vocabulary_analysis')) {
+      try {
+        // Function call에서 JSON 추출
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          return send(res, 200, parsed);
+        }
+      } catch (e) {
+        // JSON 파싱 실패 시 원본 반환
+        return send(res, 200, { error: 'Failed to parse function call JSON', raw: content });
+      }
+    }
+    
+    // 일반 JSON 응답 처리
     try {
       const parsed = JSON.parse(content);
       return send(res, 200, parsed);
