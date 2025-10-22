@@ -18,22 +18,15 @@ const API_CONFIG = {
 
 // 글 분석을 위한 프롬프트 템플릿
 const ANALYSIS_PROMPT = `
-당신은 한국어 어휘 분석기입니다. 사용자의 텍스트에서 주요 어휘를 추출하여, 반드시 다음 JSON 배열 형식을 따르는 '단어 카드'를 만드세요.
-
-다음 글을 분석해주세요:
+당신은 한국어 어휘 분석기입니다. 사용자의 텍스트에서 주요 어휘를 추출하여 submit_vocabulary_analysis 함수를 호출하세요.
 
 주제: {topic}
 작성한 글: {text}
 
-위 글에서 고급 어휘 5개를 찾아서 JSON으로 응답해주세요.
+위 글에서 고급 어휘 5개를 찾아서 submit_vocabulary_analysis 함수를 호출하여 결과를 제출하세요.
 
-{
-    "vocabulary_score": 85,
-    "structure_score": 78,
-    "logic_score": 92,
-    "creativity_score": 80,
-    "overall_score": 84,
-    "percentile": 75,
+함수 호출 형식:
+submit_vocabulary_analysis({
     "vocabulary_list": [
         {"word": "양면성", "pos": "명사", "definition": "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질"},
         {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
@@ -41,13 +34,18 @@ const ANALYSIS_PROMPT = `
         {"word": "민주주의", "pos": "명사", "definition": "국민이 주권을 가지고 스스로를 통치하는 정치 체제"},
         {"word": "진정성", "pos": "명사", "definition": "추상적 개념. 철학적 및 윤리적 담론에서 자주 사용"}
     ]
-}
+})
 
 예시:
 입력: "하늘이 정말 푸르다."
-출력: vocabulary_list에 [{"word": "하늘", "pos": "명사", "definition": "지구의 대기권, 또는 그것이 파랗게 보이는 공간."}, {"word": "푸르다", "pos": "형용사", "definition": "맑은 하늘이나 깊은 바다와 같이 밝고 짙은 파란색이다."}]
+함수 호출: submit_vocabulary_analysis({
+    "vocabulary_list": [
+        {"word": "하늘", "pos": "명사", "definition": "지구의 대기권, 또는 그것이 파랗게 보이는 공간."},
+        {"word": "푸르다", "pos": "형용사", "definition": "맑은 하늘이나 깊은 바다와 같이 밝고 짙은 파란색이다."}
+    ]
+})
 
-vocabulary_list 필드는 반드시 포함해주세요.
+반드시 submit_vocabulary_analysis 함수를 호출하여 vocabulary_list를 제출하세요.
 
 `;
 
