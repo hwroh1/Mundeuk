@@ -307,7 +307,20 @@
                     console.log('Title description updated successfully from localStorage');
                     
                 } else {
-                    console.log('No data found in URL parameters or localStorage');
+                    console.log('No data found in URL parameters or localStorage, using default text');
+                    // 기본 텍스트 표시
+                    if (titleDesc) {
+                        titleDesc.innerHTML = `
+                            <div class="written-topic">
+                                디지털 시대의 익명성
+                            </div>
+                            <div class="written-text">
+                                디지털 시대의 익명성은 양면성을 지닌다. 한편으로는 자유로운 의견 표현을 가능하게 하여 민주주의의 발전에 기여하지만, 다른 한편으로는 책임감 없는 발언과 가짜뉴스의 확산을 조장할 수 있다. 이러한 맥락에서 우리는 익명성의 장단점을 균형 있게 바라보고, 건전한 온라인 문화 조성을 위한 노력이 필요하다.
+                            </div>
+                            <div class="word-count">287/300</div>
+                        `;
+                        console.log('Default text displayed');
+                    }
                 }
             }
         }, 1000);
@@ -458,8 +471,10 @@
                 }
                 
                 if (!text || !topic) {
-                    alert('분석할 글이 없습니다. 글쓰기 페이지에서 글을 작성한 후 다시 시도해주세요.');
-                    return;
+                    // 임시 테스트용 텍스트 사용
+                    text = "디지털 시대의 익명성은 양면성을 지닌다. 한편으로는 자유로운 의견 표현을 가능하게 하여 민주주의의 발전에 기여하지만, 다른 한편으로는 책임감 없는 발언과 가짜뉴스의 확산을 조장할 수 있다. 이러한 맥락에서 우리는 익명성의 장단점을 균형 있게 바라보고, 건전한 온라인 문화 조성을 위한 노력이 필요하다.";
+                    topic = "디지털 시대의 익명성";
+                    console.log('테스트용 텍스트 사용:', { text, topic });
                 }
                 
                 // 디코딩
