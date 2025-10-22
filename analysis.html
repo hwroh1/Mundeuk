@@ -528,11 +528,16 @@
         console.log('analyzeWithGPT 함수 정의 완료:', typeof window.analyzeWithGPT);
         
         // GPT 분석 버튼에 이벤트 리스너 추가 (즉시 실행)
+        console.log('GPT 분석 버튼 설정 시작...');
         const gptButton = document.getElementById('gpt-analysis-btn');
+        console.log('GPT 분석 버튼 요소:', gptButton);
+        
         if (gptButton) {
+            console.log('GPT 분석 버튼을 찾았습니다, 이벤트 리스너 추가 중...');
             gptButton.addEventListener('click', function() {
-                console.log('GPT 분석 버튼 클릭됨');
+                console.log('GPT 분석 버튼 클릭됨!');
                 if (typeof window.analyzeWithGPT === 'function') {
+                    console.log('analyzeWithGPT 함수 호출 중...');
                     window.analyzeWithGPT();
                 } else {
                     console.error('analyzeWithGPT 함수를 찾을 수 없습니다');
@@ -540,8 +545,20 @@
                 }
             });
             console.log('GPT 분석 버튼 이벤트 리스너 추가 완료');
+            
+            // 버튼 클릭 테스트
+            console.log('버튼 클릭 테스트를 위해 버튼에 직접 onclick 추가...');
+            gptButton.onclick = function() {
+                console.log('onclick 이벤트 발생!');
+                if (typeof window.analyzeWithGPT === 'function') {
+                    window.analyzeWithGPT();
+                } else {
+                    console.error('analyzeWithGPT 함수를 찾을 수 없습니다');
+                }
+            };
         } else {
             console.error('GPT 분석 버튼을 찾을 수 없습니다');
+            console.log('페이지의 모든 버튼 요소들:', document.querySelectorAll('button'));
         }
         
         // GPT 분석 결과를 페이지에 업데이트하는 함수
