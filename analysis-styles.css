@@ -61,7 +61,7 @@ body {
     cursor: pointer;
     padding: 0.5rem 1rem;
     transition: color 0.3s ease;
-    color: white;
+    color: #FFF9F5;
 }
 
 .nav-item:hover {
@@ -1209,8 +1209,8 @@ body {
     body,
     .main,
     .analysis-dashboard {
-        background: white !important;
-        background-color: white !important;
+        background: #FFF9F5 !important;
+        background-color: #FFF9F5 !important;
     }
     
     /* Convert charts to grayscale but keep light areas visible */
@@ -1285,7 +1285,7 @@ body {
     /* Fix bell curve container for print */
     .bell-curve-container {
         overflow: visible !important;
-        background: white !important;
+        background: #FFF9F5 !important;
         border: 1px solid #ddd !important;
     }
     
