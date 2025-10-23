@@ -322,7 +322,8 @@
         
         // Test function with sample text and complete analysis
         window.testWithSampleText = function() {
-            console.log('🧪 테스트 시작 - GPT 토큰 없이 샘플 데이터로 모든 차트 테스트');
+            // 테스트 함수 비활성화
+            return;
             
             // 1. 제목 설명 업데이트
             const titleDesc = document.querySelector('.title-description');
@@ -437,7 +438,7 @@
                 console.error('❌ 테스트 중 오류 발생:', error);
             }
             
-            console.log('🎉 모든 테스트 완료! GPT 토큰 없이 모든 기능이 정상 작동합니다.');
+            // 테스트 완료 로그 제거
             
             // 로딩 페이지 숨기고 메인 콘텐츠 표시
             document.getElementById('loadingPage').style.display = 'none';
@@ -450,12 +451,13 @@
         window.analyzeWithGPT = async function() {
             console.log('GPT 분석 시작...');
             
+            // 로딩 페이지 표시
+            document.getElementById('loadingPage').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+            
             // API 설정 확인
             console.log('API_CONFIG:', window.API_CONFIG);
             console.log('analyzeText 함수:', typeof window.analyzeText);
-            
-            // 로딩 표시 (버튼이 없으므로 콘솔 로그로 대체)
-            console.log('🤖 GPT 분석 시작...');
             
             try {
                 // URL 파라미터에서 텍스트와 주제 가져오기
@@ -546,7 +548,8 @@
             
             // 8. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
             
-            // 로딩 페이지 숨기고 메인 콘텐츠 표시
+            // GPT 분석 완료 - 로딩 페이지 숨기고 메인 콘텐츠 표시
+            console.log('GPT 분석 완료');
             document.getElementById('loadingPage').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
         }
