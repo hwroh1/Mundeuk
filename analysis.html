@@ -696,7 +696,16 @@
                     result.vocabulary_analysis.basic || 0,          // C등급 (기초)
                     result.vocabulary_analysis.foregin || 0         // 외래어
                 ];
+                
+                // 합계가 100이 되도록 정규화
+                const total = distribution.reduce((sum, val) => sum + val, 0);
+                if (total > 0 && total !== 100) {
+                    console.log(`Vocabulary analysis total is ${total}, normalizing to 100`);
+                    distribution = distribution.map(val => Math.round((val / total) * 100));
+                }
+                
                 console.log('Using GPT vocabulary_analysis:', result.vocabulary_analysis);
+                console.log('Normalized distribution:', distribution);
             } else {
                 // fallback: 점수에 따른 분포 계산
                 const overallScore = result.overall_score || 0;

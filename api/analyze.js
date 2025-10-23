@@ -18,11 +18,12 @@ const ANALYSIS_PROMPT = (
    - vocabulary_difficulty: 어휘 난이도
    - sentence_structure: 문장 구성
    - logical_development: 논리적 전개
-4. vocabulary_analysis: 어휘 수준별 비율 (합계 100)
-   - high_level: 고급 어휘 비율
-   - intermediate: 중급 어휘 비율
-   - basic: 기초 어휘 비율
-   - foregin: 외래어 비율
+4. vocabulary_analysis: 어휘 수준별 비율 (반드시 합계가 100이 되어야 함)
+   - high_level: 고급 어휘 비율 (숫자)
+   - intermediate: 중급 어휘 비율 (숫자)
+   - basic: 기초 어휘 비율 (숫자)
+   - foregin: 외래어 비율 (숫자)
+   - 중요: high_level + intermediate + basic + foregin = 100 이어야 함
 5. vocabulary_list: 글에서 사용된 고급 어휘 5개 (실제 글에 있는 어휘만)
    - 각 어휘는 {"word": "단어", "pos": "품사", "definition": "정의"} 형식으로 작성
    - pos는 명사, 동사, 형용사, 부사 중 하나
