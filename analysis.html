@@ -19,8 +19,17 @@
         <div class="nav-icon">[→</div>
     </nav>
 
+    <!-- 로딩 페이지 -->
+    <div id="loadingPage" class="loading-page">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>GPT 분석 중...</h2>
+            <p>잠시만 기다려주세요. 글을 분석하고 있습니다.</p>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <main class="main">
+    <main class="main" id="mainContent" style="display: none;">
         <!-- Title Section -->
         <section class="title-section animate-on-scroll">
             <h1 class="main-title">분석 리포트</h1>
@@ -429,6 +438,10 @@
             }
             
             console.log('🎉 모든 테스트 완료! GPT 토큰 없이 모든 기능이 정상 작동합니다.');
+            
+            // 로딩 페이지 숨기고 메인 콘텐츠 표시
+            document.getElementById('loadingPage').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
         };
         
         console.log('Test function available: testWithSampleText()');
@@ -533,7 +546,9 @@
             
             // 8. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
             
-            alert('GPT 분석이 완료되었습니다!');
+            // 로딩 페이지 숨기고 메인 콘텐츠 표시
+            document.getElementById('loadingPage').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
         }
         
         // 원형 게이지 차트 업데이트
@@ -1018,6 +1033,18 @@
                 suggestionNote.textContent = '아래는 상위 3% 회원님의 글입니다!';
             }
         }
+        
+        // 페이지 로드 시 자동 분석 시작
+        window.addEventListener('load', function() {
+            // 로딩 페이지 표시
+            document.getElementById('loadingPage').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+            
+            // 자동 분석 시작
+            setTimeout(() => {
+                testWithSampleText();
+            }, 1000);
+        });
         
     </script>
 </body>
