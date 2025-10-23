@@ -989,8 +989,16 @@
             const suggestionText = document.querySelector('.suggestion-text');
             const suggestionNote = document.querySelector('.suggestion-note');
             
-            if (suggestionText && result.rewritten_text) {
-                suggestionText.textContent = result.rewritten_text;
+            console.log('Updating rewriting suggestion:', result.rewritten_text);
+            
+            if (suggestionText) {
+                if (result.rewritten_text) {
+                    suggestionText.textContent = result.rewritten_text;
+                    console.log('Updated suggestion text with GPT content');
+                } else {
+                    suggestionText.textContent = '리라이팅 제안을 생성할 수 없습니다. 다시 분석해주세요.';
+                    console.log('No rewritten_text found, showing fallback message');
+                }
             }
             
             // 제안 노트는 항상 고정 (잘 쓴 글만 보여주기)
