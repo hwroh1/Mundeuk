@@ -719,7 +719,7 @@
             const scoreDescription = document.querySelector('.score-description');
             
             if (scoreHighlight) {
-                const overallScore = result.overall_score || 0;
+                const overallScore = result.vocabulary_score || result.overall_score || 0;
                 let level = '';
                 
                 if (overallScore >= 90) level = '글쓰기 마스터';
@@ -729,6 +729,7 @@
                 else level = '열정적인 초보';
                 
                 scoreHighlight.textContent = level;
+                console.log(`Updated score highlight: ${level} (score: ${overallScore})`);
             }
             
             if (scoreDescription) {
