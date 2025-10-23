@@ -33,15 +33,10 @@
         }
         
         .writing-grid {
-            column-count: 2;
-            column-gap: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
             margin-bottom: 3rem;
-        }
-        
-        @media (max-width: 768px) {
-            .writing-grid {
-                column-count: 1;
-            }
         }
         
         .writing-card {
@@ -51,8 +46,16 @@
             padding: 2rem;
             position: relative;
             overflow: hidden;
-            break-inside: avoid;
+            flex: 1 1 calc(50% - 1rem);
+            min-width: 400px;
             margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .writing-card {
+                flex: 1 1 100%;
+                min-width: auto;
+            }
         }
         
         .writing-card:last-child {
