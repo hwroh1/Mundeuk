@@ -716,6 +716,8 @@
             
             barSegments.forEach((segment, index) => {
                 if (distribution[index] !== undefined) {
+                    // CSS data-percentage 대신 직접 스타일 설정
+                    segment.style.height = `${distribution[index]}%`;
                     segment.setAttribute('data-percentage', distribution[index]);
                     console.log(`Bar segment ${index} updated to ${distribution[index]}%`);
                 }
