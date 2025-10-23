@@ -400,7 +400,7 @@ body {
 }
 
 .gauge-max {
-    font-size: 0.6rem !important;
+    font-size: 1.2rem !important;
     color: #FFF9F5;
     font-weight: 500;
 }
