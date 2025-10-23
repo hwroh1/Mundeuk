@@ -923,14 +923,23 @@
                     const posElement = card.querySelector('.card-pos');
                     const descElement = card.querySelector('.card-desc');
                     
-                    if (wordElement) wordElement.textContent = vocab.word;
-                    if (posElement) posElement.textContent = vocab.pos;
-                    if (descElement) descElement.textContent = vocab.definition;
+                    // 두 가지 데이터 형식 처리
+                    if (typeof vocab === 'string') {
+                        // 문자열 배열인 경우 (현재 GPT 응답)
+                        if (wordElement) wordElement.textContent = vocab;
+                        if (posElement) posElement.textContent = '명사'; // 기본값
+                        if (descElement) descElement.textContent = '고급 어휘'; // 기본값
+                        console.log(`Updated card ${index + 1}: ${vocab} (string format)`);
+                    } else if (vocab && typeof vocab === 'object') {
+                        // 객체 배열인 경우 (예상 형식)
+                        if (wordElement) wordElement.textContent = vocab.word || '';
+                        if (posElement) posElement.textContent = vocab.pos || '';
+                        if (descElement) descElement.textContent = vocab.definition || '';
+                        console.log(`Updated card ${index + 1}: ${vocab.word} (${vocab.pos})`);
+                    }
                     
                     // 카드 표시
                     card.style.display = 'block';
-                    
-                    console.log(`Updated card ${index + 1}: ${vocab.word} (${vocab.pos})`);
                 }
             });
             
