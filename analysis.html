@@ -13,7 +13,7 @@
         <div class="nav-items-container">
             <div class="nav-item" onclick="window.location.href='index.html'">오늘의 학습</div>
             <div class="nav-item" style="color: #32FF8A;">분석리포트</div>
-            <div class="nav-item">베스트 라이팅</div>
+            <div class="nav-item" onclick="window.location.href='best-writing.html'">베스트 라이팅</div>
             <div class="nav-item" onclick="window.location.href='mypage.html'">마이페이지</div>
         </div>
         <div class="nav-icon">[→</div>
@@ -546,7 +546,10 @@
             // 7. 리라이팅 제안 업데이트
             updateRewritingSuggestion(result);
             
-            // 8. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
+            // 8. 베스트 라이팅 저장 (상위 3% 이상)
+            saveToBestWritings(result);
+            
+            // 9. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
             
             // GPT 분석 완료 - 로딩 페이지 숨기고 메인 콘텐츠 표시
             console.log('GPT 분석 완료');
@@ -1035,6 +1038,139 @@
             if (suggestionNote) {
                 suggestionNote.textContent = '아래는 상위 3% 회원님의 글입니다!';
             }
+        }
+        
+        // 베스트 라이팅 저장 (상위 3% 이상)
+        function saveToBestWritings(result) {
+            const percentile = result.percentile || 0;
+            
+            // 상위 3% 이상인 경우에만 저장
+            if (percentile >= 97) {
+                console.log('상위 3% 이상 - 베스트 라이팅에 저장:', percentile);
+                
+                // URL에서 작성한 텍스트와 주제 가져오기
+                const urlParams = new URLSearchParams(window.location.search);
+                const text = urlParams.get('text');
+                const topic = urlParams.get('topic');
+                
+                if (text && topic) {
+                    // 베스트 라이팅 데이터 생성
+                    const bestWriting = {
+                        id: Date.now(), // 고유 ID
+                        topic: topic,
+                        content: text,
+                        totalScore: result.overall_score || result.vocabulary_score || 0,
+                        percentile: percentile,
+                        wordCount: text.length,
+                        timestamp: new Date().toISOString(),
+                        analysis: {
+                            vocabulary_score: result.vocabulary_score || 0,
+                            structure_score: result.structure_score || 0,
+                            logic_score: result.logic_score || 0,
+                            foreign_word_ratio: result.foreign_word_ratio || 0
+                        }
+                    };
+                    
+                    // localStorage에서 기존 베스트 라이팅 가져오기
+                    const existingBestWritings = JSON.parse(localStorage.getItem('best_writings') || '[]');
+                    
+                    // 중복 확인 (같은 주제와 내용이면 저장하지 않음)
+                    const isDuplicate = existingBestWritings.some(writing => 
+                        writing.topic === topic && writing.content === text
+                    );
+                    
+                    if (!isDuplicate) {
+                        // 새 베스트 라이팅 추가
+                        existingBestWritings.push(bestWriting);
+                        
+                        // 최대 50개까지만 저장 (오래된 것부터 삭제)
+                        if (existingBestWritings.length > 50) {
+                            existingBestWritings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                            existingBestWritings.splice(50);
+                        }
+                        
+                        // localStorage에 저장
+                        localStorage.setItem('best_writings', JSON.stringify(existingBestWritings));
+                        
+                        console.log('베스트 라이팅 저장 완료:', bestWriting);
+                        
+                        // 사용자에게 알림
+                        showBestWritingNotification(percentile);
+                    } else {
+                        console.log('중복된 베스트 라이팅 - 저장하지 않음');
+                    }
+                } else {
+                    console.log('텍스트 또는 주제 정보 없음 - 베스트 라이팅 저장 불가');
+                }
+            } else {
+                console.log('상위 3% 미만 - 베스트 라이팅 저장하지 않음:', percentile);
+            }
+        }
+        
+        // 베스트 라이팅 저장 알림
+        function showBestWritingNotification(percentile) {
+            // 기존 알림이 있으면 제거
+            const existingNotification = document.querySelector('.best-writing-notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // 알림 생성
+            const notification = document.createElement('div');
+            notification.className = 'best-writing-notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #32FF8A, #00D4AA);
+                color: #1a1a1a;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                z-index: 1000;
+                box-shadow: 0 4px 20px rgba(50, 255, 138, 0.3);
+                animation: slideInRight 0.5s ease-out;
+            `;
+            
+            notification.innerHTML = `
+                🎉 축하합니다!<br>
+                상위 ${percentile}% 달성으로<br>
+                베스트 라이팅에 저장되었습니다!
+            `;
+            
+            // 애니메이션 CSS 추가
+            if (!document.querySelector('#best-writing-animation')) {
+                const style = document.createElement('style');
+                style.id = 'best-writing-animation';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            // 5초 후 자동 제거
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.animation = 'slideInRight 0.5s ease-out reverse';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 500);
+                }
+            }, 5000);
         }
         
         // 페이지 로드 시 자동 GPT 분석 시작

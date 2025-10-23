@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>베스트 라이팅 - Best Writing</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .best-writing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .best-writing-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .best-writing-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FFF9F5;
+            font-family: 'SchoolSafeUniverse', sans-serif;
+            margin-bottom: 1rem;
+        }
+        
+        .best-writing-subtitle {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+        }
+        
+        .writing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .writing-card {
+            background: #2a2a2a;
+            border: 1px solid #404040;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .writing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #32FF8A;
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        .writing-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .writing-topic {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #32FF8A;
+        }
+        
+        .writing-date {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        .writing-content {
+            font-size: 1rem;
+            color: #d0d0d0;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .writing-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(50, 255, 138, 0.1);
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #32FF8A;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #888;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .empty-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #d0d0d0;
+        }
+        
+        .empty-description {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .writing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .best-writing-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-items-container">
+            <div class="nav-item" onclick="window.location.href='index.html'">오늘의 학습</div>
+            <div class="nav-item" onclick="window.location.href='analysis.html'">분석리포트</div>
+            <div class="nav-item" style="color: #32FF8A;">베스트 라이팅</div>
+            <div class="nav-item" onclick="window.location.href='mypage.html'">마이페이지</div>
+        </div>
+        <div class="nav-icon">[→</div>
+    </nav>
+
+    <main class="main">
+        <div class="best-writing-container">
+            <div class="best-writing-header">
+                <h1 class="best-writing-title">베스트 라이팅</h1>
+                <p class="best-writing-subtitle">상위 3% 이상의 우수한 글들을 모아봤어요</p>
+            </div>
+            
+            <div id="writingGrid" class="writing-grid">
+                <!-- 베스트 라이팅 카드들이 여기에 동적으로 추가됩니다 -->
+            </div>
+            
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-icon">📝</div>
+                <h2 class="empty-title">아직 베스트 라이팅이 없어요</h2>
+                <p class="empty-description">
+                    글쓰기 연습을 통해 상위 3% 이상의 점수를 받으면<br>
+                    여기에 자동으로 저장됩니다.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 베스트 라이팅 데이터 로드 및 표시
+        function loadBestWritings() {
+            const bestWritings = JSON.parse(localStorage.getItem('best_writings') || '[]');
+            const writingGrid = document.getElementById('writingGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (bestWritings.length === 0) {
+                writingGrid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            writingGrid.style.display = 'grid';
+            emptyState.style.display = 'none';
+            
+            writingGrid.innerHTML = bestWritings.map(writing => `
+                <div class="writing-card">
+                    <div class="writing-meta">
+                        <div class="writing-topic">${writing.topic}</div>
+                        <div class="writing-date">${formatDate(writing.timestamp)}</div>
+                    </div>
+                    <div class="writing-content">${writing.content}</div>
+                    <div class="writing-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">${writing.totalScore}</div>
+                            <div class="stat-label">총점</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${writing.percentile}%</div>
+                            <div class="stat-label">상위</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${writing.wordCount}</div>
+                            <div class="stat-label">자</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 날짜 포맷팅
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
+        
+        // 페이지 로드 시 베스트 라이팅 표시
+        document.addEventListener('DOMContentLoaded', loadBestWritings);
+    </script>
+</body>
+</html>
