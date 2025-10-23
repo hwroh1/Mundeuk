@@ -4,36 +4,27 @@
 const ANALYSIS_PROMPT = (
   topic,
   text
-) => `당신은 한국어 어휘 분석 전문가입니다. 다음 JSON 형식으로 분석 결과를 반환해주세요:
+) => `당신은 한국어 어휘 분석 전문가입니다. 주어진 글을 실제로 분석하여 다음 JSON 형식으로 결과를 반환해주세요:
 
 주제: ${topic}
 작성한 글: ${text}
 
-다음 형식의 JSON을 반환해주세요:
-{
-  "vocabulary_score": 85,
-  "percentile": 78,
-  "scores": {
-    "vocabulary_diversity": 82,
-    "vocabulary_difficulty": 88,
-    "sentence_structure": 79,
-    "logical_development": 84
-  },
-  "vocabulary_analysis": {
-    "high_level": 15,
-    "intermediate": 25,
-    "basic": 60
-  },
-  "vocabulary_list": [
-    {"word": "양면성", "pos": "명사", "definition": "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질"},
-    {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
-    {"word": "조장", "pos": "동사", "definition": "어떤 일이 일어나도록 부추기거나 도움을 주는 것"},
-    {"word": "민주주의", "pos": "명사", "definition": "국민이 주권을 가지고 스스로를 통치하는 정치 체제"},
-    {"word": "진정성", "pos": "명사", "definition": "추상적 개념. 철학적 및 윤리적 담론에서 자주 사용"}
-  ]
-}
+위 글을 실제로 분석하여 다음 형식의 JSON을 반환해주세요:
 
-위 글을 분석하여 위 형식의 JSON만 반환해주세요. 다른 설명이나 텍스트는 포함하지 마세요.`;
+1. vocabulary_score: 전체 어휘 표현력 점수 (0-100)
+2. percentile: 상위 몇 퍼센트인지 (0-100)
+3. scores: 각 영역별 점수 (0-100)
+   - vocabulary_diversity: 어휘 다양성
+   - vocabulary_difficulty: 어휘 난이도
+   - sentence_structure: 문장 구성
+   - logical_development: 논리적 전개
+4. vocabulary_analysis: 어휘 수준별 비율 (합계 100)
+   - high_level: 고급 어휘 비율
+   - intermediate: 중급 어휘 비율
+   - basic: 기초 어휘 비율
+5. vocabulary_list: 글에서 사용된 고급 어휘 5개 (실제 글에 있는 어휘만)
+
+반드시 실제 글을 분석한 결과를 반환하고, 예시 값이 아닌 실제 분석 값으로 채워주세요. JSON 형식만 반환하고 다른 설명은 포함하지 마세요.`;
 
 function send(res, status, data) {
   res.statusCode = status;
