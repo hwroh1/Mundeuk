@@ -646,7 +646,15 @@
             
             legendScores.forEach((score, index) => {
                 if (scores[index] !== undefined) {
-                    score.textContent = `${scores[index]}/100`;
+                    // HTML 구조를 유지하면서 숫자 부분만 업데이트
+                    const maxSpan = score.querySelector('.legend-max');
+                    if (maxSpan) {
+                        // 기존 구조 유지: <span class="legend-score">숫자<span class="legend-max">/100</span></span>
+                        score.innerHTML = `${scores[index]}<span class="legend-max">/100</span>`;
+                    } else {
+                        // fallback: 전체 텍스트 교체
+                        score.textContent = `${scores[index]}/100`;
+                    }
                 }
             });
             
