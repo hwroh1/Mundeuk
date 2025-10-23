@@ -396,7 +396,8 @@ body {
     font-size: 2.5rem;
     font-weight: 800;
     color: #32FF8A;
-    display: inline;
+    display: block;
+    line-height: 1.0;
 }
 
 .gauge-max {
