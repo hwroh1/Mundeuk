@@ -24,21 +24,11 @@ const ANALYSIS_PROMPT = (
    - basic: 기초 어휘 비율
    - foregin: 외래어 비율
 5. vocabulary_list: 글에서 사용된 고급 어휘 5개 (실제 글에 있는 어휘만)
-   - 반드시 다음 형식으로 작성: [{"word": "단어", "pos": "품사", "definition": "정의"}, ...]
-   - pos는 "명사", "동사", "형용사", "부사" 등 정확한 품사로 작성
-   - definition은 해당 단어의 구체적인 의미를 한국어로 작성
-   - 절대로 단순 문자열 배열 ["단어1", "단어2"] 형식으로 작성하지 마세요
+   - 각 어휘는 {"word": "단어", "pos": "품사", "definition": "정의"} 형식으로 작성
+   - pos는 명사, 동사, 형용사, 부사 중 하나
+   - definition은 해당 단어의 의미
 
-예시 형식:
-"vocabulary_list": [
-  {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
-  {"word": "억압", "pos": "명사", "definition": "힘으로 누르고 억제하는 것"},
-  {"word": "무차별적", "pos": "형용사", "definition": "구별이나 선택 없이 모든 것을 대상으로 하는"},
-  {"word": "유포", "pos": "동사", "definition": "소문이나 정보를 널리 퍼뜨리는 것"},
-  {"word": "신뢰", "pos": "명사", "definition": "믿고 의지하는 마음"}
-]
-
-중요: vocabulary_list는 반드시 위 예시와 같은 객체 배열 형식으로 작성하세요. 단순 문자열 배열로 작성하면 안됩니다.`;
+반드시 실제 글을 분석한 결과를 반환하고, 예시 값이 아닌 실제 분석 값으로 채워주세요. JSON 형식만 반환하고 다른 설명은 포함하지 마세요.`;
 
 function send(res, status, data) {
   res.statusCode = status;
