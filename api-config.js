@@ -16,38 +16,7 @@ const API_CONFIG = {
     TEMPERATURE: 0.7
 };
 
-// 글 분석을 위한 프롬프트 템플릿
-const ANALYSIS_PROMPT = `
-당신은 한국어 어휘 분석기입니다. 사용자의 텍스트에서 주요 어휘를 추출하여 submit_vocabulary_analysis 함수를 호출하세요.
-
-주제: {topic}
-작성한 글: {text}
-
-위 글에서 고급 어휘 5개를 찾아서 submit_vocabulary_analysis 함수를 호출하여 결과를 제출하세요.
-
-함수 호출 형식:
-submit_vocabulary_analysis({
-    "vocabulary_list": [
-        {"word": "양면성", "pos": "명사", "definition": "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질"},
-        {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
-        {"word": "조장", "pos": "동사", "definition": "어떤 일이 일어나도록 부추기거나 도움을 주는 것"},
-        {"word": "민주주의", "pos": "명사", "definition": "국민이 주권을 가지고 스스로를 통치하는 정치 체제"},
-        {"word": "진정성", "pos": "명사", "definition": "추상적 개념. 철학적 및 윤리적 담론에서 자주 사용"}
-    ]
-})
-
-예시:
-입력: "하늘이 정말 푸르다."
-함수 호출: submit_vocabulary_analysis({
-    "vocabulary_list": [
-        {"word": "하늘", "pos": "명사", "definition": "지구의 대기권, 또는 그것이 파랗게 보이는 공간."},
-        {"word": "푸르다", "pos": "형용사", "definition": "맑은 하늘이나 깊은 바다와 같이 밝고 짙은 파란색이다."}
-    ]
-})
-
-반드시 submit_vocabulary_analysis 함수를 호출하여 vocabulary_list를 제출하세요.
-
-`;
+// 서버에서 프롬프트를 처리하므로 프론트엔드에서는 프롬프트를 보내지 않습니다
 
 // API 호출 함수
 async function analyzeText(text, topic) {
@@ -58,11 +27,10 @@ async function analyzeText(text, topic) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 
-                text, 
-                topic,
-                prompt: ANALYSIS_PROMPT.replace('{topic}', topic).replace('{text}', text)
-            })
+        body: JSON.stringify({ 
+            text, 
+            topic
+        })
         });
 
         if (!response.ok) {
@@ -75,8 +43,10 @@ async function analyzeText(text, topic) {
         console.log('API 응답 데이터:', data);
         console.log('API 응답 데이터 타입:', typeof data);
         console.log('API 응답 데이터 키들:', Object.keys(data));
-        console.log('advanced_vocabulary 존재 여부:', 'advanced_vocabulary' in data);
-        console.log('advanced_vocabulary 값:', data.advanced_vocabulary);
+        console.log('vocabulary_list 존재 여부:', 'vocabulary_list' in data);
+        console.log('vocabulary_list 값:', data.vocabulary_list);
+        console.log('vocabulary_score 존재 여부:', 'vocabulary_score' in data);
+        console.log('vocabulary_score 값:', data.vocabulary_score);
         
         // 서버가 이미 JSON 형태로 가공해 반환
         return data;
