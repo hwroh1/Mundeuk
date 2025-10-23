@@ -182,6 +182,9 @@
     <script>
         // 베스트 라이팅 데이터 로드 및 표시
         function loadBestWritings() {
+            // 기존 데이터 초기화 (테스트용)
+            localStorage.removeItem('best_writings');
+            
             let bestWritings = JSON.parse(localStorage.getItem('best_writings') || '[]');
             const writingGrid = document.getElementById('writingGrid');
             const emptyState = document.getElementById('emptyState');
