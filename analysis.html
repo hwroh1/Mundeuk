@@ -614,9 +614,23 @@
                     percentileDetails = '글쓰기 기초부터 차근차근 학습이 필요한 단계입니다. 기초 문법과 어휘력 향상에 집중하세요.';
                 }
                 
+                // 다양한 두 번째 줄 멘트
+                const secondLineMessages = [
+                    '독자와의 소통이 뛰어난 글쓰기입니다.',
+                    '감정을 잘 전달하는 표현력이 돋보입니다.',
+                    '논리적 사고가 잘 드러나는 글입니다.',
+                    '창의적이고 독창적인 관점이 인상적입니다.',
+                    '읽기 편하고 이해하기 쉬운 구성입니다.',
+                    '세심한 관찰력이 느껴지는 글입니다.',
+                    '균형 잡힌 시각으로 주제를 다뤘습니다.',
+                    '생생한 묘사와 구체적인 예시가 좋습니다.'
+                ];
+                
+                const randomMessage = secondLineMessages[Math.floor(Math.random() * secondLineMessages.length)];
+                
                 percentileList.innerHTML = `
                     <li>${percentileDetails}</li>
-                    <li>${percentileDescription} 수준의 글쓰기 실력을 보여줍니다.</li>
+                    <li>${randomMessage}</li>
                 `;
             }
             
