@@ -55,9 +55,11 @@ let currentTopicIndex = 0;
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
-    loadTopic(currentTopicIndex);
+    // Load random topic on page load
+    generateNewTopic();
     setupEventListeners();
-    loadSavedWriting();
+    // Don't load saved writing - start fresh each time
+    // loadSavedWriting();
 });
 
 // Set up event listeners

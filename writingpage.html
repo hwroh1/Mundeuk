@@ -93,6 +93,8 @@
                 placeholder="Begin writing your thoughts here..."
                 class="w-full h-64 bg-transparent border-none outline-none resize-none text-gray-800 text-lg leading-relaxed placeholder-gray-400"
                 maxlength="400"
+                autocomplete="off"
+                spellcheck="false"
             ></textarea>
         </div>
 
@@ -237,17 +239,55 @@
 
         // Initialize with random topic
         function loadRandomTopic() {
-            const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+            const randomIndex = Math.floor(Math.random() * topics.length);
+            const randomTopic = topics[randomIndex];
             
-            document.getElementById('topicIcon').innerHTML = randomTopic.icon;
-            document.getElementById('topicIcon').className = `w-48 h-48 bg-gradient-to-br ${randomTopic.gradient} rounded-full flex items-center justify-center`;
-            document.getElementById('topicQuote').innerHTML = randomTopic.quote;
-            document.getElementById('quoteAuthor').textContent = randomTopic.author;
-            document.getElementById('writingPrompt').textContent = randomTopic.prompt;
+            console.log('Random topic index:', randomIndex);
+            console.log('Selected topic:', randomTopic.prompt);
+            console.log('Topic icon:', randomTopic.icon);
+            console.log('Topic gradient:', randomTopic.gradient);
+            
+            // Check if elements exist
+            const topicIcon = document.getElementById('topicIcon');
+            const topicQuote = document.getElementById('topicQuote');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            const writingPrompt = document.getElementById('writingPrompt');
+            
+            console.log('Elements found:', {
+                topicIcon: !!topicIcon,
+                topicQuote: !!topicQuote,
+                quoteAuthor: !!quoteAuthor,
+                writingPrompt: !!writingPrompt
+            });
+            
+            if (topicIcon) {
+                topicIcon.innerHTML = randomTopic.icon;
+                topicIcon.className = `w-48 h-48 bg-gradient-to-br ${randomTopic.gradient} rounded-full flex items-center justify-center`;
+            }
+            
+            if (topicQuote) {
+                topicQuote.innerHTML = randomTopic.quote;
+            }
+            
+            if (quoteAuthor) {
+                quoteAuthor.textContent = randomTopic.author;
+            }
+            
+            if (writingPrompt) {
+                writingPrompt.textContent = randomTopic.prompt;
+            }
         }
 
         // Load random topic on page load
+        console.log('Total topics available:', topics.length);
+        console.log('All topics:', topics);
         loadRandomTopic();
+        
+        // Clear any previous content
+        writingInput.value = '';
+        charCount.textContent = '0';
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
 
         writingInput.addEventListener('input', function() {
             const currentLength = this.value.length;
