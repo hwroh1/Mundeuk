@@ -661,7 +661,7 @@
             console.log('Radar chart updated:', scores);
         }
         
-        // 막대 차트 업데이트 (점수에 따른 어휘 수준 분포)
+        // 막대 차트 업데이트 (GPT 분석 결과의 어휘 수준 분포 사용)
         window.updateBarChart = function(result) {
             const barSegments = document.querySelectorAll('.bar-segment');
             const labelPercentages = document.querySelectorAll('.label-percentage');
@@ -669,20 +669,32 @@
             console.log('Updating bar chart:', result);
             console.log('Bar elements found:', { barSegments: barSegments.length, labelPercentages: labelPercentages.length });
             
-            // 점수에 따른 어휘 수준 분포 계산
-            const overallScore = result.overall_score || 0;
+            // GPT 분석 결과에서 어휘 수준 분포 사용
             let distribution;
-            
-            if (overallScore >= 90) {
-                distribution = [40, 35, 20, 5]; // A등급, B등급, C등급, 외래어
-            } else if (overallScore >= 80) {
-                distribution = [30, 40, 25, 5];
-            } else if (overallScore >= 70) {
-                distribution = [20, 45, 30, 5];
-            } else if (overallScore >= 60) {
-                distribution = [10, 35, 45, 10];
+            if (result.vocabulary_analysis) {
+                // 서버에서 보내는 실제 분석 데이터 사용
+                distribution = [
+                    result.vocabulary_analysis.high_level || 0,    // A등급 (고급)
+                    result.vocabulary_analysis.intermediate || 0,   // B등급 (중급)
+                    result.vocabulary_analysis.basic || 0,          // C등급 (기초)
+                    result.vocabulary_analysis.foregin || 0         // 외래어
+                ];
+                console.log('Using GPT vocabulary_analysis:', result.vocabulary_analysis);
             } else {
-                distribution = [5, 25, 50, 20];
+                // fallback: 점수에 따른 분포 계산
+                const overallScore = result.overall_score || 0;
+                if (overallScore >= 90) {
+                    distribution = [40, 35, 20, 5]; // A등급, B등급, C등급, 외래어
+                } else if (overallScore >= 80) {
+                    distribution = [30, 40, 25, 5];
+                } else if (overallScore >= 70) {
+                    distribution = [20, 45, 30, 5];
+                } else if (overallScore >= 60) {
+                    distribution = [10, 35, 45, 10];
+                } else {
+                    distribution = [5, 25, 50, 20];
+                }
+                console.log('Using fallback distribution for score:', overallScore);
             }
             
             barSegments.forEach((segment, index) => {
