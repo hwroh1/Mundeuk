@@ -629,10 +629,10 @@
             const legendScores = document.querySelectorAll('.legend-score');
             
             const scores = [
-                result.vocabulary_score || 0,
-                result.structure_score || 0,
-                result.logic_score || 0,
-                result.creativity_score || 0
+                result.scores?.vocabulary_diversity || 0,
+                result.scores?.vocabulary_difficulty || 0,
+                result.scores?.sentence_structure || 0,
+                result.scores?.logical_development || 0
             ];
             
             dataBars.forEach((bar, index) => {
