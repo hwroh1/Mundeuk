@@ -148,6 +148,53 @@ html {
     line-height: 1.7;
 }
 
+/* Quote Section */
+.quote-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #404040;
+}
+
+.inspirational-quote {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0;
+    text-align: center;
+    position: relative;
+}
+
+.inspirational-quote::before {
+    content: '"';
+    font-size: 3rem;
+    color: #32FF8A;
+    position: absolute;
+    left: -1rem;
+    top: -0.5rem;
+    opacity: 0.3;
+}
+
+.inspirational-quote::after {
+    content: '"';
+    font-size: 3rem;
+    color: #32FF8A;
+    position: absolute;
+    right: -1rem;
+    bottom: -1rem;
+    opacity: 0.3;
+}
+
+.quote-author {
+    display: block;
+    font-size: 0.9rem;
+    color: #32FF8A;
+    text-align: center;
+    margin-top: 1rem;
+    font-style: normal;
+    font-weight: 500;
+}
+
 /* New Topic Button */
 .new-topic-btn {
     background: linear-gradient(135deg, #32FF8A 0%, #00D4AA 100%);

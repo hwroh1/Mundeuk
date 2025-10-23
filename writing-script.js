@@ -2,57 +2,83 @@
 const writingTopics = [
     {
         title: "진정성의 의미",
-        description: "현대 사회에서 진정성이란 무엇인지, 그리고 우리가 생각하는 모습에서 벗어나 진정한 자신을 받아들이는 것의 의미에 대해 생각해보세요."
+        description: "현대 사회에서 진정성이란 무엇인지, 그리고 우리가 생각하는 모습에서 벗어나 진정한 자신을 받아들이는 것의 의미에 대해 생각해보세요.",
+        quote: "진정성은 우리가 되어야 한다고 생각하는 사람에서 벗어나<br>진정한 우리 자신을 받아들이는 일상적인 실천이다.",
+        author: "— 브레네 브라운"
     },
     {
         title: "작은 친절의 힘",
-        description: "작은 친절한 행동들이 우리 지역사회에 어떤 의미 있는 변화를 만들어낼 수 있는지에 대해 생각해보세요."
+        description: "작은 친절한 행동들이 우리 지역사회에 어떤 의미 있는 변화를 만들어낼 수 있는지에 대해 생각해보세요.",
+        quote: "친절은 귀머거리도 들을 수 있고<br>맹인도 볼 수 있는 언어다.",
+        author: "— 마크 트웨인"
     },
     {
         title: "창의성과 혁신",
-        description: "창의성이 오늘날의 글로벌 도전들을 해결하는 데 어떤 역할을 하는지에 대해 생각해보세요."
+        description: "창의성이 오늘날의 글로벌 도전들을 해결하는 데 어떤 역할을 하는지에 대해 생각해보세요.",
+        quote: "혁신은 리더와 추종자를<br>구분하는 기준이다.",
+        author: "— 스티브 잡스"
     },
     {
         title: "독서의 영향",
-        description: "독서가 당신의 세계에 대한 이해를 어떻게 형성했는지에 대해 생각해보세요."
+        description: "독서가 당신의 세계에 대한 이해를 어떻게 형성했는지에 대해 생각해보세요.",
+        quote: "당신이 읽을수록 더 많은 것을 알게 될 것이고,<br>더 많이 배울수록 더 많은 곳에 갈 수 있을 것이다.",
+        author: "— 닥터 수스"
     },
     {
         title: "관점의 변화",
-        description: "당신의 관점을 바꾸는 것이 이해의 돌파구로 이어진 경험에 대해 설명해보세요."
+        description: "당신의 관점을 바꾸는 것이 이해의 돌파구로 이어진 경험에 대해 설명해보세요.",
+        quote: "우리는 문제를 만드는 데 사용한 것과 같은 사고방식으로<br>문제를 해결할 수는 없다.",
+        author: "— 알베르트 아인슈타인"
     },
     {
         title: "공동체의 힘",
-        description: "강한 공동체를 만드는 요소는 무엇이며, 개인이 집단의 웰빙에 어떻게 기여할 수 있는지에 대해 생각해보세요."
+        description: "강한 공동체를 만드는 요소는 무엇이며, 개인이 집단의 웰빙에 어떻게 기여할 수 있는지에 대해 생각해보세요.",
+        quote: "혼자서는 할 수 있는 것이 적지만,<br>함께하면 할 수 있는 것이 많다.",
+        author: "— 헬렌 켈러"
     },
     {
         title: "꿈과 목표",
-        description: "당신을 동기부여하는 꿈이나 목표를 설명하고, 그것이 왜 당신에게 중요한지 말해보세요."
+        description: "당신을 동기부여하는 꿈이나 목표를 설명하고, 그것이 왜 당신에게 중요한지 말해보세요.",
+        quote: "미래는 자신의 꿈의 아름다움을<br>믿는 사람들의 것이다.",
+        author: "— 엘리너 루스벨트"
     },
     {
         title: "시간의 가치",
-        description: "당신은 시간을 어떻게 우선순위를 정하며, 어떤 활동들을 가장 가치 있다고 생각하는지에 대해 생각해보세요."
+        description: "당신은 시간을 어떻게 우선순위를 정하며, 어떤 활동들을 가장 가치 있다고 생각하는지에 대해 생각해보세요.",
+        quote: "시간은 사람이 쓸 수 있는<br>가장 소중한 것이다.",
+        author: "— 테오프라스토스"
     },
     {
         title: "기술과 소통",
-        description: "기술이 우리가 다른 사람들과 소통하고 연결되는 방식을 어떻게 변화시켰는지에 대해 생각해보세요."
+        description: "기술이 우리가 다른 사람들과 소통하고 연결되는 방식을 어떻게 변화시켰는지에 대해 생각해보세요.",
+        quote: "기술은 유용한 하인이지만<br>위험한 주인이다.",
+        author: "— 크리스티안 루스 랑게"
     },
     {
         title: "환경 보호",
-        description: "환경을 보호하고 보존하는 데 개인이 해야 할 역할은 무엇인지에 대해 생각해보세요."
+        description: "환경을 보호하고 보존하는 데 개인이 해야 할 역할은 무엇인지에 대해 생각해보세요.",
+        quote: "땅은 우리에게 속한 것이 아니라,<br>우리가 땅에 속한 것이다.",
+        author: "— 치프 시애틀"
     },
     {
         title: "교육의 힘",
-        description: "교육이 당신의 세계관을 어떻게 형성했으며, 무엇을 성취하고 싶은지에 대해 생각해보세요."
+        description: "교육이 당신의 세계관을 어떻게 형성했으며, 무엇을 성취하고 싶은지에 대해 생각해보세요.",
+        quote: "교육은 세상을 바꾸는 데 사용할 수 있는<br>가장 강력한 무기다.",
+        author: "— 넬슨 만델라"
     },
     {
         title: "디지털 시대의 익명성",
-        description: "인터넷과 소셜미디어가 발달하면서 익명으로 의견을 표현할 수 있는 기회가 늘어났습니다. 익명성의 장단점과 우리 사회에 미치는 영향에 대해 생각해보세요."
+        description: "인터넷과 소셜미디어가 발달하면서 익명으로 의견을 표현할 수 있는 기회가 늘어났습니다. 익명성의 장단점과 우리 사회에 미치는 영향에 대해 생각해보세요.",
+        quote: "디지털 시대의 익명성은 자유를 주지만,<br>동시에 책임감을 요구한다.",
+        author: "— 현대 디지털 철학"
     }
 ];
 
 // DOM elements
 const currentTopicElement = document.getElementById('currentTopic');
 const topicDescriptionElement = document.querySelector('.topic-description');
+const inspirationalQuoteElement = document.getElementById('inspirationalQuote');
+const quoteAuthorElement = document.getElementById('quoteAuthor');
 const writingTextarea = document.getElementById('writingTextarea');
 const currentCountElement = document.getElementById('currentCount');
 const progressFillElement = document.getElementById('progressFill');
@@ -131,6 +157,14 @@ function loadTopic(index) {
     const topic = writingTopics[index];
     currentTopicElement.textContent = topic.title;
     topicDescriptionElement.textContent = topic.description;
+    
+    // Update inspirational quote and author
+    if (inspirationalQuoteElement && topic.quote) {
+        inspirationalQuoteElement.innerHTML = topic.quote;
+    }
+    if (quoteAuthorElement && topic.author) {
+        quoteAuthorElement.textContent = topic.author;
+    }
 }
 
 // Animate topic change
