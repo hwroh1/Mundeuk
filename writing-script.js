@@ -74,21 +74,39 @@ const writingTopics = [
     }
 ];
 
-// DOM elements
-const currentTopicElement = document.getElementById('currentTopic');
-const topicDescriptionElement = document.querySelector('.topic-description');
-const inspirationalQuoteElement = document.getElementById('inspirationalQuote');
-const quoteAuthorElement = document.getElementById('quoteAuthor');
-const writingTextarea = document.getElementById('writingTextarea');
-const currentCountElement = document.getElementById('currentCount');
-const progressFillElement = document.getElementById('progressFill');
-const successModal = document.getElementById('successModal');
+// DOM elements - will be initialized after DOM is loaded
+let currentTopicElement;
+let topicDescriptionElement;
+let inspirationalQuoteElement;
+let quoteAuthorElement;
+let writingTextarea;
+let currentCountElement;
+let progressFillElement;
+let successModal;
 
 // Current topic index
 let currentTopicIndex = 0;
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize DOM elements
+    currentTopicElement = document.getElementById('currentTopic');
+    topicDescriptionElement = document.querySelector('.topic-description');
+    inspirationalQuoteElement = document.getElementById('inspirationalQuote');
+    quoteAuthorElement = document.getElementById('quoteAuthor');
+    writingTextarea = document.getElementById('writingTextarea');
+    currentCountElement = document.getElementById('currentCount');
+    progressFillElement = document.getElementById('progressFill');
+    successModal = document.getElementById('successModal');
+    
+    console.log('DOM elements initialized:', {
+        currentTopic: !!currentTopicElement,
+        topicDescription: !!topicDescriptionElement,
+        inspirationalQuote: !!inspirationalQuoteElement,
+        quoteAuthor: !!quoteAuthorElement,
+        writingTextarea: !!writingTextarea
+    });
+    
     // Load random topic on page load
     generateNewTopic();
     setupEventListeners();
@@ -155,15 +173,26 @@ function generateNewTopic() {
 // Load topic
 function loadTopic(index) {
     const topic = writingTopics[index];
+    console.log('Loading topic:', topic.title);
+    console.log('Quote element found:', !!inspirationalQuoteElement);
+    console.log('Author element found:', !!quoteAuthorElement);
+    
     currentTopicElement.textContent = topic.title;
     topicDescriptionElement.textContent = topic.description;
     
     // Update inspirational quote and author
     if (inspirationalQuoteElement && topic.quote) {
+        console.log('Setting quote:', topic.quote);
         inspirationalQuoteElement.innerHTML = topic.quote;
+    } else {
+        console.log('Quote element not found or no quote data');
     }
+    
     if (quoteAuthorElement && topic.author) {
+        console.log('Setting author:', topic.author);
         quoteAuthorElement.textContent = topic.author;
+    } else {
+        console.log('Author element not found or no author data');
     }
 }
 
