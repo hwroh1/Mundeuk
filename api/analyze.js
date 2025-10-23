@@ -22,6 +22,7 @@ const ANALYSIS_PROMPT = (
    - high_level: 고급 어휘 비율
    - intermediate: 중급 어휘 비율
    - basic: 기초 어휘 비율
+   - foregin: 외래어 비율
 5. vocabulary_list: 글에서 사용된 고급 어휘 5개 (실제 글에 있는 어휘만)
 
 반드시 실제 글을 분석한 결과를 반환하고, 예시 값이 아닌 실제 분석 값으로 채워주세요. JSON 형식만 반환하고 다른 설명은 포함하지 마세요.`;

@@ -562,15 +562,14 @@
             console.log('Elements found:', { percentileScore, percentileList });
             
             if (percentileScore) {
-                percentileScore.textContent = `상위 ${100 - percentile}%`;
+                percentileScore.textContent = `상위 ${percentile}%`;
             }
             
             // 원래 백분위 차트 로직 사용 (정규분포 곡선을 따라가면서)
             if (window.updateScore && typeof percentile === 'number' && percentile >= 0 && percentile <= 100) {
-                // percentile은 상위 몇 %이므로, 0-100 점수로 변환
-                // 예: 상위 40% = 60점
-                const scorePercent = 100 - percentile;
-                window.updateScore(scorePercent);
+                // percentile은 상위 몇 %이므로, 그래프에서의 위치는 percentile 그대로 사용
+                // 예: 상위 82% = 그래프에서 82% 지점
+                window.updateScore(percentile);
             } else {
                 console.log('updateScore function not available, using fallback');
                 // Fallback: 단순 위치 설정
