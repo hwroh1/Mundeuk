@@ -528,7 +528,10 @@
             // 6. 어휘 카드 업데이트
             updateVocabularyCards(result);
             
-            // 7. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
+            // 7. 리라이팅 제안 업데이트
+            updateRewritingSuggestion(result);
+            
+            // 8. 상세 분석 결과 추가 제거 (title-description에 추가하지 않음)
             
             alert('GPT 분석이 완료되었습니다!');
         }
@@ -910,8 +913,6 @@
                 `;
             }
             
-        // 리라이팅 제안 섹션 업데이트
-        updateRewritingSuggestion(result);
     }
     
     // 어휘 카드 업데이트 함수
