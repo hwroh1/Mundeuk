@@ -33,11 +33,15 @@
         }
         
         .writing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 0;
+            column-count: 2;
+            column-gap: 2rem;
             margin-bottom: 3rem;
-            align-items: start;
+        }
+        
+        @media (max-width: 768px) {
+            .writing-grid {
+                column-count: 1;
+            }
         }
         
         .writing-card {
@@ -47,10 +51,13 @@
             padding: 2rem;
             position: relative;
             overflow: hidden;
+            break-inside: avoid;
+            margin-bottom: 2rem;
         }
         
         .writing-card:last-child {
             border-bottom: 1px solid #404040;
+            margin-bottom: 0;
         }
         
         .writing-card::before {
