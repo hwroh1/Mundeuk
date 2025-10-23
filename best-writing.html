@@ -54,7 +54,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: #32FF8A;
+            background: var(--card-color, #32FF8A);
             background-size: 200% 100%;
             animation: shimmer 3s ease-in-out infinite;
         }
@@ -95,15 +95,15 @@
             flex-direction: column;
             align-items: flex-start;
             padding: 0.5rem 1rem;
-            background: rgba(50, 255, 138, 0.1);
+            background: var(--stat-bg-color, rgba(50, 255, 138, 0.1));
             border-radius: 8px;
             flex: 1;
         }
         
         .stat-label {
             font-size: 0.8rem;
-            color: #32FF8A;
-            margin-bottom: 0.2rem;
+            color: var(--stat-label-color, #32FF8A);
+            margin-bottom: 0rem;
         }
         
         .stat-value {
@@ -265,29 +265,51 @@
             writingGrid.style.display = 'grid';
             emptyState.style.display = 'none';
             
-            writingGrid.innerHTML = bestWritings.map(writing => `
-                <div class="writing-card">
-                    <div class="writing-meta">
-                        <div class="writing-topic">${writing.topic}</div>
-                        <div class="writing-date">${formatDate(writing.timestamp)}</div>
+            writingGrid.innerHTML = bestWritings.map(writing => {
+                // 마이페이지와 동일한 4가지 색상
+                const colors = ['#32FF8A', '#FFF9F5', '#FFEA00', '#07B0F2'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // 색상에 따른 배경색과 라벨 색상 설정
+                let statBgColor, statLabelColor;
+                if (randomColor === '#FFF9F5') {
+                    statBgColor = 'rgba(255, 249, 245, 0.1)';
+                    statLabelColor = '#FFF9F5';
+                } else if (randomColor === '#FFEA00') {
+                    statBgColor = 'rgba(255, 234, 0, 0.1)';
+                    statLabelColor = '#FFEA00';
+                } else if (randomColor === '#07B0F2') {
+                    statBgColor = 'rgba(7, 176, 242, 0.1)';
+                    statLabelColor = '#07B0F2';
+                } else {
+                    statBgColor = 'rgba(50, 255, 138, 0.1)';
+                    statLabelColor = '#32FF8A';
+                }
+                
+                return `
+                    <div class="writing-card" style="--card-color: ${randomColor}; --stat-bg-color: ${statBgColor}; --stat-label-color: ${statLabelColor};">
+                        <div class="writing-meta">
+                            <div class="writing-topic">${writing.topic}</div>
+                            <div class="writing-date">${formatDate(writing.timestamp)}</div>
+                        </div>
+                        <div class="writing-content">${writing.content}</div>
+                        <div class="writing-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">총점</div>
+                                <div class="stat-value">${writing.totalScore}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">상위</div>
+                                <div class="stat-value">${writing.percentile}%</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">자</div>
+                                <div class="stat-value">${writing.wordCount}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="writing-content">${writing.content}</div>
-                    <div class="writing-stats">
-                        <div class="stat-item">
-                            <div class="stat-label">총점</div>
-                            <div class="stat-value">${writing.totalScore}</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">상위</div>
-                            <div class="stat-value">${writing.percentile}%</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">자</div>
-                            <div class="stat-value">${writing.wordCount}</div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
         
         // 날짜 포맷팅
