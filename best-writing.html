@@ -100,16 +100,16 @@
             flex: 1;
         }
         
+        .stat-label {
+            font-size: 0.8rem;
+            color: #32FF8A;
+            margin-bottom: 0.2rem;
+        }
+        
         .stat-value {
             font-size: 1.2rem;
             font-weight: 600;
             color: #FFF9F5;
-            margin-bottom: 0.2rem;
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            color: #32FF8A;
         }
         
         .empty-state {
@@ -274,16 +274,16 @@
                     <div class="writing-content">${writing.content}</div>
                     <div class="writing-stats">
                         <div class="stat-item">
-                            <div class="stat-value">${writing.totalScore}</div>
                             <div class="stat-label">총점</div>
+                            <div class="stat-value">${writing.totalScore}</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-value">${writing.percentile}%</div>
                             <div class="stat-label">상위</div>
+                            <div class="stat-value">${writing.percentile}%</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-value">${writing.wordCount}</div>
                             <div class="stat-label">자</div>
+                            <div class="stat-value">${writing.wordCount}</div>
                         </div>
                     </div>
                 </div>
