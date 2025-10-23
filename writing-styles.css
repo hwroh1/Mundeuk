@@ -150,49 +150,86 @@ html {
 
 /* Quote Section */
 .quote-section {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #404040;
+    margin-top: 2.5rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(50, 255, 138, 0.05) 0%, rgba(0, 212, 170, 0.05) 100%);
+    border: 1px solid rgba(50, 255, 138, 0.2);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #32FF8A, #00D4AA, #32FF8A);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
 }
 
 .inspirational-quote {
-    font-size: 1.2rem;
-    color: #e0e0e0;
+    font-size: 1.4rem;
+    color: #ffffff;
     font-style: italic;
-    line-height: 1.6;
+    line-height: 1.7;
     margin: 0;
     text-align: center;
     position: relative;
+    font-weight: 300;
+    letter-spacing: 0.5px;
 }
 
 .inspirational-quote::before {
     content: '"';
-    font-size: 3rem;
+    font-size: 4rem;
     color: #32FF8A;
     position: absolute;
-    left: -1rem;
-    top: -0.5rem;
-    opacity: 0.3;
+    left: -1.5rem;
+    top: -1rem;
+    opacity: 0.4;
+    font-family: serif;
+    line-height: 1;
 }
 
 .inspirational-quote::after {
     content: '"';
-    font-size: 3rem;
+    font-size: 4rem;
     color: #32FF8A;
     position: absolute;
-    right: -1rem;
-    bottom: -1rem;
-    opacity: 0.3;
+    right: -1.5rem;
+    bottom: -1.5rem;
+    opacity: 0.4;
+    font-family: serif;
+    line-height: 1;
 }
 
 .quote-author {
     display: block;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #32FF8A;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.quote-author::before {
+    content: '';
+    position: absolute;
+    top: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #32FF8A, #00D4AA);
+    border-radius: 1px;
 }
 
 /* New Topic Button */
@@ -593,6 +630,36 @@ html {
     
     .topic-card, .writing-container, .history-section {
         padding: 1.5rem;
+    }
+    
+    .quote-section {
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .inspirational-quote {
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+    
+    .inspirational-quote::before,
+    .inspirational-quote::after {
+        font-size: 3rem;
+    }
+    
+    .inspirational-quote::before {
+        left: -1rem;
+        top: -0.5rem;
+    }
+    
+    .inspirational-quote::after {
+        right: -1rem;
+        bottom: -1rem;
+    }
+    
+    .quote-author {
+        font-size: 0.9rem;
+        margin-top: 1rem;
     }
     
     .writing-header {
