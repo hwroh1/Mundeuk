@@ -4,34 +4,36 @@
 const ANALYSIS_PROMPT = (
   topic,
   text
-) => `당신은 한국어 어휘 분석기입니다. 사용자의 텍스트에서 주요 어휘를 추출하여 submit_vocabulary_analysis 함수를 호출하세요.
+) => `당신은 한국어 어휘 분석 전문가입니다. 다음 JSON 형식으로 분석 결과를 반환해주세요:
 
 주제: ${topic}
 작성한 글: ${text}
 
-위 글에서 고급 어휘 5개를 찾아서 submit_vocabulary_analysis 함수를 호출하여 결과를 제출하세요.
+다음 형식의 JSON을 반환해주세요:
+{
+  "vocabulary_score": 85,
+  "percentile": 78,
+  "scores": {
+    "vocabulary_diversity": 82,
+    "vocabulary_difficulty": 88,
+    "sentence_structure": 79,
+    "logical_development": 84
+  },
+  "vocabulary_analysis": {
+    "high_level": 15,
+    "intermediate": 25,
+    "basic": 60
+  },
+  "vocabulary_list": [
+    {"word": "양면성", "pos": "명사", "definition": "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질"},
+    {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
+    {"word": "조장", "pos": "동사", "definition": "어떤 일이 일어나도록 부추기거나 도움을 주는 것"},
+    {"word": "민주주의", "pos": "명사", "definition": "국민이 주권을 가지고 스스로를 통치하는 정치 체제"},
+    {"word": "진정성", "pos": "명사", "definition": "추상적 개념. 철학적 및 윤리적 담론에서 자주 사용"}
+  ]
+}
 
-함수 호출 형식:
-submit_vocabulary_analysis({
-    "vocabulary_list": [
-        {"word": "양면성", "pos": "명사", "definition": "하나의 대상이 서로 다른 두 가지 특성을 동시에 지니는 성질"},
-        {"word": "익명성", "pos": "명사", "definition": "이름이나 신원을 알 수 없는 상태"},
-        {"word": "조장", "pos": "동사", "definition": "어떤 일이 일어나도록 부추기거나 도움을 주는 것"},
-        {"word": "민주주의", "pos": "명사", "definition": "국민이 주권을 가지고 스스로를 통치하는 정치 체제"},
-        {"word": "진정성", "pos": "명사", "definition": "추상적 개념. 철학적 및 윤리적 담론에서 자주 사용"}
-    ]
-})
-
-예시:
-입력: "하늘이 정말 푸르다."
-함수 호출: submit_vocabulary_analysis({
-    "vocabulary_list": [
-        {"word": "하늘", "pos": "명사", "definition": "지구의 대기권, 또는 그것이 파랗게 보이는 공간."},
-        {"word": "푸르다", "pos": "형용사", "definition": "맑은 하늘이나 깊은 바다와 같이 밝고 짙은 파란색이다."}
-    ]
-})
-
-반드시 submit_vocabulary_analysis 함수를 호출하여 vocabulary_list를 제출하세요.`;
+위 글을 분석하여 위 형식의 JSON만 반환해주세요. 다른 설명이나 텍스트는 포함하지 마세요.`;
 
 function send(res, status, data) {
   res.statusCode = status;
@@ -89,22 +91,7 @@ export default async function handler(req, res) {
     const data = await response.json();
     const content = data.choices?.[0]?.message?.content || '';
     
-    // Function Calling 응답 처리
-    if (content.includes('submit_vocabulary_analysis')) {
-      try {
-        // Function call에서 JSON 추출
-        const jsonMatch = content.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          const parsed = JSON.parse(jsonMatch[0]);
-          return send(res, 200, parsed);
-        }
-      } catch (e) {
-        // JSON 파싱 실패 시 원본 반환
-        return send(res, 200, { error: 'Failed to parse function call JSON', raw: content });
-      }
-    }
-    
-    // 일반 JSON 응답 처리
+    // JSON 응답 처리
     try {
       const parsed = JSON.parse(content);
       return send(res, 200, parsed);
