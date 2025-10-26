@@ -251,7 +251,7 @@
                 인쇄하기
             </button>
             <button class="home-button" onclick="window.location.href='index.html'">홈으로 가기</button>
-            <button class="gpt-button" onclick="analyzeWithGPT()" style="background: #10A37F; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem;">🤖 GPT 분석</button>
+            <button class="gpt-button" onclick="analyzeWithGPT()" style="background: linear-gradient(135deg, #32FF8A, #00D4AA); color: #1a1a1a; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; margin-left: 1rem; font-weight: 600;">🤖 GPT 분석</button>
         </div>
     </main>
 
@@ -1173,16 +1173,16 @@
             }, 5000);
         }
         
-        // 페이지 로드 시 자동 GPT 분석 시작
+        // 페이지 로드 시 자동 GPT 분석 시작 (비활성화)
         window.addEventListener('load', function() {
-            // 로딩 페이지 표시
-            document.getElementById('loadingPage').style.display = 'flex';
-            document.getElementById('mainContent').style.display = 'none';
+            // 로딩 페이지 숨기고 메인 콘텐츠 표시
+            document.getElementById('loadingPage').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
             
-            // 자동 GPT 분석 시작
-            setTimeout(() => {
-                analyzeWithGPT();
-            }, 1000);
+            // GPT 분석 비활성화
+            // setTimeout(() => {
+            //     analyzeWithGPT();
+            // }, 1000);
         });
         
     </script>
