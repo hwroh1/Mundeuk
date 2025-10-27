@@ -1196,42 +1196,394 @@ body {
         size: A4;
     }
     
-    /* Hide navigation, action buttons, and header elements */
+    /* Hide navigation, action buttons, but keep title section */
     .navbar,
-    .action-buttons-container,
-    .title-section,
-    .main-title,
-    .title-description {
+    .action-buttons-container {
         display: none !important;
     }
     
-    /* Force white background for faster printing */
+    /* Show title section for print */
+    .title-section,
+    .main-title,
+    .title-description {
+        display: block !important;
+        margin-bottom: 0.5rem !important;
+        padding: 0.2rem !important;
+    }
+    
+    /* Reduce large text sizes for print */
+    .analysis-note,
+    .structure-note,
+    .suggestion-note {
+        font-size: 0.8rem !important; /* ~13pt */
+        margin-bottom: 0.2rem !important;
+        margin-top: 0.2rem !important;
+    }
+    
+    .highlight-percent {
+        font-size: 0.8rem !important; /* ~13pt */
+    }
+    
+    /* Reduce section titles further */
+    .section-title {
+        font-size: 0.8rem !important; /* ~13pt */
+        margin-bottom: 0.2rem !important;
+    }
+    
+    /* Reduce subtitle sizes */
+    .subtitle {
+        font-size: 0.7rem !important; /* ~11pt */
+        margin-bottom: 0.1rem !important;
+    }
+    
+    /* Make main title larger but reduce top spacing */
+    .main-title {
+        font-size: 1.5rem !important; /* ~16pt - maximum allowed */
+        margin-bottom: 0.1rem !important;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        line-height: 1 !important;
+    }
+    
+    /* Reduce title section spacing */
+    .title-section {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        margin-bottom: 0.2rem !important;
+    }
+    
+    /* Force minimal spacing for title section elements */
+    .title-section * {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    .title-description {
+        font-size: 0.6rem !important; /* ~10pt */
+        margin-bottom: 0.1rem !important;
+        line-height: 1.1 !important;
+    }
+    
+    .written-topic {
+        font-size: 0.6rem !important; /* ~10pt */
+        margin-bottom: 0.05rem !important;
+        line-height: 1 !important;
+    }
+    
+    .written-text {
+        font-size: 0.6rem !important; /* ~10pt */
+        margin-bottom: 0.05rem !important;
+        line-height: 1.1 !important;
+    }
+    
+    .word-count {
+        font-size: 0.6rem !important; /* ~10pt */
+        margin-bottom: 0.1rem !important;
+        line-height: 1 !important;
+    }
+    
+    /* Force white background for specific elements only */
     body,
     .main,
-    .analysis-dashboard {
-        background: #FFF9F5 !important;
-        background-color: #FFF9F5 !important;
+    .analysis-dashboard,
+    .title-section,
+    .vocabulary-score,
+    .percentile,
+    .detailed-analysis,
+    .sentence-structure,
+    .rewriting-suggestion {
+        background-color: white !important;
     }
     
-    /* Convert charts to grayscale but keep light areas visible */
+    body,
+    .main,
+    .analysis-dashboard,
+    .title-section,
+    .written-topic,
+    .written-text,
+    .word-count,
+    .section-title,
+    .subtitle,
+    .score-highlight,
+    .score-description,
+    .percentile-score,
+    .percentile-description,
+    .percentile-list,
+    .structure-text,
+    .suggestion-text {
+        background-color: white !important;
+    }
+    
+    /* Remove chart container backgrounds but keep SVG visible */
+    .gauge-container,
+    .bell-curve-container,
+    .radar-chart-container,
+    .bar-chart-container {
+        background: transparent !important;
+        border: none !important;
+    }
+    
+    /* Restore chart visibility with proper heights */
+    .gauge-container {
+        height: 180px !important;
+    }
+    
+    .bell-curve-container {
+        height: 120px !important;
+    }
+    
+    .radar-chart-container {
+        height: 220px !important;
+    }
+    
+    .bar-chart-container {
+        height: 250px !important;
+    }
+    
+    .bar-chart {
+        height: 200px !important;
+    }
+    
+    .stacked-bar-container {
+        height: 120px !important;
+    }
+    
+    .stacked-bar {
+        height: 120px !important;
+    }
+    
+    /* Override overflow hidden that might be hiding the bars */
+    .stacked-bar-container {
+        overflow: visible !important;
+    }
+    
+    .bar-chart-container {
+        overflow: visible !important;
+    }
+    
+    /* Force bar chart to be visible but preserve layout */
+    .bar-chart-container {
+        display: flex !important;
+        flex-direction: column !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .bar-chart {
+        display: flex !important;
+        flex-direction: column !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .stacked-bar-container {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .stacked-bar {
+        display: flex !important;
+        flex-direction: column !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Force specific bar segments to be visible with actual heights */
+    .bar-segment {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+    
+    /* Override default height: 0% for print - set heights based on data-percentage */
+    .bar-segment {
+        min-height: 2px !important;
+    }
+    
+    /* Set specific heights for each data-percentage value - use fixed heights for print */
+    .bar-segment[data-percentage="20"] { 
+        height: 24px !important; /* 20% of 120px */
+        min-height: 24px !important;
+    }
+    .bar-segment[data-percentage="45"] { 
+        height: 54px !important; /* 45% of 120px */
+        min-height: 54px !important;
+    }
+    .bar-segment[data-percentage="25"] { 
+        height: 30px !important; /* 25% of 120px */
+        min-height: 30px !important;
+    }
+    .bar-segment[data-percentage="10"] { 
+        height: 12px !important; /* 10% of 120px */
+        min-height: 12px !important;
+    }
+    
+    /* Use CSS custom properties to force colors */
+    :root {
+        --bar-a-color: #32FF8A;
+        --bar-b-color: #FFD700;
+        --bar-c-color: #FF8C00;
+        --bar-foreign-color: #4169E1;
+    }
+    
+    /* Force colors using CSS variables */
+    .bar-segment.grade-a {
+        background-color: var(--bar-a-color) !important;
+        background: var(--bar-a-color) !important;
+        background-image: none !important;
+        color: black !important;
+    }
+    
+    .bar-segment.grade-b {
+        background-color: var(--bar-b-color) !important;
+        background: var(--bar-b-color) !important;
+        background-image: none !important;
+        color: black !important;
+    }
+    
+    .bar-segment.grade-c {
+        background-color: var(--bar-c-color) !important;
+        background: var(--bar-c-color) !important;
+        background-image: none !important;
+        color: black !important;
+    }
+    
+    .bar-segment.foreign {
+        background-color: var(--bar-foreign-color) !important;
+        background: var(--bar-foreign-color) !important;
+        background-image: none !important;
+        color: white !important;
+    }
+    
+    /* Last resort: use box-shadow to create colored bars */
+    .bar-segment.grade-a {
+        box-shadow: inset 0 0 0 1000px #32FF8A !important;
+    }
+    
+    .bar-segment.grade-b {
+        box-shadow: inset 0 0 0 1000px #FFD700 !important;
+    }
+    
+    .bar-segment.grade-c {
+        box-shadow: inset 0 0 0 1000px #FF8C00 !important;
+    }
+    
+    .bar-segment.foreign {
+        box-shadow: inset 0 0 0 1000px #4169E1 !important;
+    }
+    
+    /* Override label-color display none for print */
+    .label-color {
+        display: inline-block !important;
+        visibility: visible !important;
+    }
+    
+    .label-color.grade-a {
+        background-color: #32FF8A !important;
+    }
+    
+    .label-color.grade-b {
+        background-color: #FFD700 !important;
+    }
+    
+    .label-color.grade-c {
+        background-color: #FF8C00 !important;
+    }
+    
+    .label-color.foreign {
+        background-color: #4169E1 !important;
+    }
+    
+    /* Ensure charts are visible */
     canvas,
     svg {
-        filter: grayscale(100%) !important;
-        -webkit-filter: grayscale(100%) !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
-    /* Make radar chart image visible by inverting it more strongly */
-    .radar-chart image[href="Grid.svg"] {
-        filter: invert(0.3) !important;
-        -webkit-filter: invert(0.3) !important;
-    }
-    
-    /* Make light colors visible by adding subtle borders */
+    /* Keep SVG charts visible but remove backgrounds */
     .gauge-chart,
     .radar-chart,
     .bell-curve,
     .bar-chart {
-        border: 1px solid #ddd !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+    }
+    
+    /* Make radar chart grid visible with darker brightness */
+    .radar-chart image[href="Grid.svg"] {
+        opacity: 1 !important;
+        filter: brightness(0.3) !important;
+        -webkit-filter: brightness(0.3) !important;
+    }
+    
+    /* Ensure canvas and SVG are visible */
+    canvas,
+    svg {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    
+    /* Restore bar chart colors */
+    .bar-segment {
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+    
+    .bar-segment.grade-a {
+        background-color: #32FF8A !important;
+    }
+    
+    .bar-segment.grade-b {
+        background-color: #FFD700 !important;
+    }
+    
+    .bar-segment.grade-c {
+        background-color: #FF8C00 !important;
+    }
+    
+    .bar-segment.foreign {
+        background-color: #4169E1 !important;
+    }
+    
+    /* Restore legend colors */
+    .legend-color.vocabulary {
+        background-color: #32FF8A !important;
+    }
+    
+    .legend-color.difficulty {
+        background-color: #FFD700 !important;
+    }
+    
+    .legend-color.structure {
+        background-color: #FF8C00 !important;
+    }
+    
+    .legend-color.logic {
+        background-color: #4169E1 !important;
+    }
+    
+    /* Restore label colors */
+    .label-color.grade-a {
+        background-color: #32FF8A !important;
+    }
+    
+    .label-color.grade-b {
+        background-color: #FFD700 !important;
+    }
+    
+    .label-color.grade-c {
+        background-color: #FF8C00 !important;
+    }
+    
+    .label-color.foreign {
+        background-color: #4169E1 !important;
     }
     
     /* Reduce padding and margins for print */
@@ -1241,31 +1593,315 @@ body {
     .bar-chart-container,
     .vocabulary-score,
     .percentile {
-        padding: 0.5rem !important;
+        padding: 0.2rem !important;
         margin: 0 !important;
     }
     
     /* Make dashboard more compact */
     .analysis-dashboard {
-        padding: 0.5rem !important;
+        padding: 0.2rem !important;
         margin: 0 !important;
     }
     
     .dashboard-row-top,
     .dashboard-row-bottom {
-        gap: 0.5rem !important;
-        margin-bottom: 0.5rem !important;
+        gap: 0.2rem !important;
+        margin-bottom: 0.2rem !important;
     }
     
-    /* Reduce font sizes for print */
-    .section-title {
-        font-size: 1.2rem !important;
+    /* Reduce spacing between sections */
+    .detailed-analysis,
+    .sentence-structure,
+    .rewriting-suggestion {
         margin-bottom: 0.5rem !important;
+        padding: 0.2rem !important;
+        margin-top: 0.1rem !important;
+    }
+    
+    /* Reduce vocabulary cards spacing */
+    .vocabulary-cards {
+        gap: 0.2rem !important;
+        margin-bottom: 0.3rem !important;
+    }
+    
+    .vocab-card {
+        padding: 0.2rem !important;
+        margin: 0 !important;
+    }
+    
+    /* Reduce chart content spacing */
+    .radar-content,
+    .bar-chart {
+        gap: 0.2rem !important;
+    }
+    
+    /* Reduce legend spacing */
+    .radar-legend,
+    .bar-labels {
+        gap: 0.1rem !important;
+    }
+    
+    .legend-item,
+    .label-item {
+        margin-bottom: 0.1rem !important;
+    }
+    
+    /* Reduce font sizes for print - all fonts under 16pt */
+    .section-title {
+        font-size: 0.9rem !important; /* ~14pt */
+        margin-bottom: 0.1rem !important;
     }
     
     .subtitle {
-        font-size: 1rem !important;
-        margin-bottom: 0.3rem !important;
+        font-size: 0.8rem !important; /* ~13pt */
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .score-highlight {
+        font-size: 0.9rem !important; /* ~14pt */
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .score-description {
+        font-size: 0.7rem !important; /* ~11pt */
+        line-height: 1.2 !important;
+        margin-bottom: 0.1rem !important;
+        margin-top: 0.1rem !important;
+    }
+    
+    .gauge-number {
+        font-size: 1rem !important; /* ~16pt - maximum allowed */
+    }
+    
+    .percentile-score {
+        font-size: 0.9rem !important; /* ~14pt */
+        margin-bottom: 0.1rem !important;
+        margin-top: 0.1rem !important;
+    }
+    
+    .percentile-description {
+        font-size: 0.7rem !important; /* ~11pt */
+        margin-bottom: 0.1rem !important;
+        margin-top: 0.1rem !important;
+    }
+    
+    .percentile-list {
+        margin-top: 0.1rem !important;
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .radar-chart-title,
+    .bar-chart-title {
+        font-size: 0.8rem !important; /* ~13pt */
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .structure-text,
+    .suggestion-text {
+        font-size: 0.7rem !important; /* ~11pt */
+        line-height: 1.2 !important;
+        margin-bottom: 0.1rem !important;
+        margin-top: 0.1rem !important;
+    }
+    
+    /* Reduce vocabulary cards size and spacing */
+    .vocabulary-cards {
+        gap: 0.1rem !important;
+        margin-bottom: 0.1rem !important;
+        padding: 0 !important;
+    }
+    
+    .vocab-card {
+        padding: 0.1rem !important;
+        margin: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        border: none !important;
+        background: white !important;
+    }
+    
+    .card-word {
+        font-size: 0.6rem !important; /* ~10pt */
+        margin-bottom: 0.05rem !important;
+        line-height: 1 !important;
+    }
+    
+    .card-pos {
+        font-size: 0.5rem !important; /* ~8pt */
+        margin-bottom: 0.05rem !important;
+        line-height: 1 !important;
+    }
+    
+    .card-desc {
+        font-size: 0.5rem !important; /* ~8pt */
+        margin-bottom: 0 !important;
+        line-height: 1.1 !important;
+    }
+    
+    .legend-text,
+    .label-text {
+        font-size: 0.7rem !important; /* ~11pt */
+        margin-bottom: 0.05rem !important;
+    }
+    
+    .legend-score,
+    .label-percentage {
+        font-size: 0.7rem !important; /* ~11pt */
+    }
+    
+    /* Reduce line height and spacing for compact print */
+    .percentile-list li {
+        margin-bottom: 0.05rem !important;
+        line-height: 1.1 !important;
+    }
+    
+    .structure-text,
+    .suggestion-text {
+        line-height: 1.2 !important;
+        margin-bottom: 0.1rem !important;
+    }
+    
+    /* Specific spacing fixes for vocabulary score section - force everything to minimal */
+    .vocabulary-score .subtitle {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-top: 0 !important;
+        line-height: 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .vocabulary-score .score-highlight {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-top: 0 !important;
+        line-height: 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .vocabulary-score .score-description {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-top: 0 !important;
+        line-height: 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    /* Reduce spacing in gauge container specifically */
+    .vocabulary-score .gauge-container {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .vocabulary-score .gauge-text {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        line-height: 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    /* Fix vocabulary-score layout for print - remove space-between */
+    .vocabulary-score {
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+        gap: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    /* Drastic fix for percentile section - force everything to be compact */
+    .percentile {
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+        gap: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0.1rem !important;
+    }
+    
+    .percentile-info {
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .percentile-details {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .bell-curve-container {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 150px !important;
+        min-height: 0 !important;
+    }
+    
+    /* Force all text elements to have zero spacing */
+    .percentile .subtitle,
+    .percentile .percentile-score,
+    .percentile .percentile-description,
+    .percentile .percentile-list,
+    .percentile .percentile-list li {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .vocabulary-score * {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        line-height: 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    /* Exception for gauge chart itself - keep it visible */
+    .vocabulary-score .gauge-chart {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+    }
+    
+    /* Force minimal spacing for all text elements */
+    h1, h2, h3, h4, h5, h6 {
+        margin-top: 0.1rem !important;
+        margin-bottom: 0.1rem !important;
+    }
+    
+    p {
+        margin-top: 0.1rem !important;
+        margin-bottom: 0.1rem !important;
+    }
+    
+    /* Reduce spacing in gauge and percentile containers */
+    .gauge-text {
+        margin-top: 0.1rem !important;
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .percentile-details {
+        margin-top: 0.1rem !important;
+        margin-bottom: 0.1rem !important;
     }
     
     /* Make charts smaller */
@@ -1274,12 +1910,42 @@ body {
     }
     
     .bell-curve-container {
-        height: 250px !important;
+        height: 100px !important;
     }
     
-    .radar-chart-container,
-    .bar-chart-container {
-        height: 300px !important;
+    /* Fix radar chart container spacing */
+    .radar-chart-container {
+        height: 200px !important;
+        margin-top: 0.2rem !important;
+        padding-top: 0.2rem !important;
+    }
+    
+    .radar-chart-title {
+        font-size: 0.7rem !important; /* ~11pt */
+        margin-bottom: 0.2rem !important;
+        margin-top: 0.1rem !important;
+    }
+    
+    .radar-content {
+        gap: 0.3rem !important;
+        margin-top: 0.1rem !important;
+    }
+    
+    .radar-chart {
+        height: 200px !important;
+        width: 200px !important;
+    }
+    
+    /* Increase radar chart container to accommodate larger chart */
+    .radar-chart-container {
+        height: 250px !important;
+        margin-top: 0.2rem !important;
+        padding-top: 0.2rem !important;
+    }
+    
+    .radar-legend {
+        gap: 0.1rem !important;
+        margin-top: 0.1rem !important;
     }
     
     /* Fix bell curve container for print */
@@ -1296,10 +1962,10 @@ body {
         width: 100% !important;
     }
     
-    /* Reduce bar chart container width for print */
+    /* Keep bar chart container width reasonable for print */
     .bar-chart-container {
-        width: 25% !important;
-        flex: 0 0 25% !important;
+        width: 35% !important;
+        flex: 0 0 35% !important;
     }
     
     .radar-chart-container {
@@ -1318,8 +1984,42 @@ body {
         gap: 1rem !important;
     }
     
-    /* Ensure all text is black for readability */
-    * {
+    /* Ensure text is black for readability, but preserve chart colors */
+    body,
+    .main,
+    .analysis-dashboard,
+    .title-section,
+    .vocabulary-score,
+    .percentile,
+    .detailed-analysis,
+    .sentence-structure,
+    .rewriting-suggestion,
+    .vocab-card,
+    .main-title,
+    .title-description,
+    .written-topic,
+    .written-text,
+    .word-count,
+    .section-title,
+    .subtitle,
+    .score-highlight,
+    .score-description,
+    .gauge-number,
+    .gauge-max,
+    .percentile-highlight,
+    .percentile-description,
+    .percentile-list li,
+    .radar-chart-title,
+    .bar-chart-title,
+    .legend-text,
+    .legend-score,
+    .legend-max,
+    .label-text,
+    .label-percentage,
+    .analysis-note,
+    .structure-note,
+    .suggestion-note,
+    .highlight-percent {
         color: black !important;
     }
     
