@@ -1192,7 +1192,7 @@ body {
 @media print {
     /* Remove browser default margins and headers */
     @page {
-        margin: 0.25in;
+        margin: 0.2in 0.25in 0.25in 0.25in; /* 상단 여백만 줄임 */
         size: A4;
     }
     
@@ -1236,14 +1236,7 @@ body {
         margin-bottom: 0.1rem !important;
     }
     
-    /* Make main title larger but reduce top spacing */
-    .main-title {
-        font-size: 1.5rem !important; /* ~16pt - maximum allowed */
-        margin-bottom: 0.1rem !important;
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-        line-height: 1 !important;
-    }
+    /* 중복 제거됨 */
     
     /* Reduce title section spacing */
     .title-section {
@@ -1258,22 +1251,20 @@ body {
         padding-top: 0 !important;
     }
     
-    .title-description {
-        font-size: 0.6rem !important; /* ~10pt */
-        margin-bottom: 0.1rem !important;
-        line-height: 1.1 !important;
-    }
+    /* 중복 제거됨 */
     
     .written-topic {
-        font-size: 0.6rem !important; /* ~10pt */
-        margin-bottom: 0.05rem !important;
-        line-height: 1 !important;
+        font-size: 0.8rem !important; /* ~13pt - 다른 소제목과 동일 */
+        margin-bottom: 0.1rem !important;
+        line-height: 1.2 !important;
+        color: black !important;
     }
     
     .written-text {
-        font-size: 0.6rem !important; /* ~10pt */
-        margin-bottom: 0.05rem !important;
-        line-height: 1.1 !important;
+        font-size: 0.7rem !important; /* ~11pt - 리라이팅 본문과 동일 */
+        margin-bottom: 0.1rem !important;
+        line-height: 1.2 !important;
+        padding: 0 !important; /* 패딩 제거 */
     }
     
     .word-count {
@@ -1333,11 +1324,11 @@ body {
     }
     
     .radar-chart-container {
-        height: 220px !important;
+        height: 250px !important; /* 막대 차트와 딱 맞는 높이 */
     }
     
     .bar-chart-container {
-        height: 250px !important;
+        height: 250px !important; /* 레이더 차트와 딱 맞는 높이 */
     }
     
     .bar-chart {
@@ -1345,11 +1336,11 @@ body {
     }
     
     .stacked-bar-container {
-        height: 120px !important;
+        height: 200px !important; /* 더 길게 늘림 */
     }
     
     .stacked-bar {
-        height: 120px !important;
+        height: 200px !important; /* 더 길게 늘림 */
     }
     
     /* Override overflow hidden that might be hiding the bars */
@@ -1404,22 +1395,46 @@ body {
         min-height: 2px !important;
     }
     
-    /* Set specific heights for each data-percentage value - use fixed heights for print */
+    /* Use percentage-based heights for flexibility - 분석 결과에 따라 자동 조정 */
     .bar-segment[data-percentage="20"] { 
-        height: 24px !important; /* 20% of 120px */
-        min-height: 24px !important;
+        height: 20% !important;
+        min-height: 15px !important;
     }
     .bar-segment[data-percentage="45"] { 
-        height: 54px !important; /* 45% of 120px */
-        min-height: 54px !important;
+        height: 45% !important;
+        min-height: 20px !important;
     }
     .bar-segment[data-percentage="25"] { 
-        height: 30px !important; /* 25% of 120px */
-        min-height: 30px !important;
+        height: 25% !important;
+        min-height: 15px !important;
     }
     .bar-segment[data-percentage="10"] { 
-        height: 12px !important; /* 10% of 120px */
+        height: 10% !important;
+        min-height: 10px !important;
+    }
+    .bar-segment[data-percentage="5"] { 
+        height: 5% !important;
+        min-height: 8px !important;
+    }
+    .bar-segment[data-percentage="15"] { 
+        height: 15% !important;
         min-height: 12px !important;
+    }
+    .bar-segment[data-percentage="30"] { 
+        height: 30% !important;
+        min-height: 18px !important;
+    }
+    .bar-segment[data-percentage="35"] { 
+        height: 35% !important;
+        min-height: 20px !important;
+    }
+    .bar-segment[data-percentage="40"] { 
+        height: 40% !important;
+        min-height: 22px !important;
+    }
+    .bar-segment[data-percentage="50"] { 
+        height: 50% !important;
+        min-height: 25px !important;
     }
     
     /* Use CSS custom properties to force colors */
@@ -1516,6 +1531,11 @@ body {
         border: none !important;
     }
     
+    /* 게이지 차트 배경을 화이트로 변경 */
+    .gauge-background {
+        stroke: white !important;
+    }
+    
     /* Make radar chart grid visible with darker brightness */
     .radar-chart image[href="Grid.svg"] {
         opacity: 1 !important;
@@ -1552,21 +1572,34 @@ body {
         background-color: #4169E1 !important;
     }
     
-    /* Restore legend colors */
+    /* Restore legend colors - box-shadow 방법 사용 */
+    .legend-color {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 14px !important;
+        height: 14px !important;
+        border-radius: 0px !important;
+        flex-shrink: 0 !important;
+        margin-right: 0.3rem !important;
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    
     .legend-color.vocabulary {
-        background-color: #32FF8A !important;
+        box-shadow: inset 0 0 0 1000px #ffff00 !important;
     }
     
     .legend-color.difficulty {
-        background-color: #FFD700 !important;
+        box-shadow: inset 0 0 0 1000px #32FF8A !important;
     }
     
     .legend-color.structure {
-        background-color: #FF8C00 !important;
+        box-shadow: inset 0 0 0 1000px #FF8C00 !important; /* 주황색으로 변경 */
     }
     
     .legend-color.logic {
-        background-color: #4169E1 !important;
+        box-shadow: inset 0 0 0 1000px #0096ff !important;
     }
     
     /* Restore label colors */
@@ -1597,25 +1630,130 @@ body {
         margin: 0 !important;
     }
     
-    /* Make dashboard more compact */
-    .analysis-dashboard {
-        padding: 0.2rem !important;
-        margin: 0 !important;
+    /* 분석 대시보드 컨테이너 - 위쪽 여백 줄임 */
+    .main .analysis-dashboard {
+        padding: 0.5rem !important; /* 위아래 패딩 추가 */
+        margin: 0.1rem 0 0.3rem 0 !important; /* 위쪽 마진 대폭 줄임 */
+        border-top: 1px solid #7B7B7B !important; /* 위쪽 구분선 - 통일된 두께 */
+        border-bottom: none !important; /* 아래쪽 구분선 제거 */
+        border-left: none !important;
+        border-right: none !important;
+        background-color: white !important;
+        box-shadow: none !important;
     }
     
     .dashboard-row-top,
     .dashboard-row-bottom {
-        gap: 0.2rem !important;
+        gap: 0.05rem !important; /* 행 내부 간격 더 줄임 */
+        margin-bottom: 0.05rem !important; /* 행 사이 여백 더 줄임 */
+    }
+    
+    /* 강제 적용 - 최고 우선순위로 설정 */
+    .main .analysis-dashboard .dashboard-row-top {
+        margin-bottom: 0 !important; /* 위열 아래 여백 완전 제거 */
+        padding-bottom: 0 !important;
+    }
+    
+    /* 아래 두 차트를 위로 강제 이동 */
+    .main .analysis-dashboard .dashboard-row-bottom {
+        margin-top: -1rem !important; /* 음수 마진으로 위로 이동 */
+        padding-top: 0 !important;
+        transform: translateY(-0.3rem) !important; /* 추가로 위로 이동 */
+    }
+    
+    /* 차트 컨테이너들도 위로 이동 */
+    .main .analysis-dashboard .radar-chart-container,
+    .main .analysis-dashboard .bar-chart-container {
+        margin-top: -0.3rem !important; /* 음수 마진으로 위로 이동 */
+        padding-top: 0 !important;
+    }
+    
+    /* 차트 컨테이너들의 여백 완전 제거 */
+    .main .analysis-dashboard .vocabulary-score,
+    .main .analysis-dashboard .percentile,
+    .main .analysis-dashboard .radar-chart-container,
+    .main .analysis-dashboard .bar-chart-container {
+        margin: 0 !important; /* 모든 마진 제거 */
+        padding: 0.05rem !important; /* 최소 패딩만 유지 */
+    }
+    
+    /* 상세 분석 결과 섹션 - 옆 패딩 제거 */
+    .detailed-analysis {
+        margin-bottom: 0.5rem !important;
+        padding: 0 !important; /* 모든 패딩 제거 */
+        margin-top: 0.1rem !important;
+        border-top: 1px solid #7B7B7B !important; /* 위쪽 구분선 - 통일된 두께 */
+        padding-top: 0.5rem !important; /* 구분선과 내용 사이 여백만 유지 */
+        background-color: white !important;
+    }
+    
+    /* 리라이팅 제안 구분선 위 여백 강제 추가 */
+    .main .rewriting-suggestion::before {
+        content: '' !important;
+        display: block !important;
+        height: 0.5rem !important; /* 구분선 위 여백 블록 */
         margin-bottom: 0.2rem !important;
     }
     
-    /* Reduce spacing between sections */
-    .detailed-analysis,
-    .sentence-structure,
-    .rewriting-suggestion {
-        margin-bottom: 0.5rem !important;
-        padding: 0.2rem !important;
-        margin-top: 0.1rem !important;
+    /* 문장 구조 섹션 전체 아래 여백 추가 */
+    .main .sentence-structure {
+        margin-bottom: 0.5rem !important; /* 섹션 전체 아래 여백 추가 */
+        padding-bottom: 0.3rem !important; /* 섹션 내부 아래 패딩 추가 */
+    }
+    
+    /* 문장 구조 본문 아래 여백 강제 추가 */
+    .main .sentence-structure .structure-text {
+        margin-top: 0.05rem !important; /* 본문 위 여백 최소화 */
+        margin-bottom: 0.7rem !important; /* 본문 아래 여백 추가 - 구분선 위 여백 */
+        padding-bottom: 0.3rem !important; /* 본문 아래 패딩 추가 */
+    }
+    
+    /* 리라이팅 제안 섹션 위쪽 여백 추가 */
+    .main .rewriting-suggestion {
+        margin-top: 0.2rem !important; /* 위쪽 여백 추가 */
+        margin-bottom: 0.1rem !important; /* 아래쪽 여백 최소화 */
+        padding: 0.05rem !important; /* 패딩 최소화 */
+    }
+    
+    /* 어휘 분석 섹션 옆 패딩 제거 */
+    .main .vocabulary-analysis {
+        margin-top: 0.1rem !important; /* 위쪽 여백 최소화 */
+        margin-bottom: 0.1rem !important; /* 아래쪽 여백 최소화 */
+        padding: 0 !important; /* 모든 패딩 제거 */
+        margin-left: 0 !important; /* 왼쪽 마진 제거 */
+        margin-right: 0 !important; /* 오른쪽 마진 제거 */
+    }
+    
+    /* 모든 부제목들 여백 최소화 */
+    .main .analysis-note,
+    .main .structure-note,
+    .main .suggestion-note {
+        margin-top: 0.05rem !important; /* 부제목 위 여백 최소화 */
+        margin-bottom: 0.05rem !important; /* 부제목 아래 여백 최소화 */
+    }
+    
+    /* 작성한 글 본문과 모든 본문 텍스트들 행간 통일 */
+    .main .title-description,
+    .main .structure-text,
+    .main .suggestion-text {
+        margin-top: 0.05rem !important; /* 본문 위 여백 최소화 */
+        margin-bottom: 0.05rem !important; /* 본문 아래 여백 최소화 */
+        line-height: 1.3 !important; /* 행간 통일 */
+    }
+    
+    /* 부제목들의 여백 통일 */
+    .main .analysis-note,
+    .main .structure-note,
+    .main .suggestion-note {
+        margin-top: 0.1rem !important; /* 부제목 위 여백 통일 */
+        margin-bottom: 0.2rem !important; /* 부제목 아래 여백 통일 */
+    }
+    
+    /* 본문 텍스트들의 여백 통일 */
+    .main .structure-text,
+    .main .suggestion-text {
+        margin-top: 0.1rem !important; /* 본문 위 여백 통일 */
+        margin-bottom: 0.1rem !important; /* 본문 아래 여백 통일 */
     }
     
     /* Reduce vocabulary cards spacing */
@@ -1636,8 +1774,11 @@ body {
     }
     
     /* Reduce legend spacing */
-    .radar-legend,
     .bar-labels {
+        height: 200px !important; /* 스택바와 동일한 높이 */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
         gap: 0.1rem !important;
     }
     
@@ -1653,13 +1794,40 @@ body {
     }
     
     .subtitle {
-        font-size: 0.8rem !important; /* ~13pt */
+        font-size: 0.7rem !important; /* 통일된 크기 */
+        font-weight: 600 !important; /* 통일된 굵기 */
         margin-bottom: 0.1rem !important;
+        margin-top: 0.1rem !important;
+        color: black !important;
+        font-family: inherit !important;
+        text-transform: none !important;
+        letter-spacing: normal !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
     }
     
-    .score-highlight {
-        font-size: 0.9rem !important; /* ~14pt */
+    /* Remove borders from score containers and title section */
+    .vocabulary-score,
+    .percentile,
+    .title-section,
+    .title-description {
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    /* 성과 백분위 하이라이트 텍스트 - 인쇄용 스타일 강화 */
+    .percentile-highlight {
+        font-size: 0.7rem !important; /* 통일된 크기 */
+        font-weight: 600 !important; /* 통일된 굵기 */
+        color: black !important; /* 검정색으로 강제 설정 */
         margin-bottom: 0.1rem !important;
+        margin-top: 0.1rem !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+        font-family: inherit !important;
+        text-transform: none !important;
+        letter-spacing: normal !important;
     }
     
     .score-description {
@@ -1670,17 +1838,51 @@ body {
     }
     
     .gauge-number {
-        font-size: 1rem !important; /* ~16pt - maximum allowed */
+        font-size: 0.8rem !important; /* ~13pt - 그래프 숫자 통일 */
     }
     
-    .percentile-score {
-        font-size: 0.9rem !important; /* ~14pt */
-        margin-bottom: 0.1rem !important;
-        margin-top: 0.1rem !important;
+    /* 강제 적용 - 더 구체적인 선택자 사용 */
+    .main .main-title {
+        font-size: 1.5rem !important; /* ~16pt - maximum allowed */
+        margin-bottom: 0.5rem !important; /* 아래 여백 더 증가 */
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        line-height: 1 !important;
+    }
+    
+    .main .title-description {
+        font-size: 0.6rem !important; /* ~10pt */
+        margin-bottom: 0 !important; /* 아래 패딩 완전 제거 */
+        line-height: 1.1 !important;
+    }
+    
+    /* 색상 강제 적용 - 최고 우선순위 */
+    .main .percentile-score {
+        font-size: 0.7rem !important;
+        font-weight: 600 !important;
+        color: black !important;
+        background-color: black !important;
+        -webkit-text-fill-color: black !important;
+        text-fill-color: black !important;
+    }
+    
+    .main .data-bar.structure,
+    .main .legend-color.structure {
+        stroke: #FF8C00 !important;
+        fill: #FF8C00 !important;
+        background-color: #FF8C00 !important;
+        box-shadow: inset 0 0 0 1000px #FF8C00 !important;
+    }
+    
+    .main .animated-red-dot {
+        background-color: #7B7B7B !important;
+        border: 1.5px solid #7B7B7B !important;
+        fill: #7B7B7B !important;
+        opacity: 1 !important;
     }
     
     .percentile-description {
-        font-size: 0.7rem !important; /* ~11pt */
+        font-size: 0.6rem !important; /* ~10pt - 다른 작은 글씨와 통일 */
         margin-bottom: 0.1rem !important;
         margin-top: 0.1rem !important;
     }
@@ -1690,52 +1892,61 @@ body {
         margin-bottom: 0.1rem !important;
     }
     
+    /* 차트 제목들 - 인쇄용 스타일 강화 */
     .radar-chart-title,
     .bar-chart-title {
-        font-size: 0.8rem !important; /* ~13pt */
-        margin-bottom: 0.1rem !important;
-    }
-    
-    .structure-text,
-    .suggestion-text {
-        font-size: 0.7rem !important; /* ~11pt */
-        line-height: 1.2 !important;
+        font-size: 0.7rem !important; /* 통일된 크기 */
+        font-weight: 600 !important; /* 통일된 굵기 */
+        color: black !important; /* 검정색으로 강제 설정 */
         margin-bottom: 0.1rem !important;
         margin-top: 0.1rem !important;
-    }
-    
-    /* Reduce vocabulary cards size and spacing */
-    .vocabulary-cards {
-        gap: 0.1rem !important;
-        margin-bottom: 0.1rem !important;
         padding: 0 !important;
+        line-height: 1.2 !important;
+        font-family: inherit !important;
+        text-transform: none !important;
+        letter-spacing: normal !important;
+        text-align: left !important;
     }
     
-    .vocab-card {
-        padding: 0.1rem !important;
-        margin: 0 !important;
+    /* 어휘 카드들 완전 컴팩트하게 */
+    .main .vocabulary-cards {
+        gap: 0.02rem !important; /* 카드 간격 최소화 */
+        margin: 0 !important; /* 모든 마진 제거 */
+        padding: 0 !important; /* 모든 패딩 제거 */
+        justify-content: flex-start !important; /* 왼쪽 정렬 */
+        width: 100% !important; /* 전체 너비 사용 */
+    }
+    
+    /* 어휘 카드들 가로 길이 일정하게 */
+    .main .vocab-card {
+        padding: 0.02rem !important; /* 패딩 최소화 */
+        margin: 0 !important; /* 마진 제거 */
+        min-width: 120px !important; /* 최소 너비 설정 */
+        width: 120px !important; /* 고정 너비 설정 */
         height: auto !important;
         min-height: 0 !important;
         border: none !important;
         background: white !important;
+        flex-shrink: 0 !important; /* 축소 방지 */
+        flex-grow: 0 !important; /* 확장 방지 */
     }
     
     .card-word {
         font-size: 0.6rem !important; /* ~10pt */
-        margin-bottom: 0.05rem !important;
-        line-height: 1 !important;
+        margin-bottom: 0.1rem !important; /* 여백 증가 */
+        line-height: 1.3 !important; /* 행간 넓히기 */
     }
     
     .card-pos {
-        font-size: 0.5rem !important; /* ~8pt */
-        margin-bottom: 0.05rem !important;
-        line-height: 1 !important;
+        font-size: 0.6rem !important; /* ~10pt - 적절한 크기로 조정 */
+        margin-bottom: 0.1rem !important; /* 여백 증가 */
+        line-height: 1.3 !important; /* 행간 넓히기 */
     }
     
     .card-desc {
-        font-size: 0.5rem !important; /* ~8pt */
+        font-size: 0.6rem !important; /* ~10pt - 적절한 크기로 조정 */
         margin-bottom: 0 !important;
-        line-height: 1.1 !important;
+        line-height: 1.3 !important; /* 행간 넓히기 */
     }
     
     .legend-text,
@@ -1746,60 +1957,70 @@ body {
     
     .legend-score,
     .label-percentage {
-        font-size: 0.7rem !important; /* ~11pt */
+        font-size: 0.8rem !important; /* ~13pt - 그래프 숫자 통일 */
+    }
+    
+    .gauge-max,
+    .legend-max {
+        font-size: 0.8rem !important; /* ~13pt - 그래프 숫자 통일 */
     }
     
     /* Reduce line height and spacing for compact print */
     .percentile-list li {
+        font-size: 0.7rem !important; /* ~11pt - 적절한 크기로 조정 */
         margin-bottom: 0.05rem !important;
         line-height: 1.1 !important;
+        padding-left: 0 !important; /* 체크 표시 공간 제거 */
+    }
+    
+    .percentile-list li:before {
+        display: none !important; /* 체크 표시 숨김 */
     }
     
     .structure-text,
     .suggestion-text {
+        font-size: 0.7rem !important; /* 통일된 크기 */
         line-height: 1.2 !important;
         margin-bottom: 0.1rem !important;
+        margin-top: 0.1rem !important;
+        padding: 0 !important; /* 패딩 제거 */
+        color: black !important; /* 검정색으로 강제 설정 */
+        text-align: justify !important;
+        background-color: transparent !important;
+        border-radius: 0 !important;
     }
     
     /* Specific spacing fixes for vocabulary score section - force everything to minimal */
     .vocabulary-score .subtitle {
-        margin-bottom: 0 !important;
-        margin-top: 0 !important;
+        margin-bottom: 0.2rem !important;
+        margin-top: 0.1rem !important;
         padding-bottom: 0 !important;
         padding-top: 0 !important;
-        line-height: 1 !important;
-        height: auto !important;
-        min-height: 0 !important;
-    }
-    
-    .vocabulary-score .score-highlight {
-        margin-bottom: 0 !important;
-        margin-top: 0 !important;
-        padding-bottom: 0 !important;
-        padding-top: 0 !important;
-        line-height: 1 !important;
+        line-height: 1.2 !important;
         height: auto !important;
         min-height: 0 !important;
     }
     
     .vocabulary-score .score-description {
-        margin-bottom: 0 !important;
-        margin-top: 0 !important;
+        margin-bottom: 0.3rem !important;
+        margin-top: 0.1rem !important;
         padding-bottom: 0 !important;
         padding-top: 0 !important;
-        line-height: 1 !important;
+        line-height: 1.2 !important;
         height: auto !important;
         min-height: 0 !important;
     }
     
     /* Reduce spacing in gauge container specifically */
     .vocabulary-score .gauge-container {
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
+        margin: 0.5rem auto !important; /* 위쪽 여백 더 늘림 */
         padding-top: 0 !important;
         padding-bottom: 0 !important;
         height: auto !important;
         min-height: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
     
     .vocabulary-score .gauge-text {
@@ -1846,21 +2067,45 @@ body {
     }
     
     .bell-curve-container {
-        margin: 0 !important;
+        margin: 0.5rem 0 0 0 !important; /* 위쪽 여백 추가 */
         padding: 0 !important;
         height: 150px !important;
         min-height: 0 !important;
     }
     
-    /* Force all text elements to have zero spacing */
-    .percentile .subtitle,
-    .percentile .percentile-score,
-    .percentile .percentile-description,
-    .percentile .percentile-list,
-    .percentile .percentile-list li {
-        margin: 0 !important;
+    /* Add spacing to percentile section elements */
+    .percentile .subtitle {
+        margin-bottom: 0.2rem !important;
+        margin-top: 0.1rem !important;
         padding: 0 !important;
-        line-height: 1 !important;
+        line-height: 1.2 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .percentile .percentile-description {
+        margin-bottom: 0.2rem !important;
+        margin-top: 0.1rem !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .percentile .percentile-list {
+        margin-top: 0.2rem !important;
+        margin-bottom: 0.1rem !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+    
+    .percentile .percentile-list li {
+        margin-bottom: 0.15rem !important;
+        margin-top: 0.05rem !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
         height: auto !important;
         min-height: 0 !important;
     }
@@ -1906,11 +2151,12 @@ body {
     
     /* Make charts smaller */
     .gauge-container {
-        height: 200px !important;
+        height: 150px !important; /* 크기 더 줄임 */
+        width: 150px !important; /* 크기 더 줄임 */
     }
     
     .bell-curve-container {
-        height: 100px !important;
+        height: 130px !important; /* 높이를 조금 늘림 */
     }
     
     /* Fix radar chart container spacing */
@@ -1920,10 +2166,18 @@ body {
         padding-top: 0.2rem !important;
     }
     
-    .radar-chart-title {
-        font-size: 0.7rem !important; /* ~11pt */
-        margin-bottom: 0.2rem !important;
+    /* 설득 장인 텍스트 - 인쇄용 스타일 강화 */
+    .score-highlight {
+        font-size: 0.7rem !important; /* 통일된 크기 */
+        font-weight: 600 !important; /* 통일된 굵기 */
+        color: black !important; /* 검정색으로 강제 설정 */
+        margin-bottom: 0.1rem !important;
         margin-top: 0.1rem !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+        font-family: inherit !important;
+        text-transform: none !important;
+        letter-spacing: normal !important;
     }
     
     .radar-content {
@@ -1932,15 +2186,20 @@ body {
     }
     
     .radar-chart {
-        height: 200px !important;
-        width: 200px !important;
+        height: 220px !important; /* 크기 조금 증가 */
+        width: 220px !important; /* 크기 조금 증가 */
     }
     
     /* Increase radar chart container to accommodate larger chart */
     .radar-chart-container {
-        height: 250px !important;
+        height: 220px !important; /* 막대 차트와 동일한 높이 */
         margin-top: 0.2rem !important;
         padding-top: 0.2rem !important;
+    }
+    
+    /* 막대 차트 컨테이너도 동일한 높이로 맞춤 */
+    .bar-chart-container {
+        height: 250px !important; /* 레이더 차트와 딱 맞는 높이 */
     }
     
     .radar-legend {
@@ -1951,8 +2210,8 @@ body {
     /* Fix bell curve container for print */
     .bell-curve-container {
         overflow: visible !important;
-        background: #FFF9F5 !important;
-        border: 1px solid #ddd !important;
+        background: transparent !important;
+        border: none !important;
     }
     
     /* Ensure bell curve chart is fully visible */
@@ -1969,8 +2228,12 @@ body {
     }
     
     .radar-chart-container {
-        width: 75% !important;
-        flex: 0 0 75% !important;
+        width: 70% !important;
+        flex: 0 0 70% !important;
+    }
+    
+    .field-content {
+        gap: 0.5rem !important; /* 그래프와 라벨 간격 줄임 */
     }
     
     .dashboard-row-top,
@@ -2006,7 +2269,6 @@ body {
     .score-description,
     .gauge-number,
     .gauge-max,
-    .percentile-highlight,
     .percentile-description,
     .percentile-list li,
     .radar-chart-title,
@@ -2019,14 +2281,33 @@ body {
     .analysis-note,
     .structure-note,
     .suggestion-note,
-    .highlight-percent {
+    .highlight-percent,
+    .structure-text,
+    .suggestion-text,
+    .card-pos,
+    .card-desc {
         color: black !important;
+    }
+    
+    /* 레이더 차트 크림색을 주황색으로 변경 (인쇄시만) */
+    .data-bar.structure,
+    .legend-color.structure {
+        stroke: #FF8C00 !important; /* 주황색으로 변경 */
+        background-color: #FF8C00 !important; /* 주황색으로 변경 */
+        box-shadow: inset 0 0 0 1000px #FF8C00 !important; /* 강제 색상 적용 */
+    }
+    
+    /* 백분위 그래프 점 - 인쇄용 색상 강제 설정 */
+    .animated-red-dot {
+        background-color: #7B7B7B !important; /* 테두리와 같은 색상으로 강제 설정 */
+        border: 1.5px solid #7B7B7B !important; /* 테두리와 같은 색상으로 강제 설정 */
+        opacity: 1 !important; /* 인쇄시 완전히 보이도록 */
     }
     
     /* Page setup */
     @page {
         size: A4;
-        margin: 0.5in;
+        margin: 0.2in 0.5in 0.5in 0.5in; /* 상단 여백만 줄임 */
     }
 }
 
