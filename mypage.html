@@ -24,13 +24,10 @@
         <section class="profile-section">
             <div class="profile-info">
                 <div class="avatar">
-                    <div class="avatar-line"></div>
-                    <div class="avatar-line"></div>
-                    <div class="avatar-dot"></div>
-                    <div class="avatar-dot"></div>
+                    <img src="user.png" alt="User" class="avatar-image" />
                 </div>
                 <div class="user-info">
-                    <h2 class="user-title">설득 장인 Guest1</h2>
+                    <h2 class="user-title">Guest1</h2>
                     <p class="user-level">5단계</p>
                 </div>
             </div>
@@ -38,19 +35,27 @@
             <!-- 설정 메뉴 -->
             <div class="settings-menu">
                 <div class="setting-item">
-                    <div class="setting-icon">👤</div>
+                    <div class="setting-icon">
+                        <img src="Vector - 0.svg" alt="계정 관리" />
+                    </div>
                     <span class="setting-label">계정 관리</span>
                 </div>
                 <div class="setting-item">
-                    <div class="setting-icon">⚙️</div>
+                    <div class="setting-icon">
+                        <img src="Vector - 1.svg" alt="설정" />
+                    </div>
                     <span class="setting-label">설정</span>
                 </div>
                 <div class="setting-item">
-                    <div class="setting-icon">🔔</div>
+                    <div class="setting-icon">
+                        <img src="Vector - 2.svg" alt="공지" />
+                    </div>
                     <span class="setting-label">공지</span>
                 </div>
                 <div class="setting-item">
-                    <div class="setting-icon">❓</div>
+                    <div class="setting-icon">
+                        <img src="Vector - 3.svg" alt="문의" />
+                    </div>
                     <span class="setting-label">문의</span>
                 </div>
             </div>
@@ -62,6 +67,22 @@
             <div class="bookshelf">
                 <div class="books-container" id="shelf1">
                     <!-- 모든 책들을 자유롭게 배치 -->
+                    <!-- 상단 힌트 박스 -->
+                    <div class="top-hint-book">
+                        <div class="top-hint-content">
+                            <span>책들을<br>클릭 드래그<br>해보세요!</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 무늬 책 덩어리 -->
+                    <div class="book-stack">
+                        <div class="book pattern-checkered" draggable="false"></div>
+                        <div class="book pattern-striped" draggable="false"></div>
+                        <div class="book pattern-dotted" draggable="false"></div>
+                        <div class="book pattern-line-top" draggable="false"></div>
+                        <div class="book pattern-line-bottom" draggable="false"></div>
+                    </div>
+                    
                     <div class="book vertical pattern-checkered thick" data-book="pattern1" draggable="true"></div>
                     <div class="book vertical pattern-striped thin" data-book="pattern2" draggable="true"></div>
                     <div class="book vertical short" data-book="white" draggable="true"></div>
@@ -94,8 +115,9 @@
                     <!-- 업적 북엔드 -->
                     <div class="book achievement-book" draggable="true">
                         <div class="achievement-content">
-                            <h2 class="achievement-title">지금까지 쌓은 업적</h2>
+                            <h2 class="achievement-title">지금까지<br>쌓은 업적</h2>
                             <div class="achievement-count">
+                                <span class="count-label">총</span>
                                 <span class="count-number">56</span>
                                 <span class="count-unit">권</span>
                             </div>
@@ -228,7 +250,7 @@
                     <!-- 드래그 힌트 북엔드 -->
                     <div class="book hint-book" draggable="true">
                         <div class="drag-hint-content">
-                            <span>옆으로 드래그 해보세요!</span>
+                            <span>옆으로<br>드래그<br>해보세요!</span>
                         </div>
                     </div>
                 </div>

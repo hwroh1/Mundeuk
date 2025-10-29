@@ -13,48 +13,94 @@ class BookShelfManager {
         this.setupDragAndDrop();
         this.setupBookInteractions();
         this.loadBookPositions();
+        this.randomizeAchievementBookPosition();
+        this.randomizeHintBookPosition();
     }
 
     setupRandomColors() {
         const books = document.querySelectorAll('.book');
         const fonts = ['font-school', 'font-ongleip', 'font-bookk'];
+        // 제목이 없는 책들을 위한 패턴 목록
+        const patterns = ['pattern-checkered', 'pattern-striped', 'pattern-dotted', 'pattern-line-top', 'pattern-line-bottom'];
         
         books.forEach(book => {
+            // 책 덩어리 안의 책들은 제외
+            if (book.closest('.book-stack')) {
+                return;
+            }
             const randomColor = this.bookColors[Math.floor(Math.random() * this.bookColors.length)];
             book.style.setProperty('--book-color', randomColor);
             
-            // 랜덤 폰트 할당
+            // 제목이 없는 책에 랜덤 패턴 할당
             const bookTitle = book.querySelector('.book-title');
+            if (!bookTitle) {
+                // 이미 패턴이 없으면 랜덤 패턴 추가
+                const hasPattern = Array.from(book.classList).some(cls => cls.startsWith('pattern-'));
+                if (!hasPattern) {
+                    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+                    book.classList.add(randomPattern);
+                }
+                
+                // 제목이 없는 책들도 랜덤 높이 설정
+                if (!book.classList.contains('hint-book') && !book.classList.contains('achievement-book')) {
+                    const baseHeight = 170; // 기본 최소 높이
+                    const randomOffset = Math.floor(Math.random() * 81) - 40; // -40 ~ +40
+                    const randomHeight = baseHeight + randomOffset;
+                    book.style.setProperty('min-height', randomHeight + 'px', 'important');
+                }
+            }
+            
+            // 랜덤 폰트 할당 및 제목 길이에 따라 책 높이 조정
             if (bookTitle) {
                 const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
                 bookTitle.className = 'book-title ' + randomFont;
-                bookTitle.style.position = 'relative';
-                bookTitle.style.top = '0';
-                bookTitle.style.left = '0';
-                bookTitle.style.transform = 'none';
                 bookTitle.style.textAlign = 'center';
                 bookTitle.style.whiteSpace = 'nowrap';
                 bookTitle.style.margin = '0';
                 bookTitle.style.padding = '0';
+                
+                // 제목이 있는 책에도 랜덤으로 위쪽 검은 줄 패턴 추가 (30% 확률)
+                // 단, achievement-book와 hint-book은 제외
+                if (!book.classList.contains('achievement-book') && !book.classList.contains('hint-book')) {
+                    if (Math.random() < 0.3) {
+                        book.classList.add('pattern-line-top');
+                    }
+                }
+                
+                // 제목 길이에 따라 책 높이 조정 (90도 회전 고려)
+                const titleText = bookTitle.textContent || '';
+                const titleLength = titleText.length;
+                // 제목 길이에 따라 최소 높이 계산 (글자당 약 20px, 기본 최소 높이 170px)
+                const baseHeight = Math.max(170, titleLength * 20);
+                // 랜덤 요소 추가 (±20px 범위)
+                const randomOffset = Math.floor(Math.random() * 41) - 20; // -20 ~ +20
+                const calculatedMinHeight = baseHeight + randomOffset;
+                book.style.setProperty('min-height', calculatedMinHeight + 'px', 'important');
             }
             
-            // 책 크기를 제목에 맞게 자동 조정
-            book.style.display = 'block';
-            book.style.width = 'auto';
-            book.style.height = 'auto';
-            book.style.minWidth = '40px';
-            book.style.minHeight = '120px';
-            book.style.maxWidth = '200px';
-            book.style.padding = '20px 8px 10px 8px';
+            // 책 크기 기본 설정 (hint-book, achievement-book, book-stack 내부 책 제외)
+            if (!book.classList.contains('hint-book') && 
+                !book.classList.contains('achievement-book') &&
+                !book.closest('.book-stack')) {
+                book.style.display = 'block';
+                book.style.height = 'auto';
+                
+                // 책 두께 랜덤 설정 (30px ~ 70px 범위)
+                if (!book.classList.contains('horizontal')) {
+                    const randomWidth = 30 + Math.floor(Math.random() * 41); // 30 ~ 70px
+                    book.style.width = `${randomWidth}px`;
+                    book.style.minWidth = `${randomWidth}px`;
+                } else {
+                    book.style.width = 'auto';
+                    book.style.minWidth = '40px';
+                }
+                
+                book.style.maxWidth = '200px';
+                book.style.padding = '20px 8px 10px 8px';
+            }
             
-            // 최소/최대 높이 범위에서 랜덤 높이 적용
-            const minHeight = 120; // 최소 높이 (제목 공간 확보)
-            const maxHeight = 200; // 최대 높이
-            const randomHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
-            book.style.setProperty('min-height', randomHeight + 'px', 'important');
-            
-            // vertical 책들만 랜덤 간격 적용
-            if (!book.classList.contains('horizontal')) {
+            // vertical 책들만 랜덤 간격 적용 (book-stack 내부 책 제외)
+            if (!book.classList.contains('horizontal') && !book.closest('.book-stack')) {
                 // 좁은 간격이 주가 되고 넓은 간격이 가끔 나오도록 조정
                 let randomMargin;
                 if (Math.random() < 0.8) {
@@ -87,6 +133,11 @@ class BookShelfManager {
         const books = document.querySelectorAll('.book');
         
         books.forEach(book => {
+            // 책 덩어리 안의 책들은 드래그 불가능
+            if (book.closest('.book-stack')) {
+                return;
+            }
+            
             book.draggable = true;
             
             // 드래그 시작
@@ -305,6 +356,60 @@ class BookShelfManager {
         }
     }
 
+    // 업적 북을 랜덤 위치에 배치
+    randomizeAchievementBookPosition() {
+        const shelves = document.querySelectorAll('.books-container');
+        shelves.forEach(shelf => {
+            const achievementBook = shelf.querySelector('.achievement-book');
+            if (!achievementBook) return;
+            
+            const allBooks = Array.from(shelf.querySelectorAll('.book'));
+            const otherBooks = allBooks.filter(book => 
+                !book.classList.contains('achievement-book') && 
+                !book.classList.contains('hint-book') &&
+                !book.closest('.book-stack')
+            );
+            
+            if (otherBooks.length === 0) return;
+            
+            // 왼쪽 부분에 가중치를 두어 랜덤 위치 선택 (왼쪽 30% 범위 내에서 선택)
+            const maxIndex = Math.floor(otherBooks.length * 0.3);
+            const randomIndex = Math.floor(Math.random() * (maxIndex + 1));
+            const targetBook = otherBooks[randomIndex];
+            
+            // achievement-book을 랜덤 위치에 삽입
+            achievementBook.remove();
+            shelf.insertBefore(achievementBook, targetBook);
+        });
+    }
+
+    // 힌트 북을 오른쪽 부분에서 랜덤 위치에 배치
+    randomizeHintBookPosition() {
+        const shelves = document.querySelectorAll('.books-container');
+        shelves.forEach(shelf => {
+            const hintBook = shelf.querySelector('.hint-book');
+            if (!hintBook) return;
+            
+            const allBooks = Array.from(shelf.querySelectorAll('.book'));
+            const otherBooks = allBooks.filter(book => 
+                !book.classList.contains('achievement-book') && 
+                !book.classList.contains('hint-book') &&
+                !book.closest('.book-stack')
+            );
+            
+            if (otherBooks.length === 0) return;
+            
+            // 오른쪽 부분에 가중치를 두어 랜덤 위치 선택 (오른쪽 30% 범위 내에서 선택)
+            const startIndex = Math.floor(otherBooks.length * 0.7);
+            const randomIndex = startIndex + Math.floor(Math.random() * (otherBooks.length - startIndex));
+            const targetBook = otherBooks[randomIndex];
+            
+            // hint-book을 랜덤 위치에 삽입
+            hintBook.remove();
+            shelf.insertBefore(hintBook, targetBook.nextSibling || null);
+        });
+    }
+
     // 책 랜덤 배치 기능 (디버깅용)
     randomizeBooks() {
         const shelves = document.querySelectorAll('.books-container');
@@ -342,20 +447,38 @@ class BookShelfManager {
             if (bookTitle) {
                 const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
                 bookTitle.className = 'book-title ' + randomFont;
-                bookTitle.style.display = 'flex';
-                bookTitle.style.alignItems = 'center';
-                bookTitle.style.justifyContent = 'center';
                 bookTitle.style.textAlign = 'center';
-                bookTitle.style.height = '100%';
-                bookTitle.style.width = '100%';
             }
         });
+    }
+    
+    // 책 덩어리를 중간 위치에 삽입하는 함수
+    insertBookStackInMiddle() {
+        const booksContainer = document.getElementById('shelf1');
+        const books = Array.from(booksContainer.children).filter(child => 
+            !child.classList.contains('book-stack') && 
+            !child.classList.contains('achievement-book') && 
+            !child.classList.contains('hint-book')
+        );
+        
+        if (books.length > 0) {
+            const bookStack = document.querySelector('.book-stack');
+            
+            if (bookStack) {
+                // 중간 위치에 삽입
+                const middleIndex = Math.floor(books.length / 2);
+                booksContainer.insertBefore(bookStack, books[middleIndex]);
+            }
+        }
     }
 }
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
     const bookShelfManager = new BookShelfManager();
+    
+    // 책 덩어리를 중간 위치에 삽입
+    bookShelfManager.insertBookStackInMiddle();
     
     // 전역 함수로 노출 (디버깅용)
     window.bookShelfManager = bookShelfManager;
