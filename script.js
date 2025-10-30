@@ -84,7 +84,7 @@ class BookStack {
         patternOverlay.style.left = '10px';
         patternOverlay.style.width = 'calc(100% - 20px)';
         patternOverlay.style.height = 'calc(100% - 20px)';
-        patternOverlay.style.opacity = '0.3';
+        patternOverlay.style.opacity = '0.5';
         patternOverlay.style.pointerEvents = 'none';
         
         // Apply random color to pattern
@@ -337,6 +337,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add cursor following rotation to the floating circle
     const floatingCircle = document.querySelector('.floating-circle');
     if (floatingCircle) {
+        let circleTipHideTimeout = null;
+        const ensureCircleTip = () => {
+            let tip = document.getElementById('circleTip');
+            if (!tip) {
+                tip = document.createElement('div');
+                tip.id = 'circleTip';
+                tip.className = 'circle-tip';
+                tip.textContent = '책을 클릭해보세요!';
+                document.body.appendChild(tip);
+            }
+            return tip;
+        };
+
+        // 고정 툴팁: 초기 1회 위치 계산 후 고정
+        const positionCircleTip = () => {
+            const tip = ensureCircleTip();
+            const rect = floatingCircle.getBoundingClientRect();
+            const tipWidth = tip.offsetWidth || 160;
+            const x = rect.left + rect.width / 2 - tipWidth / 2;
+            const y = rect.top - 56; // 더 위로 올림
+            tip.style.left = Math.max(8, x) + 'px';
+            tip.style.top = Math.max(8, y - tip.offsetHeight) + 'px';
+            // 초기에는 항상 보이지 않도록, 위치만 맞춤
+        };
+
+        // 초기 배치 및 리사이즈/스크롤 시 재배치
+        positionCircleTip();
+        window.addEventListener('resize', positionCircleTip);
+        window.addEventListener('scroll', positionCircleTip, { passive: true });
+
         document.addEventListener('mousemove', (e) => {
             const circle = floatingCircle.getBoundingClientRect();
             const circleCenterX = circle.left + circle.width / 2;
@@ -358,6 +388,14 @@ document.addEventListener('DOMContentLoaded', () => {
             angle = Math.max(-60, Math.min(60, angle));
             
             floatingCircle.style.transform = `rotate(${angle}deg)`;
+
+            // 마우스 움직임 시 3초간 표시
+            const tip = ensureCircleTip();
+            tip.classList.add('show');
+            if (circleTipHideTimeout) clearTimeout(circleTipHideTimeout);
+            circleTipHideTimeout = setTimeout(() => {
+                tip.classList.remove('show');
+            }, 3000);
         });
     }
     

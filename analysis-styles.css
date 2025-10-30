@@ -927,30 +927,34 @@ body {
     color: #1a1a1a;
     opacity: 0;
     transform: translateY(30px) scale(0.9);
-    animation: cardSlideIn 0.8s ease forwards;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
 }
 
-.vocab-card:nth-child(1) { 
+/* 카드 애니메이션은 뷰포트 진입 시에만 시작 */
+.vocab-card.animate {
+    animation: cardSlideIn 0.8s ease forwards;
+}
+
+.vocab-card.animate:nth-child(1) { 
     background-color: #32FF8A; 
     animation-delay: 0.5s;
 }
-.vocab-card:nth-child(2) { 
+.vocab-card.animate:nth-child(2) { 
     background-color: #FFEA00; 
     animation-delay: 0.7s;
 }
-.vocab-card:nth-child(3) { 
+.vocab-card.animate:nth-child(3) { 
     background-color: #07B0F2; 
     animation-delay: 0.9s;
 }
-.vocab-card:nth-child(4) { 
+.vocab-card.animate:nth-child(4) { 
     background-color: #FFF9F5; 
     animation-delay: 1.1s;
 }
-.vocab-card:nth-child(5) { 
+.vocab-card.animate:nth-child(5) { 
     background-color: #32FF8A; 
     animation-delay: 1.3s;
 }

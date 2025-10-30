@@ -20,6 +20,14 @@
     font-display: swap;
 }
 
+/* 추가 폰트 - 산하엽 */
+@font-face {
+    font-family: 'Sanhayeop';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/Diphylleia-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
 /* 기본 스타일 */
 * {
     margin: 0;
@@ -185,13 +193,12 @@ body {
 /* 책장 섹션 */
 .bookshelf-section {
     margin-top: 1rem;
-    width: max-content; /* 내용에 맞게 너비 조정 */
-    min-width: 100vw; /* 최소 너비는 화면 너비 */
+    width: 100vw;
     margin-left: calc(-50vw + 50%);
-    padding: 0 2rem;
+    padding: 0;
     position: relative;
-    overflow-x: auto; /* 가로 스크롤 허용 */
-    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow-y: visible;
     /* 스크롤바 숨기기 */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -227,14 +234,38 @@ body {
     align-items: flex-end;
     gap: 0;
     min-height: 280px;
-    padding: 1rem 0;
-    width: max-content; /* 내용에 맞게 너비 조정 */
-    min-width: 100%; /* 최소 너비는 100% */
+    padding: 1rem 12px;
+    width: 100%;
+    min-width: 0;
     justify-content: flex-start;
-    flex-wrap: nowrap; /* 책들이 아래로 내려가지 않고 옆으로 늘어나도록 */
+    flex-wrap: nowrap;
     padding-bottom: 0.5rem;
     position: relative;
     transition: background-color 0.2s ease;
+}
+
+/* 좌우 여백 유지를 위한 유령 플렉스 아이템 */
+.books-container::before,
+.books-container::after {
+    content: '';
+    display: block;
+    flex: 0 0 12px;
+    pointer-events: none;
+}
+
+/* 양 끝 정렬 모드: 첫/마지막 책을 컨테이너 좌우에 맞춤 */
+.books-container.justify-ends {
+    justify-content: space-between;
+}
+
+/* 양 끝 정렬 시, 유령 스페이서 제거 및 책 여백 제거 */
+.books-container.justify-ends::before,
+.books-container.justify-ends::after {
+    display: none;
+}
+
+.books-container.justify-ends .book {
+    margin-right: 0 !important;
 }
 
 /* 책 스타일 */
@@ -292,6 +323,12 @@ body {
         rgba(0, 0, 0, 0.1) 50%, 
         rgba(0, 0, 0, 0.4) 100%);
     pointer-events: none;
+}
+
+/* 흰색 힌트 박스의 세로 라인을 가운데 정렬 */
+.top-hint-book::after,
+.hint-book::after {
+    display: none !important;
 }
 
 .book:hover {
@@ -395,6 +432,11 @@ body {
     transform: rotate(90deg);
     text-shadow: none;
     line-height: 1.1;
+}
+
+/* 책 제목 - 산하엽 폰트 */
+.book-title.font-sanhayeop {
+    font-family: 'Sanhayeop', 'Arial', sans-serif;
 }
 
 /* 제목이 없는 책들의 패턴 스타일 - 기존 패턴 제거됨 */
@@ -605,6 +647,59 @@ body {
     max-height: 22px !important;
 }
 
+/* 스택 안 흰색 책(2번째)의 우측 세로 라인 숨김 */
+.book-stack .book:nth-child(2)::after {
+    display: none !important;
+}
+
+/* 흰색 세로 책의 라인을 가운데로 이동 */
+.book[data-book="white"]::after {
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-0.5px) !important;
+}
+
+/* 필요 시 라인을 완전히 숨기고 싶을 때 사용할 클래스 */
+.book.hide-spine::after {
+    display: none !important;
+}
+
+/* 3번째 선반 전용 스택 사이즈 변형 */
+#shelf3 .book-stack.stack-variant .book:nth-child(1) {
+    width: 150px !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    max-height: 26px !important;
+}
+
+#shelf3 .book-stack.stack-variant .book:nth-child(2) {
+    width: 220px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+}
+
+#shelf3 .book-stack.stack-variant .book:nth-child(3) {
+    width: 160px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+}
+
+#shelf3 .book-stack.stack-variant .book:nth-child(4) {
+    width: 240px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+}
+
+#shelf3 .book-stack.stack-variant .book:nth-child(5) {
+    width: 180px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+}
+
 /* 상단 힌트 박스 스타일 */
 .top-hint-book {
     background: #FFF9F5 !important;
@@ -778,7 +873,7 @@ body {
     }
     
     .bookshelf-section {
-        padding: 0 1rem;
+        padding: 0;
     }
     
     .books-container {
@@ -841,7 +936,7 @@ body {
     }
     
     .bookshelf-section {
-        padding: 0 0.5rem;
+        padding: 0;
     }
     
     .books-container {
@@ -917,4 +1012,9 @@ body {
 /* 책장 스크롤바 숨기기 */
 .books-container::-webkit-scrollbar {
     display: none;
+}
+
+/* 전역: 모든 책의 장식용 스파인 라인 제거 */
+.book::after {
+    display: none !important;
 }

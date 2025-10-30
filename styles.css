@@ -393,6 +393,39 @@ html {
     top: -50%;
 }
 
+/* Circle follow tooltip */
+.circle-tip {
+    position: fixed;
+    background: #FFF9F5;
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
+    line-height: 1.35;
+    z-index: 1001;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+.circle-tip.show { opacity: 1; transform: translateY(0); }
+
+.circle-tip::after {
+    content: '';
+    position: absolute;
+    left: 18px;
+    bottom: -10px;
+    border-width: 10px 10px 0 10px;
+    border-style: solid;
+    border-color: #FFF9F5 transparent transparent transparent;
+}
+
+/* 테두리 효과가 보이도록 외곽 삼각형 추가 */
+.circle-tip::before { display: none; }
+
 /* Speech Bubble Styles */
 .speech-bubble {
     position: fixed;
@@ -459,21 +492,12 @@ html {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.writing-btn:hover {
-    background: linear-gradient(135deg, #32FF8A 0%, #00D4AA 100%);
-    color: #1a1a1a;
-}
-
-.reading-btn:hover {
-    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
-}
-
-.vocabulary-btn:hover {
-    background: linear-gradient(135deg, #F5A623 0%, #E89611 100%);
-}
-
+.writing-btn:hover,
+.reading-btn:hover,
+.vocabulary-btn:hover,
 .grammar-btn:hover {
-    background: linear-gradient(135deg, #D0021B 0%, #B71C1C 100%);
+    background: #32FF8A;
+    color: #1a1a1a;
 }
 
 .btn-icon {

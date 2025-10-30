@@ -67,12 +67,7 @@
             <div class="bookshelf">
                 <div class="books-container" id="shelf1">
                     <!-- 모든 책들을 자유롭게 배치 -->
-                    <!-- 상단 힌트 박스 -->
-                    <div class="top-hint-book">
-                        <div class="top-hint-content">
-                            <span>책들을<br>클릭 드래그<br>해보세요!</span>
-                        </div>
-                    </div>
+                    
                     
                     <!-- 무늬 책 덩어리 -->
                     <div class="book-stack">
@@ -133,42 +128,8 @@
                     <div class="book vertical short" data-book="adult-changed" draggable="true">
                         <span class="book-title">우리 어른이 달라졌어요!</span>
                     </div>
-                    <div class="book vertical thick" data-book="word-master" draggable="true">
-                        <span class="book-title">단어의 마법사</span>
-                    </div>
-                    <div class="book vertical thin" data-book="story-weaver" draggable="true">
-                        <span class="book-title">이야기 엮는 사람</span>
-                    </div>
-                    <div class="book vertical tall" data-book="poetry-garden" draggable="true">
-                        <span class="book-title">시의 정원</span>
-                    </div>
-                    <div class="book vertical short" data-book="creative-flow" draggable="true">
-                        <span class="book-title">창작의 흐름</span>
-                    </div>
-                    <div class="book vertical thick" data-book="language-bridge" draggable="true">
-                        <span class="book-title">언어의 다리</span>
-                    </div>
-                    <div class="book vertical thin" data-book="word-magic" draggable="true">
-                        <span class="book-title">단어의 마법</span>
-                    </div>
-                    <div class="book vertical short" data-book="story-teller" draggable="true">
-                        <span class="book-title">이야기꾼</span>
-                    </div>
-                    <div class="book vertical tall" data-book="poetry-collection" draggable="true">
-                        <span class="book-title">시집 모음</span>
-                    </div>
-                    <div class="book vertical thick" data-book="creative-mind" draggable="true">
-                        <span class="book-title">창작의 마음</span>
-                    </div>
-                    <div class="book vertical thin" data-book="language-art" draggable="true">
-                        <span class="book-title">언어의 예술</span>
-                    </div>
-                    <div class="book vertical short" data-book="word-garden" draggable="true">
-                        <span class="book-title">단어의 정원</span>
-                    </div>
-                    <div class="book vertical tall" data-book="narrative-flow" draggable="true">
-                        <span class="book-title">서사의 흐름</span>
-                    </div>
+                    
+                    
                 </div>
                 <div class="shelf-line"></div>
             </div>
@@ -177,6 +138,12 @@
             <div class="bookshelf">
                 <div class="books-container" id="shelf2">
                     <!-- 모든 책들을 자유롭게 배치 -->
+                    <!-- 클릭 드래그 힌트 박스 (2번째 선반) -->
+                    <div class="top-hint-book" id="click-drag-hint">
+                        <div class="top-hint-content">
+                            <span>책들을<br>클릭 드래그<br>해보세요!</span>
+                        </div>
+                    </div>
                     <div class="book vertical thin" data-book="rewrite-reason" draggable="true">
                         <span class="book-title">다시 쓰는 이유</span>
                     </div>
@@ -225,6 +192,24 @@
                         <span class="book-title">단어의 연금술</span>
                     </div>
                     
+                    
+                    
+                    
+                </div>
+            </div>
+            <div class="shelf-line"></div>
+            
+            <!-- 추가된 하단 책장 (3번째 줄) -->
+            <div class="bookshelf">
+                <div class="books-container" id="shelf3">
+                    <!-- 무늬 책 덩어리 -->
+                    <div class="book-stack stack-variant">
+                        <div class="book pattern-dotted" draggable="false"></div>
+                        <div class="book pattern-line-bottom" draggable="false"></div>
+                        <div class="book pattern-checkered" draggable="false"></div>
+                        <div class="book pattern-striped" draggable="false"></div>
+                        <div class="book pattern-line-top" draggable="false"></div>
+                    </div>
                     <div class="book vertical thick" data-book="writing-master" draggable="true">
                         <span class="book-title">글쓰기 달인</span>
                     </div>
@@ -246,12 +231,41 @@
                     <div class="book vertical short" data-book="word-artist" draggable="true">
                         <span class="book-title">단어 예술가</span>
                     </div>
-                    
-                    <!-- 드래그 힌트 북엔드 -->
-                    <div class="book hint-book" draggable="true">
-                        <div class="drag-hint-content">
-                            <span>옆으로<br>드래그<br>해보세요!</span>
-                        </div>
+                    <div class="book vertical short" data-book="story-teller" draggable="true">
+                        <span class="book-title">이야기꾼</span>
+                    </div>
+                    <div class="book vertical tall" data-book="poetry-collection" draggable="true">
+                        <span class="book-title">시집 모음</span>
+                    </div>
+                    <div class="book vertical thick" data-book="creative-mind" draggable="true">
+                        <span class="book-title">창작의 마음</span>
+                    </div>
+                    <div class="book vertical thin" data-book="language-art" draggable="true">
+                        <span class="book-title">언어의 예술</span>
+                    </div>
+                    <div class="book vertical short" data-book="word-garden" draggable="true">
+                        <span class="book-title">단어의 정원</span>
+                    </div>
+                    <div class="book vertical tall" data-book="narrative-flow" draggable="true">
+                        <span class="book-title">서사의 흐름</span>
+                    </div>
+                    <div class="book vertical thick" data-book="word-master" draggable="true">
+                        <span class="book-title">단어의 마법사</span>
+                    </div>
+                    <div class="book vertical thin" data-book="story-weaver" draggable="true">
+                        <span class="book-title">이야기 엮는 사람</span>
+                    </div>
+                    <div class="book vertical tall" data-book="poetry-garden" draggable="true">
+                        <span class="book-title">시의 정원</span>
+                    </div>
+                    <div class="book vertical short" data-book="creative-flow" draggable="true">
+                        <span class="book-title">창작의 흐름</span>
+                    </div>
+                    <div class="book vertical thick" data-book="language-bridge" draggable="true">
+                        <span class="book-title">언어의 다리</span>
+                    </div>
+                    <div class="book vertical thin" data-book="word-magic" draggable="true">
+                        <span class="book-title">단어의 마법</span>
                     </div>
                 </div>
             </div>

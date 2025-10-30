@@ -30,6 +30,10 @@ class BookShelfManager {
             }
             const randomColor = this.bookColors[Math.floor(Math.random() * this.bookColors.length)];
             book.style.setProperty('--book-color', randomColor);
+            // 파란색(#07B0F2)일 때 우측 스파인 라인 숨김
+            if (randomColor === '#07B0F2') {
+                book.classList.add('hide-spine');
+            }
             
             // 제목이 없는 책에 랜덤 패턴 할당
             const bookTitle = book.querySelector('.book-title');
@@ -52,8 +56,14 @@ class BookShelfManager {
             
             // 랜덤 폰트 할당 및 제목 길이에 따라 책 높이 조정
             if (bookTitle) {
-                const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
-                bookTitle.className = 'book-title ' + randomFont;
+                // 일부 책 제목만 산하엽 폰트 적용 (약 35% 확률)
+                bookTitle.className = 'book-title';
+                if (Math.random() < 0.35) {
+                    bookTitle.classList.add('font-sanhayeop');
+                } else {
+                    const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+                    bookTitle.classList.add(randomFont);
+                }
                 bookTitle.style.textAlign = 'center';
                 bookTitle.style.whiteSpace = 'nowrap';
                 bookTitle.style.margin = '0';
@@ -445,8 +455,13 @@ class BookShelfManager {
         books.forEach(book => {
             const bookTitle = book.querySelector('.book-title');
             if (bookTitle) {
-                const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
-                bookTitle.className = 'book-title ' + randomFont;
+                bookTitle.className = 'book-title';
+                if (Math.random() < 0.35) {
+                    bookTitle.classList.add('font-sanhayeop');
+                } else {
+                    const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+                    bookTitle.classList.add(randomFont);
+                }
                 bookTitle.style.textAlign = 'center';
             }
         });
@@ -471,6 +486,24 @@ class BookShelfManager {
             }
         }
     }
+    
+    // 두번째 선반에 클릭 드래그 힌트를 중간에 배치
+    insertTopHintInMiddle() {
+        const shelf = document.getElementById('shelf2');
+        if (!shelf) return;
+        const hint = document.getElementById('click-drag-hint');
+        if (!hint) return;
+        const books = Array.from(shelf.children).filter(child => 
+            child.classList.contains('book') &&
+            !child.classList.contains('achievement-book') &&
+            !child.classList.contains('hint-book') &&
+            !child.closest('.book-stack') &&
+            child !== hint
+        );
+        if (books.length === 0) return;
+        const middleIndex = Math.floor(books.length / 2);
+        shelf.insertBefore(hint, books[middleIndex] || null);
+    }
 }
 
 // 페이지 로드 시 초기화
@@ -479,6 +512,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 책 덩어리를 중간 위치에 삽입
     bookShelfManager.insertBookStackInMiddle();
+    // 두번째 선반 힌트 박스를 중간에 삽입
+    bookShelfManager.insertTopHintInMiddle();
     
     // 전역 함수로 노출 (디버깅용)
     window.bookShelfManager = bookShelfManager;

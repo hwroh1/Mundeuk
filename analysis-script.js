@@ -177,10 +177,8 @@ function initializePercentileChart() {
         }
     });
 
-    // Animate the red dot along the curve after chart is loaded
-    setTimeout(() => {
-        animateRedDotAlongCurve(chart, 60);
-    }, 300);
+    // 차트 인스턴스를 전역으로 보관하고, 뷰포트 진입 시 애니메이션 시작
+    window.__percentileChart__ = chart;
 }
 
 // Function to animate red dot along the curve
@@ -380,14 +378,41 @@ function countTo(el, target, dur = 1200) {
             const pct = Number(seg.getAttribute("data-percentage") || 0);
             seg.style.height = pct + "%";
           });
+
+          // 백분위 차트 애니메이션 (뷰포트 진입 시 시작)
+          if (e.target.classList.contains('percentile')) {
+            const chart = window.__percentileChart__ || Chart.getChart('percentileChart');
+            if (chart && !chart.__animated__) {
+              chart.__animated__ = true;
+              animateRedDotAlongCurve(chart, 60);
+            }
+          }
+
+          // 레이더/스택 바 애니메이션은 컨테이너 진입 시 시작
+          if (e.target.classList.contains('radar-chart-container')) {
+            if (!window.__radarInit__) {
+              window.__radarInit__ = true;
+              initializeRadarChart();
+            }
+          }
+          if (e.target.classList.contains('bar-chart-container')) {
+            if (!window.__barInit__) {
+              window.__barInit__ = true;
+              initializeStackedBar();
+            }
+          }
         }
       });
     },
     { threshold: 0.2 }
   );
   
-  // animate-on-scroll, 주요 섹션에 부착
-  document.querySelectorAll(".animate-on-scroll, .card").forEach((el) => io.observe(el));
+  // animate-on-scroll, 주요 섹션에 부착 + 차트 컨테이너 추가
+  document
+    .querySelectorAll(
+      ".animate-on-scroll, .card, .vocabulary-score, .percentile, .radar-chart-container, .bar-chart-container, .vocab-card, .vocabulary-cards"
+    )
+    .forEach((el) => io.observe(el));
   
   // Set radar chart bar heights based on scores
   function setRadarBarHeights() {
@@ -541,7 +566,6 @@ function animateBarSegment(segment, targetPercentage) {
 }
 
 window.addEventListener("load", () => {
-    initializeRadarChart();
-    initializeStackedBar();
+    // 초기화는 스크롤 인터섹션에서 수행
 });
   
