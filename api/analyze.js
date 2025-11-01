@@ -22,8 +22,9 @@ const ANALYSIS_PROMPT = (
    - high_level: 고급 어휘 비율 (숫자)
    - intermediate: 중급 어휘 비율 (숫자)
    - basic: 기초 어휘 비율 (숫자)
-   - foregin: 외래어 비율 (숫자)
-   - 중요: high_level + intermediate + basic + foregin = 100 이어야 함
+   - foreign: 외래어 비율 (숫자, 영어, 한자어 외래어 포함)
+   - 중요: high_level + intermediate + basic + foreign = 100 이어야 함
+   - 외래어 감지 방법: 글 속의 모든 단어를 검토하여 영어, 일본어, 프랑스어 등에서 유래한 외래어를 정확히 찾아내고, 전체 단어 대비 외래어의 비율을 계산하세요. 예를 들어 "디지털", "컴퓨터", "인터넷", "카페", "커피" 등이 외래어입니다. 외래어가 하나라도 있으면 0%가 아닙니다.
 5. vocabulary_list: 글에서 사용된 고급 어휘 5개 (실제 글에 있는 어휘만)
    - 각 어휘는 {"word": "단어", "pos": "품사", "definition": "정의"} 형식으로 작성
    - pos는 명사, 동사, 형용사, 부사 중 하나
@@ -75,7 +76,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: 'gpt-4',
         messages: [
-          { role: 'system', content: '당신은 한국어 어휘 분석 전문가입니다. 사용자의 텍스트에서 고급 어휘를 정확하게 추출해주세요.' },
+          { role: 'system', content: '당신은 한국어 어휘 분석 전문가입니다. 사용자의 텍스트에서 고급 어휘를 정확하게 추출하고, 외래어를 빠짐없이 감지해야 합니다. 외래어가 하나라도 있으면 반드시 0%가 아닌 값으로 계산하세요.' },
           { role: 'user', content: ANALYSIS_PROMPT(topic, text) },
         ],
         max_tokens: 2000,
